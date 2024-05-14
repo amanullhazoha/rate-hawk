@@ -23,10 +23,13 @@ const config: Config = {
         "sky-bg": "#DCFCE7",
         "text-blue": "#3C5BBB",
         "text-red": "#AB3E3E",
+        "y-50": "#D3D2AA",
+        "border-primary": "#C9CFDA",
       },
       spacing: {},
       fontFamily: {
-        primary: ["Inter", "sans-serif"],
+        primary: ["Poppins", "sans-serif"],
+        secondary: ["Manrope", "sans-serif"],
       },
     },
     screens: {
