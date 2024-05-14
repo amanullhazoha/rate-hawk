@@ -14,6 +14,7 @@ const config: Config = {
         "black-600": "#313025",
         "black-800": "#211E03",
         "text-blar": "#6B7280",
+        "text-light": "#B8B8B8",
         "primary-color": "#FBE200",
         "semi-primary": "#9E9012",
         "yellow-bg": "#F6F0B1",
