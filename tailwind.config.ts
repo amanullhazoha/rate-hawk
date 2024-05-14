@@ -17,6 +17,7 @@ const config: Config = {
         "primary-color": "#FBE200",
         "semi-primary": "#9E9012",
         "yellow-bg": "#F6F0B1",
+        "yellow-50": "#D3D2AA",
         "red-bg-900": "#FEE2E2",
         "sky-bg": "#DCFCE7",
         "text-blue": "#3C5BBB",
