@@ -1,4 +1,3 @@
-import "./globals.css";
 import UserLayout from "@/components/layout/UserLayout";
 import "@/styles/globals.css";
 import type { Metadata } from "next";

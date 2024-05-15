@@ -1,3 +1,4 @@
+import HeartIcon from "@/assets/icons/HeartIcon";
 import MapIcon from "@/assets/icons/MapIcon";
 import product_image from "@/assets/images/product.jpg";
 import Image from "next/image";
@@ -5,8 +6,18 @@ import Image from "next/image";
 const ProductCard = () => {
   return (
     <div>
-      <div className="rounded-[10px] ">
+      <div className="rounded-[10px] relative">
         <Image src={product_image} alt="image" />
+
+        <div className="absolute top-3 flex justify-between items-center left-0 right-0">
+          <p className="bg-primary-color text-white text-xs font-medium px-2 rounded-r-[10px] py-1">
+            -10% today
+          </p>
+
+          <span className="w-8 h-8 rounded-full bg-black-400 flex justify-center items-center mr-2">
+            <HeartIcon />
+          </span>
+        </div>
       </div>
 
       <div className="mt-3.5">

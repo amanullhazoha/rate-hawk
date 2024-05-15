@@ -87,59 +87,59 @@ const UserLayout = ({
       {children}
 
       <footer className="bg-black-800">
-        <div className="container mx-auto py-24 flex">
-          <div className="w-4/12">
-            <Link
-              href="/"
-              className="text-[32px] font-semibold text-semi-primary"
-            >
-              Logo
-            </Link>
-
-            <p className="text-base text-white font-normal mt-4">
-              Quisque imperdiet sapien porttito the bibendum sellentesque the
-              commodo erat acar accumsa lobortis, enim diam the nesuen.
-            </p>
-
-            <div className="mt-9 flex items-center gap-4">
+        <div className="container mx-auto py-24 flex gap-[90px]">
+          <div className="w-6/12 flex gap-[40px]">
+            <div>
               <Link
                 href="/"
-                className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                className="text-[32px] font-semibold text-semi-primary"
               >
-                <FacebookIcon />
+                Logo
               </Link>
 
-              <Link
-                href="/"
-                className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
-              >
-                <FacebookIcon />
-              </Link>
+              <p className="text-base text-white font-normal mt-4">
+                Quisque imperdiet sapien porttito the bibendum sellentesque the
+                commodo erat acar accumsa lobortis, enim diam the nesuen.
+              </p>
 
-              <Link
-                href="/"
-                className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
-              >
-                <FacebookIcon />
-              </Link>
+              <div className="mt-9 flex items-center gap-4">
+                <Link
+                  href="/"
+                  className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                >
+                  <FacebookIcon />
+                </Link>
 
-              <Link
-                href="/"
-                className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
-              >
-                <FacebookIcon />
-              </Link>
+                <Link
+                  href="/"
+                  className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                >
+                  <FacebookIcon />
+                </Link>
 
-              <Link
-                href="/"
-                className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
-              >
-                <FacebookIcon />
-              </Link>
+                <Link
+                  href="/"
+                  className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                >
+                  <FacebookIcon />
+                </Link>
+
+                <Link
+                  href="/"
+                  className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                >
+                  <FacebookIcon />
+                </Link>
+
+                <Link
+                  href="/"
+                  className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                >
+                  <FacebookIcon />
+                </Link>
+              </div>
             </div>
-          </div>
 
-          <div className="w-8/12 flex gap-[90px]">
             <div>
               <h3 className="text-white text-lg font-medium mb-6 min-w-[125px]">
                 COMPANY
@@ -155,7 +155,9 @@ const UserLayout = ({
                 <Link href="/">Blog</Link>
               </div>
             </div>
+          </div>
 
+          <div className="w-6/12 flex gap-[90px]">
             <div>
               <h3 className="text-white text-lg font-medium mb-6">
                 CONTACT US
