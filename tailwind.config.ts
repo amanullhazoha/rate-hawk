@@ -19,6 +19,7 @@ const config: Config = {
         "semi-primary": "#9E9012",
         "yellow-bg": "#F6F0B1",
         "yellow-50": "#D3D2AA",
+        "yellow-100": "#FEFFD8",
         "red-bg-900": "#FEE2E2",
         "sky-bg": "#DCFCE7",
         "text-blue": "#3C5BBB",
