@@ -1,5 +1,5 @@
-const page = () => {
-  return <div>page</div>;
-};
+import HomePageView from "@/components/view/HomePageView";
 
-export default page;
+export default function Home() {
+  return <HomePageView />;
+}
