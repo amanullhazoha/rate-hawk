@@ -5,6 +5,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
   @apply leading-[normal] m-0 font-primary;
 }

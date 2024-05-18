@@ -2,21 +2,20 @@ import FacebookIcon from '@/assets/icons/FacebookIcon';
 import GoogleIcon from '@/assets/icons/GoogleIcon';
 import LockIcon from '@/assets/icons/LockIcon';
 import MailIcon from '@/assets/icons/MailIcon';
-import UserIcon from '@/assets/icons/UserIcon';
 import ButtonPrimary from '@/components/buttons/ButtonPrimary';
 import SocialButton from '@/components/buttons/SocialButton';
 import InputGroup from '@/components/inputs/InputGroup';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const signup = () => {
+const Login = () => {
   return (
     <main>
       <div className="my-container pt-[55px]">
         {/* heading */}
         <div className="flex items-center justify-center gap-6">
           <span className="block w-[100px] h-[4px] bg-primary-color"></span>
-          <h1 className="heading">Signup</h1>
+          <h1 className="heading">Login</h1>
           <span className="block w-[100px] h-[4px] bg-primary-color"></span>
         </div>
 
@@ -44,70 +43,47 @@ const signup = () => {
 
               <div className="flex flex-col gap-6">
                 <InputGroup
-                  label="Username *"
-                  type="text"
-                  placeholder="name"
-                  name="username"
-                  icon={<UserIcon />}
-                />
-
-                <InputGroup
-                  label="Your email *"
+                  label="Email address"
                   type="email"
                   placeholder="example@example.com"
                   name="email"
                   icon={<MailIcon />}
                 />
 
-                <div className="flex items-center justify-between gap-3">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="password" className="text-black-800">
+                      Password
+                    </label>
+                    <Link
+                      href="/forget-password"
+                      className="text-black-400 text-sm font-medium underline"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                   <InputGroup
-                    label="Password *"
+                    label=""
                     type="password"
                     placeholder="XXXXXXXXXXXX"
                     name="password"
                     icon={<LockIcon />}
                   />
-                  <InputGroup
-                    label="Confirm Password *"
-                    type="password"
-                    placeholder="XXXXXXXXXXXX"
-                    name="confirmPassword"
-                    icon={<LockIcon />}
-                  />
                 </div>
-
-                <div className="flex items-center gap-2 ">
-                  <input
-                    type="checkbox"
-                    className="border border-text-blar rounded-[2px] w-4 h-4 checked:bg-y-50 checkbox"
-                    name=""
-                    id="aggreement"
-                  />
-                  <label
-                    htmlFor="aggreement"
-                    className="text-sm text-text-blar"
-                  >
-                    I agree to{' '}
-                    <b className="text-black-600">term and conditions</b>
-                  </label>
-                </div>
+                <ButtonPrimary>Continue</ButtonPrimary>
               </div>
 
-              <div className="my-10">
-                <ButtonPrimary>Create New Account</ButtonPrimary>
-              </div>
-
-              <div className="flex items-center justify-center gap-2 mt-10">
-                <p className="text-text-blar">Already have an account! </p>
-                <Link href="/login" className=" text-black-600 font-semibold">
-                  Login Here !
+              <div className="flex items-center justify-center gap-2 mt-6">
+                <p className="text-text-blar">New user? </p>
+                <Link href="/signup" className=" text-black-600 font-semibold">
+                  Create an account
                 </Link>
               </div>
             </form>
           </div>
           <div className="relative w-1/2">
             <Image
-              src="/images/login-bg.png"
+              src="/images/login.png"
               width={600}
               height={600}
               alt="Login Rafiki"
@@ -119,4 +95,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Login;

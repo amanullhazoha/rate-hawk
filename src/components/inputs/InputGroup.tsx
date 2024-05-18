@@ -1,3 +1,5 @@
+import PassEyeIcon from '@/assets/icons/PassEyeIcon';
+
 interface Types {
   label: string;
   name: string;
@@ -20,6 +22,11 @@ const InputGroup = ({ label, name, type, icon, placeholder }: Types) => {
           placeholder={placeholder}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pr-4 py-[14px] bg-transparent"
         />
+        {type === 'password' && (
+          <button className="px-4">
+            <PassEyeIcon />
+          </button>
+        )}
       </div>
     </div>
   );
