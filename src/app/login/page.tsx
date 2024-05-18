@@ -83,7 +83,7 @@ const Login = () => {
           </div>
           <div className="relative w-1/2">
             <Image
-              src="/images/login-bg.png"
+              src="/images/login.png"
               width={600}
               height={600}
               alt="Login Rafiki"
