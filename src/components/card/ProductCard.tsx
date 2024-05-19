@@ -2,10 +2,11 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import MapIcon from "@/assets/icons/MapIcon";
 import product_image from "@/assets/images/product.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = () => {
   return (
-    <div>
+    <Link href="/hotel-detail">
       <div className="rounded-[10px] relative">
         <Image src={product_image} alt="image" />
 
@@ -56,7 +57,7 @@ const ProductCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
