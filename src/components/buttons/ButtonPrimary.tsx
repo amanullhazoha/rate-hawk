@@ -1,12 +1,19 @@
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
+  className?: string;
 }
 
-const ButtonPrimary = ({ children }: Props) => {
+const ButtonPrimary = ({ children, className }: Props) => {
   return (
-    <button className="bg-primary-color font-semibold text-center w-full rounded-lg  py-[14px] text-xl text-black-600 border border-[#DBDBDB] font-secondary">
+    <button
+      className={clsx(
+        'bg-primary-color font-semibold text-center w-full rounded-lg  py-[14px] text-xl text-black-600 border border-[#DBDBDB] font-secondary',
+        className
+      )}
+    >
       {children}
     </button>
   );
