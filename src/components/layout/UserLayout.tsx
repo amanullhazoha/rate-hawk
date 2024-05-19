@@ -1,9 +1,9 @@
-import EmailIcon from "@/assets/icons/Email";
-import FacebookIcon from "@/assets/icons/FacebookIcon";
-import SearchIcon from "@/assets/icons/SearchIcon";
-import Link from "next/link";
-import BlogImage from "@/assets/images/blog.jpg";
-import Image from "next/image";
+import EmailIcon from '@/assets/icons/Email';
+import FacebookIcon from '@/assets/icons/FacebookIcon';
+import SearchIcon from '@/assets/icons/SearchIcon';
+import BlogImage from '@/assets/images/blog.jpg';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const UserLayout = ({
   children,
@@ -84,7 +84,7 @@ const UserLayout = ({
         </div>
       </header>
 
-      {children}
+      <main className="min-h-[calc(100vh-690px)]">{children}</main>
 
       <footer className="bg-black-800">
         <div className="container mx-auto py-24 flex gap-[90px]">
