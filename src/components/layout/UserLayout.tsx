@@ -35,7 +35,7 @@ const UserLayout = ({
 
             <div className="flex items-center gap-7">
               <Link
-                href="/"
+                href="/login"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
                 <EmailIcon />
@@ -45,7 +45,7 @@ const UserLayout = ({
               <div className="w-[1px] h-[16px] bg-primary-color"></div>
 
               <Link
-                href="/"
+                href="/signup"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
                 Register
@@ -66,7 +66,7 @@ const UserLayout = ({
                   Home
                   <p className="w-7 h-[3px] bg-primary-color"></p>
                 </Link>
-                <Link href="/">About Us</Link>
+                <Link href="/about-us">About Us</Link>
                 <Link href="/">Blog & News</Link>
                 <Link href="/">Contact</Link>
               </div>
