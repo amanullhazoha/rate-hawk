@@ -26,6 +26,7 @@ const config: Config = {
         "text-red": "#AB3E3E",
         "y-50": "#D3D2AA",
         "border-primary": "#C9CFDA",
+        "bg-primary": "#F3F4F6",
       },
       spacing: {},
       boxShadow: {
