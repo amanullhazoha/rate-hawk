@@ -18,7 +18,9 @@ const SocialButton = ({ icon, children, className, onClick }: Props) => {
       onClick={onClick}
     >
       <div>{icon}</div>
-      <div className="text-base font-medium text-black">{children}</div>
+      <div className="md:text-base text-sm font-medium text-black">
+        {children}
+      </div>
       <div></div>
     </button>
   );

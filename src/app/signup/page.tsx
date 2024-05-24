@@ -20,8 +20,8 @@ const Signup = () => {
       </div>
 
       {/* form */}
-      <div className="flex items-center justify-between gap-10 my-[85px]">
-        <div className="w-1/2">
+      <div className="flex items-center justify-between gap-10 md:my-[85px] my-12">
+        <div className="lg:w-1/2  w-full">
           <form className="px-8 py-9 border border-border-primary rounded-[20px]">
             <div className="mb-4">
               <SocialButton icon={<FacebookIcon />}>
@@ -58,7 +58,7 @@ const Signup = () => {
                 icon={<MailIcon />}
               />
 
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex max-md:flex-col items-center justify-between gap-3">
                 <InputGroup
                   label="Password *"
                   type="password"
@@ -93,7 +93,7 @@ const Signup = () => {
               <ButtonPrimary>Create New Account</ButtonPrimary>
             </div>
 
-            <div className="flex items-center justify-center gap-2 mt-10">
+            <div className="flex max-md:flex-col items-center justify-center gap-2 mt-10">
               <p className="text-text-blar">Already have an account! </p>
               <Link href="/login" className=" text-black-600 font-semibold">
                 Login Here !
@@ -101,7 +101,7 @@ const Signup = () => {
             </div>
           </form>
         </div>
-        <div className="relative w-1/2">
+        <div className="relative w-1/2 max-lg:hidden">
           <Image
             src="/images/login-bg.png"
             width={600}

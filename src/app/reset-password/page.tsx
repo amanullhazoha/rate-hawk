@@ -9,8 +9,8 @@ const ResetPassword = () => {
   return (
     <main>
       <div className="my-container  h-screen w-full flex items-center justify-center">
-        <div className="flex w-full h-full items-center justify-between">
-          <div className="relative w-1/2">
+        <div className="flex w-full h-full items-center justify-between ">
+          <div className="relative w-1/2 max-lg:hidden">
             <Image
               src="/images/reset-pass-bg.png"
               width={500}
@@ -19,11 +19,11 @@ const ResetPassword = () => {
             />
           </div>
 
-          <div className="w-1/2">
+          <div className="lg:w-1/2 w-full ">
             <div className="">
               <h1 className="heading">Reset Your Password</h1>
 
-              <div className="flex items-center justify-center gap-2 text-black-600 font-medium">
+              <div className="flex items-center justify-center gap-2 text-black-600 font-medium max-md:mb-8">
                 <ProfileIcon />
                 <p className="text-center">example@example.com</p>
               </div>
