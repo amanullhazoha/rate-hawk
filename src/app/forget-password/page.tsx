@@ -7,8 +7,8 @@ const ForgetPassword = () => {
   return (
     <main>
       <div className="my-container  h-screen w-full flex items-center justify-center">
-        <div className="flex w-full h-full items-center justify-between">
-          <div className="relative w-1/2">
+        <div className="flex  w-full h-full items-center justify-between">
+          <div className="relative w-1/2 max-lg:hidden">
             <Image
               src="/images/forgot-pass-bg.png"
               width={500}
@@ -17,7 +17,7 @@ const ForgetPassword = () => {
             />
           </div>
 
-          <div className="w-1/2">
+          <div className="md:w-1/2 w-full">
             <div className="max-w-[500px] flex items-center justify-end">
               <div>
                 <h1 className="heading">Forgot Password?</h1>

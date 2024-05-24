@@ -10,7 +10,7 @@ const ButtonPrimary = ({ children, className }: Props) => {
   return (
     <button
       className={clsx(
-        'bg-primary-color font-semibold text-center w-full rounded-lg  py-[14px] text-xl text-black-600 border border-[#DBDBDB] font-secondary',
+        'bg-primary-color font-semibold text-center w-full rounded-lg  py-[14px] lg:text-xl text-md text-black-600 border border-[#DBDBDB] font-secondary',
         className
       )}
     >

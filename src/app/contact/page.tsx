@@ -23,14 +23,14 @@ const Contact = () => {
       <div className="my-container">
         {/* heading */}
         <div className="flex items-center justify-center gap-6 mt-10">
-          <span className="block w-[100px] h-[4px] bg-primary-color"></span>
+          <span className="block md:w-[100px] w-[80px] h-[4px] bg-primary-color"></span>
           <h1 className="heading">Contact</h1>
-          <span className="block w-[100px] h-[4px] bg-primary-color"></span>
+          <span className="block md:w-[100px] w-[80px] h-[4px] bg-primary-color"></span>
         </div>
 
-        <div className="flex mb-[57px] justify-between gap-10 mt-[129px]">
-          <div className="max-w-[443px]">
-            <div className="py-8 px-5 flex flex-col gap-8 border border-border-primary rounded-xl">
+        <div className="flex max-lg:flex-col mb-[57px] justify-between gap-10 lg:mt-[129px] md:mt-20 mt-12 w-full">
+          <div className="lg:w-1/2 w-full ">
+            <div className="py-8 px-5 flex flex-col gap-8 border border-border-primary rounded-xl lg:mt-[32px]">
               <div>
                 <div className="flex items-center gap-2">
                   <div>
@@ -118,8 +118,8 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="w-1/2">
-            <div className="flex flex-col gap-6">
+          <div className="lg:w-1/2 w-full">
+            <div className="flex flex-col gap-6 w-full">
               <InputGroup
                 label="Full name"
                 type="text"
@@ -148,13 +148,14 @@ const Contact = () => {
                 </div>
               </div>
 
-              <ButtonPrimary className="max-w-[286px] !text-xl">
+              <ButtonPrimary className="lg:max-w-[286px]  md:!text-xl text-md">
                 Send Message
               </ButtonPrimary>
             </div>
           </div>
         </div>
-        <div className="w-full h-[250px] mt-14 mb-40">
+
+        <div className="w-full h-[250px] mt-14 lg:mb-40 mb-20">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7734.729592200921!2d90.49457063171886!3d23.807706059292467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1716144598009!5m2!1sen!2sbd"
             // width="600"
@@ -168,11 +169,11 @@ const Contact = () => {
       </div>
 
       {/* Newslatter */}
-      <div className="bg-yellow-100 py-[100px] ">
+      <div className="bg-yellow-100 lg:py-[100px] md:py-20 py-14 ">
         <div className="max-w-[1152px] mx-auto  flex items-center justify-center gap-[124px]">
-          <div className="w-1/2">
+          <div className="lg:w-1/2 w-full max-lg:px-5">
             <h2 className="heading mb-3">Join our newsletter</h2>
-            <p className="text-lg font-medium text-black-400">
+            <p className="lg:text-lg text-sm font-medium text-black-400">
               Read and share new perspectives on just about any topic.
               Everyone’s welcome.
             </p>
@@ -191,11 +192,11 @@ const Contact = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-between p-3 pl-8 bg-white border-[1.5px] border-semi-primary rounded-[50px] relative">
+              <div className="flex items-center justify-between md:p-3 p-2 md:pl-8 pl-5 bg-white border-[1.5px] border-semi-primary rounded-[50px] relative">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full h-full outline-none focus:outline-none border-none placeholder:text-text-light placeholder:text-lg text-lg "
+                  className="w-full h-full outline-none focus:outline-none border-none placeholder:text-text-light md:placeholder:text-lg md:text-lg text-md"
                 />
                 <button>
                   <svg
@@ -223,13 +224,13 @@ const Contact = () => {
                   </svg>
                 </button>
 
-                <div className="absolute left-full -translate-x-1/2 bottom-0 ">
+                <div className="absolute left-full -translate-x-1/2 bottom-0 max-lg:hidden">
                   <Direction />
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-1/2 relative">
+          <div className="w-1/2 relative max-lg:hidden">
             <Image
               src="/images/contact.png"
               width={500}
