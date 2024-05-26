@@ -7,7 +7,7 @@ const AmenitiesSection = () => {
         <h3 className="text-2xl font-semibold text-black">Amenities</h3>
 
         <p className="text-base font-normal text-text-blar mt-2.5">
-          About the property's amenities and services
+          About the property&apos;s amenities and services
         </p>
 
         <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>

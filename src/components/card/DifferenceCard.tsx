@@ -40,7 +40,7 @@ const DifferenceCard = ({ className }: Props) => {
         <p className="text-sm text-black-400 font-normal">
           Our advanced search algorithms make finding the perfect accommodation
           a breeze, with filters for amenities, location, and price range,
-          ensuring you find exactly what you're looking for in seconds.
+          ensuring you find exactly what you&apos;re looking for in seconds.
         </p>
       </div>
     </div>

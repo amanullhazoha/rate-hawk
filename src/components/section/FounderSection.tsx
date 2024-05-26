@@ -29,7 +29,7 @@ const FounderSection = () => {
 
             <div>
               <h4 className="text-4xl text-black-800 font-medium mb-6">
-                Founder's Vision: Mr. Anderson
+                Founder&apos;s Vision: Mr. Anderson
               </h4>
 
               <p className="text-base text-black-800 font-normal">

@@ -15,11 +15,11 @@ const AboutBannerSection = () => {
 
             <p className="text-lg font-medium text-black-600">
               Welcome to a world of boundless possibilities and endless
-              adventures. At [Your Hotel Booking Platform], we're dedicated to
-              turning your travel dreams into reality. Whether you're seeking
-              luxury, relaxation, or adventure, we're here to guide you every
-              step of the way. Join us as we embark on unforgettable journeys
-              together, one booking at a time.
+              adventures. At [Your Hotel Booking Platform], we&apos;re dedicated
+              to turning your travel dreams into reality. Whether you&apos;re
+              seeking luxury, relaxation, or adventure, we&apos;re here to guide
+              you every step of the way. Join us as we embark on unforgettable
+              journeys together, one booking at a time.
             </p>
           </div>
         </div>
