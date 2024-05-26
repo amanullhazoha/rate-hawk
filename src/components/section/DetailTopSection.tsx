@@ -91,7 +91,7 @@ const DetailTopSection = () => {
         </p>
       </div>
 
-      <div className="flex items-center gap-14">
+      <div className="flex items-center flex-wrap gap-5 md:gap-14">
         <div className="flex items-center gap-3">
           <PeopleIcon />
 

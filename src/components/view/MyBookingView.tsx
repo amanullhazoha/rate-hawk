@@ -9,9 +9,9 @@ import ProductCard from "../card/ProductCard";
 const MyBookingView = () => {
   return (
     <main className="bg-white py-20">
-      <div className="container mx-auto">
-        <div className="w-[90%] mx-auto flex gap-14">
-          <div className="w-4/12 p-14 border border-border-primary rounded-[20px] mb-8">
+      <div className="container mx-auto px-2.5">
+        <div className="w-full md:w-[90%] mx-auto flex flex-wrap gap-14">
+          <div className="w-full md:w-4/12 p-14 border border-border-primary rounded-[20px] mb-8">
             <div className="flex items-center flex-col gap-4 pb-6">
               <Image
                 src={team}
@@ -100,7 +100,7 @@ const MyBookingView = () => {
             </div>
           </div>
 
-          <div className="w-8/12">
+          <div className="w-full md:w-8/12">
             <div className="p-8 border border-border-primary rounded-[20px] mb-8">
               <h3 className="text-2xl font-semibold text-black">
                 Andy Flower’s listings
@@ -113,7 +113,7 @@ const MyBookingView = () => {
 
               <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
 
-              <div className="grid grid-cols-2 gap-8 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <ProductCard />
                 <ProductCard />
                 <ProductCard />

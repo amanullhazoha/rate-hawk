@@ -8,7 +8,7 @@ const ProductCard = () => {
   return (
     <Link href="/hotel-detail">
       <div className="rounded-[10px] relative">
-        <Image src={product_image} alt="image" />
+        <Image src={product_image} alt="image" className="w-full" />
 
         <div className="absolute top-3 flex justify-between items-center left-0 right-0">
           <p className="bg-primary-color text-white text-xs font-medium px-2 rounded-r-[10px] py-1">

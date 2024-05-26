@@ -40,8 +40,8 @@ const SearchPageView = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-10">
-          <div className="grid grid-cols-2 gap-10">
+        <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <ProductCard />
             <ProductCard />
             <ProductCard />

@@ -4,7 +4,7 @@ import product1 from "@/assets/images/product_1.jpg";
 
 const ProductImageSection = () => {
   return (
-    <div className="grid grid-cols-2 gap-2 mb-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-16">
       <div className="relative">
         <Image src={product1} alt="image" className="h-full" />
 

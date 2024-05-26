@@ -13,7 +13,7 @@ const AmenitiesSection = () => {
         <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
       </div>
 
-      <div className="grid grid-cols-3 gap-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
         <div className="flex items-center gap-3.5">
           <KeyIcon />
           <p className="font-medium text-sm text-black">la-key</p>

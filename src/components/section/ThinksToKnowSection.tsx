@@ -26,12 +26,12 @@ const ThinksToKnowSection = () => {
         Cancellation policy
       </p>
 
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary w-1/2">
+      <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary w-full md:w-1/2">
         <p>Check-in</p>
         <p>08:00am - 12:00 am</p>
       </div>
 
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-white w-1/2">
+      <div className="p-3.5 rounded-md flex items-center justify-between bg-white w-full md:w-1/2">
         <p>Check-out</p>
         <p>02:00 pm - 04:00 pm</p>
       </div>
