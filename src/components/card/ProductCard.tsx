@@ -2,12 +2,13 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import MapIcon from "@/assets/icons/MapIcon";
 import product_image from "@/assets/images/product.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductCard = () => {
   return (
-    <div>
+    <Link href="/hotel-detail">
       <div className="rounded-[10px] relative">
-        <Image src={product_image} alt="image" />
+        <Image src={product_image} alt="image" className="w-full" />
 
         <div className="absolute top-3 flex justify-between items-center left-0 right-0">
           <p className="bg-primary-color text-white text-xs font-medium px-2 rounded-r-[10px] py-1">
@@ -56,7 +57,7 @@ const ProductCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

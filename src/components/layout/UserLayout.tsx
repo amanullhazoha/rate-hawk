@@ -14,7 +14,7 @@ const UserLayout = ({
     <>
       <header>
         <div className="bg-black-800">
-          <div className="container mx-auto flex justify-between items-center py-2.5">
+          <div className="container max-md:px-2.5 mx-auto justify-between items-center py-2.5 hidden md:flex">
             <div className="flex items-center gap-7">
               <Link
                 href="/"
@@ -35,7 +35,7 @@ const UserLayout = ({
 
             <div className="flex items-center gap-7">
               <Link
-                href="/"
+                href="/login"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
                 <EmailIcon />
@@ -45,7 +45,7 @@ const UserLayout = ({
               <div className="w-[1px] h-[16px] bg-primary-color"></div>
 
               <Link
-                href="/"
+                href="/signup"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
                 Register
@@ -55,18 +55,32 @@ const UserLayout = ({
         </div>
 
         <div className="bg-white border-b border-yellow-50">
-          <div className="container mx-auto flex justify-between items-center py-6">
+          <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-6 overflow-hidden">
             <div className="flex items-center gap-14">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
                 Logo
               </Link>
 
-              <div className="flex items-center gap-12">
+              <div className="hidden md:flex items-center gap-12">
                 <Link href="/" className="text-base text-black-800 font-normal">
                   Home
                   <p className="w-7 h-[3px] bg-primary-color"></p>
                 </Link>
-                <Link href="/">About Us</Link>
+                <Link href="/about-us">About Us</Link>
+                <Link href="/">Blog & News</Link>
+                <Link href="/">Contact</Link>
+              </div>
+
+              <div className="hidden md:hidden flex-col gap-3 absolute left-0 top-0 bottom-0 bg-yellow-bg px-6 py-10 border-r w-[50%]">
+                <Link href="/" className="text-[40px] text-black-600 font-bold">
+                  Logo
+                </Link>
+
+                <Link href="/" className="text-base text-black-800 font-normal">
+                  Home
+                  <p className="w-7 h-[3px] bg-primary-color"></p>
+                </Link>
+                <Link href="/about-us">About Us</Link>
                 <Link href="/">Blog & News</Link>
                 <Link href="/">Contact</Link>
               </div>
@@ -87,9 +101,9 @@ const UserLayout = ({
       <main className="min-h-[calc(100vh-690px)]">{children}</main>
 
       <footer className="bg-black-800">
-        <div className="container mx-auto py-24 flex gap-[90px]">
-          <div className="w-6/12 flex gap-[40px]">
-            <div>
+        <div className="container max-md:px-2.5 mx-auto py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-2">
+          <div className="flex gap-10 flex-col md:flex-row">
+            <div className="w-full md:w-1/2 lg:w-4/6">
               <Link
                 href="/"
                 className="text-[32px] font-semibold text-semi-primary"
@@ -102,7 +116,7 @@ const UserLayout = ({
                 commodo erat acar accumsa lobortis, enim diam the nesuen.
               </p>
 
-              <div className="mt-9 flex items-center gap-4">
+              <div className="mt-9 flex items-center gap-4 lg:w-2/6">
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
@@ -157,8 +171,8 @@ const UserLayout = ({
             </div>
           </div>
 
-          <div className="w-6/12 flex gap-[90px]">
-            <div>
+          <div className="flex md:gap-[90px] gap-10 flex-col md:flex-row">
+            <div className="w-full md:w-1/2">
               <h3 className="text-white text-lg font-medium mb-6">
                 CONTACT US
                 <p className="w-[50px] h-[3px] bg-primary-color mt-1"></p>
@@ -183,7 +197,7 @@ const UserLayout = ({
               </div>
             </div>
 
-            <div>
+            <div className="w-full md:w-1/2">
               <h3 className="text-white text-lg font-medium mb-6">
                 RECENT POST
                 <p className="w-[50px] h-[3px] bg-primary-color mt-1"></p>
@@ -216,8 +230,8 @@ const UserLayout = ({
           </div>
         </div>
 
-        <div className="container mx-auto flex justify-between items-center py-5 border-t border-yellow-50">
-          <p className="text-white text-base font-normal">
+        <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-5 border-t border-yellow-50 flex-col md:flex-row gap-4">
+          <p className="text-white text-base font-normal max-md:text-center">
             Copyright &copy; 2022 [name]. All rights reserved.
           </p>
 

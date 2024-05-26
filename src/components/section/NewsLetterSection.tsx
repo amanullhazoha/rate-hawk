@@ -4,8 +4,8 @@ import newsLetter from "@/assets/images/news-letter.png";
 const NewsLetterSection = () => {
   return (
     <section className="bg-yellow-bg py-[100px]">
-      <div className="container mx-auto">
-        <div className="w-[80%] mx-auto grid grid-cols-2 gap-[124px] items-center">
+      <div className="container max-md:px-2.5 mx-auto">
+        <div className="w-full md:w-[80%] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-[124px] items-center">
           <div className="mb-14">
             <h2 className="text-[40px] font-semibold text-black-800 mb-3">
               Join our newsletter
@@ -72,7 +72,7 @@ const NewsLetterSection = () => {
             </form>
           </div>
 
-          <div>
+          <div className="hidden lg:block">
             <Image src={newsLetter} alt="image" />
           </div>
         </div>

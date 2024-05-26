@@ -26,8 +26,12 @@ const config: Config = {
         "text-red": "#AB3E3E",
         "y-50": "#D3D2AA",
         "border-primary": "#C9CFDA",
+        "bg-primary": "#F3F4F6",
       },
       spacing: {},
+      boxShadow: {
+        "shadow-primary": "0px 4px 15px 0px rgba(0, 0, 0, 0.15)",
+      },
       fontFamily: {
         primary: ["Poppins", "sans-serif"],
         secondary: ["Manrope", "sans-serif"],

@@ -4,8 +4,8 @@ import ProductCard from "../card/ProductCard";
 const FeaturedPlaceSection = () => {
   return (
     <section className="py-[100px] bg-white">
-      <div className="container mx-auto">
-        <div className="w-[90%] mx-auto">
+      <div className="container max-md:px-2.5 mx-auto overflow-hidden">
+        <div className="w-full md:w-[90%] mx-auto">
           <div className="mb-14">
             <h2 className="text-[40px] font-semibold text-black-800 mb-3">
               Featured places to stay
@@ -16,14 +16,16 @@ const FeaturedPlaceSection = () => {
             </p>
           </div>
 
-          <div className="flex justify-between items-center mb-14">
-            <div className="flex gap-2">
-              <button
-                type="button"
-                className="px-6 py-2 rounded-full text-base font-medium bg-primary-color text-black"
-              >
-                New York
-              </button>
+          <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-14 gap-3">
+            <div className="flex gap-2 overflow-auto w-full md:w-fit">
+              <div>
+                <button
+                  type="button"
+                  className="w-[140px] px-6 py-2 rounded-full text-base font-medium bg-primary-color text-black"
+                >
+                  New York
+                </button>
+              </div>
 
               <button
                 type="button"
@@ -56,7 +58,7 @@ const FeaturedPlaceSection = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ProductCard />
             <ProductCard />
             <ProductCard />

@@ -6,8 +6,8 @@ const AboutBannerSection = () => {
     <section>
       <Image src={banner_image} alt="banner image" />
 
-      <div className="container mx-auto relative flex justify-center h-[300px]">
-        <div className="w-[80%] mx-auto absolute top-[-110px]">
+      <div className="container mx-auto relative flex justify-center h-[450px] md:h-[300px]">
+        <div className="w-full md:w-[80%] mx-auto absolute top-[-110px]">
           <div className="bg-yellow-100 rounded-[20px] px-10 py-8 shadow-md">
             <h1 className="mb-10 text-[40px] font-semibold text-black-800 text-center">
               Welcome to [name]
