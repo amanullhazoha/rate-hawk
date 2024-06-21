@@ -1,17 +1,17 @@
-import FacebookIcon from '@/assets/icons/FacebookIcon';
-import GoogleIcon from '@/assets/icons/GoogleIcon';
-import LockIcon from '@/assets/icons/LockIcon';
-import MailIcon from '@/assets/icons/MailIcon';
-import UserIcon from '@/assets/icons/UserIcon';
-import ButtonPrimary from '@/components/buttons/ButtonPrimary';
-import SocialButton from '@/components/buttons/SocialButton';
-import InputGroup from '@/components/inputs/InputGroup';
-import Image from 'next/image';
-import Link from 'next/link';
+import FacebookIcon from "@/assets/icons/FacebookIcon";
+import GoogleIcon from "@/assets/icons/GoogleIcon";
+import LockIcon from "@/assets/icons/LockIcon";
+import MailIcon from "@/assets/icons/MailIcon";
+import UserIcon from "@/assets/icons/UserIcon";
+import ButtonPrimary from "@/components/buttons/ButtonPrimary";
+import SocialButton from "@/components/buttons/SocialButton";
+import InputGroup from "@/components/inputs/InputGroup";
+import Image from "next/image";
+import Link from "next/link";
 
 const Signup = () => {
   return (
-    <div className="my-container pt-[55px]">
+    <div className="container w-full px-2.5 md:w-[80%] mx-auto pt-[55px]">
       {/* heading */}
       <div className="flex items-center justify-center gap-6">
         <span className="block w-[100px] h-[4px] bg-primary-color"></span>
@@ -83,7 +83,7 @@ const Signup = () => {
                   id="aggreement"
                 />
                 <label htmlFor="aggreement" className="text-sm text-text-blar">
-                  I agree to{' '}
+                  I agree to{" "}
                   <b className="text-black-600">term and conditions</b>
                 </label>
               </div>

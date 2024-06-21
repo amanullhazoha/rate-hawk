@@ -1,26 +1,26 @@
-import Direction from '@/assets/icons/Direction';
-import EmailIcon from '@/assets/icons/EmailIcon';
-import LocationIcon from '@/assets/icons/LocationIcon';
-import MailIcon from '@/assets/icons/MailIcon';
-import NumberOne from '@/assets/icons/NumberOne';
-import NumberTwo from '@/assets/icons/NumberTwo';
-import PhoneIcon from '@/assets/icons/PhoneIcon';
-import DribbleIcon from '@/assets/icons/social/DribbleIcon';
-import FbIcon from '@/assets/icons/social/FbIcon';
-import LinkdinIcon from '@/assets/icons/social/LinkdinIcon';
-import PinterestIcon from '@/assets/icons/social/PinterestIcon';
-import XIcon from '@/assets/icons/social/XIcon';
-import SocialIcon from '@/assets/icons/SocialIcon';
-import UserIcon from '@/assets/icons/UserIcon';
-import ButtonPrimary from '@/components/buttons/ButtonPrimary';
-import InputGroup from '@/components/inputs/InputGroup';
-import Image from 'next/image';
-import Link from 'next/link';
+import Direction from "@/assets/icons/Direction";
+import EmailIcon from "@/assets/icons/EmailIcon";
+import LocationIcon from "@/assets/icons/LocationIcon";
+import MailIcon from "@/assets/icons/MailIcon";
+import NumberOne from "@/assets/icons/NumberOne";
+import NumberTwo from "@/assets/icons/NumberTwo";
+import PhoneIcon from "@/assets/icons/PhoneIcon";
+import DribbleIcon from "@/assets/icons/social/DribbleIcon";
+import FbIcon from "@/assets/icons/social/FbIcon";
+import LinkdinIcon from "@/assets/icons/social/LinkdinIcon";
+import PinterestIcon from "@/assets/icons/social/PinterestIcon";
+import XIcon from "@/assets/icons/social/XIcon";
+import SocialIcon from "@/assets/icons/SocialIcon";
+import UserIcon from "@/assets/icons/UserIcon";
+import ButtonPrimary from "@/components/buttons/ButtonPrimary";
+import InputGroup from "@/components/inputs/InputGroup";
+import Image from "next/image";
+import Link from "next/link";
 
 const Contact = () => {
   return (
     <div>
-      <div className="my-container">
+      <div className="container w-full px-2.5 md:w-[90%] mx-auto">
         {/* heading */}
         <div className="flex items-center justify-center gap-6 mt-10">
           <span className="block md:w-[100px] w-[80px] h-[4px] bg-primary-color"></span>

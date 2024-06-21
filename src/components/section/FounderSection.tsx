@@ -20,7 +20,7 @@ const FounderSection = () => {
             </p>
           </div>
 
-          <div className="bg-yellow-50 rounded-[40px] flex gap-12 p-10 items-center">
+          <div className="bg-yellow-50 rounded-[40px] flex flex-col md:flex-row gap-12 p-3 md:p-10 items-center">
             <Image
               src={fonder}
               alt="founder image"

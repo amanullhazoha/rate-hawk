@@ -5,7 +5,7 @@ const TeamSection = () => {
     <section className="bg-yellow-bg py-16">
       <div className="container mx-auto">
         <div className="w-[90%] mx-auto">
-          <div className="w-[60%] mb-16 mx-auto">
+          <div className="w-full md:w-[60%] mb-16 mx-auto">
             <h3 className="text-center text-4xl text-black-800 font-semibold mb-4">
               The Dynamic Team
             </h3>
@@ -18,7 +18,7 @@ const TeamSection = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <TeamCard />
             <TeamCard />
             <TeamCard />

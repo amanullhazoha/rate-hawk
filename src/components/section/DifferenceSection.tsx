@@ -9,13 +9,13 @@ const DifferenceSection = () => {
             Our Differences
           </h3>
 
-          <div className="grid grid-cols-2">
-            <DifferenceCard className="border-r pr-5" />
-            <DifferenceCard className="pl-5" />
-            <DifferenceCard className="border-r pr-5" />
-            <DifferenceCard className="pl-5" />
-            <DifferenceCard className="border-r pr-5 border-b-0" />
-            <DifferenceCard className="pl-5 border-b-0" />
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <DifferenceCard className="border-none pr-0 md:border-r md:pr-5" />
+            <DifferenceCard className="pl-0 md:pl-5" />
+            <DifferenceCard className="border-none pr-0 md:border-r md:pr-5" />
+            <DifferenceCard className="pl-0 md:pl-5" />
+            <DifferenceCard className="border-none pr-0 md:border-r md:pr-5 border-b-0" />
+            <DifferenceCard className="pl-0 md:pl-5 border-b-0" />
           </div>
         </div>
       </div>

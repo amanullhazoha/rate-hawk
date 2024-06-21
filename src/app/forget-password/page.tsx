@@ -1,12 +1,12 @@
-import MailIcon from '@/assets/icons/MailIcon';
-import ButtonPrimary from '@/components/buttons/ButtonPrimary';
-import InputGroup from '@/components/inputs/InputGroup';
-import Image from 'next/image';
+import MailIcon from "@/assets/icons/MailIcon";
+import ButtonPrimary from "@/components/buttons/ButtonPrimary";
+import InputGroup from "@/components/inputs/InputGroup";
+import Image from "next/image";
 
 const ForgetPassword = () => {
   return (
     <main>
-      <div className="my-container  h-screen w-full flex items-center justify-center">
+      <div className="container w-full px-2.5 md:w-[80%] mx-auto flex items-center justify-center py-10 md:py-0">
         <div className="flex  w-full h-full items-center justify-between">
           <div className="relative w-1/2 max-lg:hidden">
             <Image
