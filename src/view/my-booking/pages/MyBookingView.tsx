@@ -4,7 +4,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import Link from "next/link";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import HomeIcon from "@/assets/icons/HomeIcon";
-import ProductCard from "../card/ProductCard";
+import ProductCard from "../components/card/ProductCard";
 
 const MyBookingView = () => {
   return (

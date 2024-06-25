@@ -1,4 +1,4 @@
-import SaveListPageView from "@/components/view/SaveListPageView";
+import { SaveListPageView } from "@/view/save-list";
 
 const SaveListPage = () => {
   return <SaveListPageView />;

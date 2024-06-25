@@ -1,4 +1,4 @@
-import SearchPageView from "@/components/view/SearchPageView";
+import { SearchPageView } from "@/view/search-hotel";
 
 const SearchHotel = () => {
   return <SearchPageView />;

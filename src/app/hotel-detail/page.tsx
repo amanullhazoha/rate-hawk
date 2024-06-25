@@ -1,4 +1,4 @@
-import ProductDetailPageView from "@/components/view/ProductDetailPageView";
+import { ProductDetailPageView } from "@/view/hotel-detail";
 
 const HotelDetailPage = () => {
   return <ProductDetailPageView />;

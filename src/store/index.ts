@@ -2,6 +2,8 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { hotelDetailApi } from "@/view/hotel-detail/slice";
+import { searchHotelApi } from "@/view/search-hotel/slice";
 // import { userApi } from "@/view/user/slice/user.slice";
 // import { authApi } from "@/view/login/slice/auth.slice";
 // import { orderApi } from "@/view/order/slice/order.slice";
@@ -15,8 +17,8 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 const store = configureStore({
   reducer: {
-    // [userApi.reducerPath]: userApi.reducer,
-    // [authApi.reducerPath]: authApi.reducer,
+    [hotelDetailApi.reducerPath]: hotelDetailApi.reducer,
+    [searchHotelApi.reducerPath]: searchHotelApi.reducer,
     // [orderApi.reducerPath]: orderApi.reducer,
     // [couponApi.reducerPath]: couponApi.reducer,
     // [profileApi.reducerPath]: profileApi.reducer,
@@ -27,10 +29,9 @@ const store = configureStore({
     // [productTypeApi.reducerPath]: productTypeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat
-      // userApi.middleware,
-      // authApi.middleware,
+    getDefaultMiddleware().concat(
+      hotelDetailApi.middleware,
+      searchHotelApi.middleware,
       // orderApi.middleware,
       // couponApi.middleware,
       // profileApi.middleware,
@@ -39,7 +40,7 @@ const store = configureStore({
       // productBrandApi.middleware,
       // productCategoryApi.middleware,
       // productTypeApi.middleware,
-      (),
+    ),
 });
 
 setupListeners(store.dispatch);

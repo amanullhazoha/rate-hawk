@@ -1,8 +1,36 @@
+"use client";
+
 import Image from "next/image";
-import ProductCard from "../card/ProductCard";
+import { useEffect } from "react";
 import map from "@/assets/images/map.jpg";
+import ProductCard from "../../../components/card/ProductCard";
+import { useGetSearchHotelMutation } from "../slice/search-hotel.slice";
 
 const SearchPageView = () => {
+  const [getSearchHotel, { isLoading: isHotelSearching, data }] =
+    useGetSearchHotelMutation();
+
+  useEffect(() => {
+    const payload = {
+      checkin: "2024-06-25",
+      checkout: "2024-06-26",
+      residency: "gb",
+      language: "en",
+      guests: [
+        {
+          adults: 2,
+          children: [],
+        },
+      ],
+      region_id: 1798,
+      currency: "EUR",
+    };
+
+    getSearchHotel(payload);
+  }, []);
+
+  console.log(data);
+
   return (
     <main className="pt-24 pb-28 bg-white">
       <div className="container mx-auto px-[35px]">

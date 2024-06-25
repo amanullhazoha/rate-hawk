@@ -1,4 +1,4 @@
-import AboutUsPageView from "@/components/view/AboutUsPageView";
+import { AboutUsPageView } from "@/view/about-us";
 
 const AboutUs = () => {
   return <AboutUsPageView />;

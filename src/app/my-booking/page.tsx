@@ -1,4 +1,4 @@
-import MyBookingView from "@/components/view/MyBookingView";
+import { MyBookingView } from "@/view/my-booking";
 
 const MyBookingPage = () => {
   return <MyBookingView />;

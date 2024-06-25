@@ -1,4 +1,4 @@
-import ProductCard from "../card/ProductCard";
+import ProductCard from "../../../components/card/ProductCard";
 
 const SaveListPageView = () => {
   return (
