@@ -97,6 +97,7 @@ const ContactPage = () => {
                     </h3>
                   </div>
                 </div>
+
                 <div className="flex items-center gap-2 mt-2">
                   <Link href="">
                     <FbIcon />

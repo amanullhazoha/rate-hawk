@@ -1,33 +1,49 @@
-import PassEyeIcon from '@/assets/icons/PassEyeIcon';
+import { Field, ErrorMessage } from "formik";
+import PassEyeIcon from "@/assets/icons/PassEyeIcon";
 
 interface Types {
   label: string;
   name: string;
   type: string;
-  icon: React.ReactNode;
   placeholder: string;
+  icon: React.ReactNode;
 }
 
-const InputGroup = ({ label, name, type, icon, placeholder }: Types) => {
+const InputGroup = ({
+  label,
+  name,
+  icon,
+  placeholder,
+  type = "text",
+}: Types) => {
   return (
     <div>
       <label htmlFor={name} className="text-black-800">
         {label}
       </label>
+
       <div className="border border-border-primary rounded-lg  flex items-center pl-4 gap-[10px] mt-2">
         <div>{icon}</div>
-        <input
+
+        <Field
+          name={name}
           type={type}
-          id={name}
           placeholder={placeholder}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pr-4 py-[14px] bg-transparent"
         />
-        {type === 'password' && (
+
+        {type === "password" && (
           <button className="px-4">
             <PassEyeIcon />
           </button>
         )}
       </div>
+
+      <ErrorMessage
+        name={name}
+        component="div"
+        className="text-red-500 text-sm mt-1"
+      />
     </div>
   );
 };

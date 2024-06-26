@@ -1,9 +1,13 @@
-import EmailIcon from '@/assets/icons/Email';
-import FacebookIcon from '@/assets/icons/FacebookIcon';
-import SearchIcon from '@/assets/icons/SearchIcon';
-import BlogImage from '@/assets/images/blog.jpg';
-import Image from 'next/image';
-import Link from 'next/link';
+import Link from "next/link";
+import Image from "next/image";
+import EmailIcon from "@/assets/icons/Email";
+import BlogImage from "@/assets/images/blog.jpg";
+import SearchIcon from "@/assets/icons/SearchIcon";
+import TwitterIcon from "@/assets/icons/social/TwitterIcon";
+import LinkedInIcon from "@/assets/icons/social/LinkedInIcon";
+import FacebookIcon from "@/assets/icons/social/FacebookIcon";
+import InstagramIcon from "@/assets/icons/social/InstagramIcon";
+import PinterestIcon from "@/assets/icons/social/PinterestIcon";
 
 const UserLayout = ({
   children,
@@ -116,40 +120,40 @@ const UserLayout = ({
                 commodo erat acar accumsa lobortis, enim diam the nesuen.
               </p>
 
-              <div className="mt-9 flex items-center gap-4 lg:w-2/6">
+              <div className="mt-9 flex items-center gap-4">
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <FacebookIcon />
+                  <FacebookIcon className="w-6 h-6 text-white" />
                 </Link>
 
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <FacebookIcon />
+                  <TwitterIcon className="w-6 h-6 text-white" />
                 </Link>
 
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <FacebookIcon />
+                  <InstagramIcon className="w-6 h-6 text-white" />
                 </Link>
 
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <FacebookIcon />
+                  <LinkedInIcon className="w-6 h-6 text-white" />
                 </Link>
 
                 <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <FacebookIcon />
+                  <PinterestIcon className="w-6 h-6 text-white" />
                 </Link>
               </div>
             </div>
