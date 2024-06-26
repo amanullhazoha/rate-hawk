@@ -2,24 +2,36 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Formik, Form, Field } from "formik";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import LockIcon from "@/assets/icons/LockIcon";
 import UserIcon from "@/assets/icons/UserIcon";
 import MailIcon from "@/assets/icons/MailIcon";
 import GoogleIcon from "@/assets/icons/GoogleIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import InputGroup from "@/components/inputs/InputGroup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { userSignupSchema } from "../schema/sign-up.schema";
 import SocialButton from "@/components/buttons/SocialButton";
 import ButtonPrimary from "@/components/buttons/ButtonPrimary";
 import { useUserSignUpMutation } from "../slice/sign-up.slice";
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [userSignUp, { isLoading }] = useUserSignUpMutation();
 
   const handleUserSignUp = async (values: object) => {
-    const data = await userSignUp(values);
+    const data: any = await userSignUp(values);
 
-    console.log(data);
+    if (data?.error) {
+      toast.error(data?.error?.data?.message);
+    } else {
+      toast.success("User sign up successfully.");
+
+      if (data) {
+        router.push("/email-verification");
+      }
+    }
   };
 
   return (
@@ -32,106 +44,119 @@ const SignUpPage = () => {
 
       <div className="flex items-center justify-between gap-10 md:my-[85px] my-12">
         <div className="lg:w-1/2  w-full">
-          <Formik
-            initialValues={{
-              email: "",
-              password: "",
-              user_name: "",
-              is_agree: false,
-              confirmPassword: "",
-            }}
-            onSubmit={handleUserSignUp}
-          >
-            {({ handleSubmit }) => (
-              <Form
-                onSubmit={handleSubmit}
-                className="px-8 py-9 border border-border-primary rounded-[20px]"
-              >
-                <div className="mb-4">
-                  <SocialButton icon={<FacebookIcon />}>
-                    Continue with Facebook
-                  </SocialButton>
-                </div>
+          <div className="px-8 py-9 border border-border-primary rounded-[20px]">
+            <div className="mb-4">
+              <SocialButton icon={<FacebookIcon />}>
+                Continue with Facebook
+              </SocialButton>
+            </div>
 
-                <div className="mb-4">
-                  <SocialButton icon={<GoogleIcon />}>
-                    Continue with Google
-                  </SocialButton>
-                </div>
+            <div className="mb-4">
+              <SocialButton icon={<GoogleIcon />}>
+                Continue with Google
+              </SocialButton>
+            </div>
 
-                <div className="flex items-center gap-4">
-                  <span className="block w-full h-[1px] bg-y-50"></span>
-                  <span className="text-black-400 text-sm font-medium">OR</span>
-                  <span className="block w-full h-[1px] bg-y-50"></span>
-                </div>
+            <div className="flex items-center gap-4">
+              <span className="block w-full h-[1px] bg-y-50"></span>
+              <span className="text-black-400 text-sm font-medium">OR</span>
+              <span className="block w-full h-[1px] bg-y-50"></span>
+            </div>
 
-                <div className="flex flex-col gap-6">
-                  <InputGroup
-                    type="text"
-                    name="user_name"
-                    label="Username *"
-                    placeholder="name"
-                    icon={<UserIcon />}
-                  />
-
-                  <InputGroup
-                    type="email"
-                    name="email"
-                    icon={<MailIcon />}
-                    label="Your email *"
-                    placeholder="example@example.com"
-                  />
-
-                  <div className="flex max-md:flex-col items-center justify-between gap-3">
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+                user_name: "",
+                is_agree: false,
+                confirmPassword: "",
+              }}
+              onSubmit={handleUserSignUp}
+              validationSchema={userSignupSchema}
+            >
+              {({ handleSubmit }) => (
+                <Form onSubmit={handleSubmit}>
+                  <div className="flex flex-col gap-6">
                     <InputGroup
-                      type="password"
-                      name="password"
-                      label="Password *"
-                      icon={<LockIcon />}
-                      placeholder="XXXXXXXXXXXX"
+                      type="text"
+                      name="user_name"
+                      label="Username *"
+                      placeholder="name"
+                      icon={<UserIcon />}
                     />
 
                     <InputGroup
-                      type="password"
-                      icon={<LockIcon />}
-                      name="confirmPassword"
-                      label="Confirm Password *"
-                      placeholder="XXXXXXXXXXXX"
+                      type="email"
+                      name="email"
+                      icon={<MailIcon />}
+                      label="Your email *"
+                      placeholder="example@example.com"
                     />
+
+                    <div className="flex max-md:flex-col justify-between gap-3">
+                      <InputGroup
+                        type="password"
+                        name="password"
+                        label="Password *"
+                        icon={<LockIcon />}
+                        placeholder="XXXXXXXXXXXX"
+                      />
+
+                      <InputGroup
+                        type="password"
+                        icon={<LockIcon />}
+                        name="confirmPassword"
+                        label="Confirm Password *"
+                        placeholder="XXXXXXXXXXXX"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-2 ">
+                        <Field
+                          name="is_agree"
+                          id="aggreement"
+                          type="checkbox"
+                          className="border border-text-blar rounded-[2px] w-4 h-4 checked:bg-y-50 checkbox"
+                        />
+
+                        <label
+                          htmlFor="aggreement"
+                          className="text-sm text-text-blar"
+                        >
+                          I agree to{" "}
+                          <b className="text-black-600">term and conditions</b>
+                        </label>
+                      </div>
+
+                      <ErrorMessage
+                        name="is_agree"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                      />
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2 ">
-                    <Field
-                      name="is_agree"
-                      id="aggreement"
-                      type="checkbox"
-                      className="border border-text-blar rounded-[2px] w-4 h-4 checked:bg-y-50 checkbox"
-                    />
+                  <div className="my-10">
+                    <ButtonPrimary disabled={isLoading}>
+                      Create New Account
+                    </ButtonPrimary>
+                  </div>
 
-                    <label
-                      htmlFor="aggreement"
-                      className="text-sm text-text-blar"
+                  <div className="flex max-md:flex-col items-center justify-center gap-2 mt-10">
+                    <p className="text-text-blar">Already have an account! </p>
+
+                    <Link
+                      href="/login"
+                      className=" text-black-600 font-semibold"
                     >
-                      I agree to{" "}
-                      <b className="text-black-600">term and conditions</b>
-                    </label>
+                      Login Here !
+                    </Link>
                   </div>
-                </div>
-
-                <div className="my-10">
-                  <ButtonPrimary>Create New Account</ButtonPrimary>
-                </div>
-
-                <div className="flex max-md:flex-col items-center justify-center gap-2 mt-10">
-                  <p className="text-text-blar">Already have an account! </p>
-
-                  <Link href="/login" className=" text-black-600 font-semibold">
-                    Login Here !
-                  </Link>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
         <div className="relative w-1/2 max-lg:hidden">
           <Image

@@ -2,18 +2,30 @@
 
 import Image from "next/image";
 import { Form, Formik } from "formik";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import MailIcon from "@/assets/icons/MailIcon";
 import InputGroup from "@/components/inputs/InputGroup";
 import ButtonPrimary from "@/components/buttons/ButtonPrimary";
 import { useForgotPasswordMutation } from "../slice/forgot-password.slice";
 
 const ForgetPasswordPage = () => {
+  const router = useRouter();
+
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const handleForgotPassword = async (values: object) => {
-    const data = await forgotPassword(values);
+    const data: any = await forgotPassword(values);
 
-    console.log(data);
+    if (data?.error) {
+      toast.error(data?.error?.data?.message);
+    } else {
+      toast.success("Send reset password link successfully.");
+
+      if (data) {
+        router.push("/reset-verification");
+      }
+    }
   };
 
   return (
@@ -44,7 +56,7 @@ const ForgetPasswordPage = () => {
                       </p>
                     </div>
 
-                    <div className="mt-8">
+                    <div className="mt-8 mb-6">
                       <InputGroup
                         type="email"
                         name="email"
@@ -54,11 +66,11 @@ const ForgetPasswordPage = () => {
                       />
                     </div>
 
-                    <button className="text-sm text-semi-primary font-medium py-6">
+                    {/* <button className="text-sm text-semi-primary font-medium py-6">
                       Try another way
-                    </button>
+                    </button> */}
 
-                    <ButtonPrimary>Next</ButtonPrimary>
+                    <ButtonPrimary disabled={isLoading}>Next</ButtonPrimary>
                   </Form>
                 )}
               </Formik>

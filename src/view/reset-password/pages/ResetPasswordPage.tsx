@@ -6,16 +6,39 @@ import { Formik, Form } from "formik";
 import LockIcon from "@/assets/icons/LockIcon";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
 import InputGroup from "@/components/inputs/InputGroup";
+import { useSearchParams, useRouter } from "next/navigation";
 import ButtonPrimary from "@/components/buttons/ButtonPrimary";
 import { useResetPasswordMutation } from "../slice/reset-password.slice";
+import { toast } from "react-toastify";
+import { resetPasswordSchema } from "../schema/reset-password.schema";
 
 const ResetPasswordPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const handleResetPassword = async (values: object) => {
-    const data = await resetPassword(values);
+    const payload = {
+      ...values,
+      email: searchParams.get("email"),
+      token: searchParams.get("token"),
+    };
 
-    console.log(data);
+    if (!payload.email) return toast.error("Email is not exist.");
+    if (!payload.token) return toast.error("Token is not exist.");
+
+    const data: any = await resetPassword(payload);
+
+    if (data?.error) {
+      toast.error(data?.error?.data?.message);
+    } else {
+      toast.success("Password reset successfully.");
+
+      if (data) {
+        router.push("/login");
+      }
+    }
   };
 
   return (
@@ -32,14 +55,18 @@ const ResetPasswordPage = () => {
           </div>
 
           <div className="lg:w-1/2 w-full ">
-            <Formik initialValues={{}} onSubmit={handleResetPassword}>
+            <Formik
+              onSubmit={handleResetPassword}
+              validationSchema={resetPasswordSchema}
+              initialValues={{ password: "", confirmPassword: "" }}
+            >
               {({ handleSubmit }) => (
                 <Form className="" onSubmit={handleSubmit}>
                   <h1 className="heading">Reset Your Password</h1>
 
-                  <div className="flex items-center justify-center gap-2 text-black-600 font-medium max-md:mb-8">
+                  <div className="flex items-center justify-center gap-2 text-black-600 font-medium max-md:mb-8 mt-2">
                     <ProfileIcon />
-                    <p className="text-center">example@example.com</p>
+                    <p className="text-center">{searchParams.get("email")}</p>
                   </div>
 
                   <div>
@@ -63,7 +90,7 @@ const ResetPasswordPage = () => {
                   </div>
 
                   <div className="my-10">
-                    <ButtonPrimary>Submit</ButtonPrimary>
+                    <ButtonPrimary disabled={isLoading}>Submit</ButtonPrimary>
                   </div>
 
                   <div className="flex items-center justify-center gap-2 mt-6">
