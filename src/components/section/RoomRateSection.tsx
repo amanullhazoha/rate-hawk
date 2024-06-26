@@ -1,4 +1,12 @@
-const RoomRateSection = () => {
+import RoomCard from "../card/RoomCard";
+
+const RoomRateSection = ({
+  bookHash,
+  room_groups,
+}: {
+  bookHash: any;
+  room_groups: any;
+}) => {
   return (
     <div className="p-8 border border-border-primary rounded-[20px] mb-8">
       <div>
@@ -11,10 +19,23 @@ const RoomRateSection = () => {
         <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
       </div>
 
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary">
+      <div className="flex gap-4 flex-col">
+        {bookHash?.length > 0 &&
+          room_groups?.map((room: any, index: any) => (
+            <RoomCard
+              room={room}
+              key={index}
+              rates={bookHash[0]?.rates}
+              images={room?.images}
+            />
+          ))}
+      </div>
+
+      {/* <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary">
         <p>Monday - Thursday</p>
         <p>$199</p>
       </div>
+
       <div className="p-3.5 rounded-md flex items-center justify-between bg-white">
         <p>Monday - Thursday</p>
         <p>$199</p>
@@ -34,7 +55,7 @@ const RoomRateSection = () => {
       <div className="p-3.5 rounded-md flex items-center justify-between bg-white">
         <p>Max number of nights</p>
         <p>90 nights</p>
-      </div>
+      </div> */}
     </div>
   );
 };

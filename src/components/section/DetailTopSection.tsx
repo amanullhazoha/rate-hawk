@@ -4,12 +4,22 @@ import Image from "next/image";
 import team from "@/assets/images/team.jpg";
 import PeopleIcon from "@/assets/icons/PeopleIcon";
 
-const DetailTopSection = () => {
+const DetailTopSection = ({
+  kind,
+  name,
+  address,
+  star_rating,
+}: {
+  kind?: string;
+  name?: string;
+  address: string;
+  star_rating?: number;
+}) => {
   return (
     <div className="p-8 border border-border-primary rounded-[20px] mb-8">
       <div className="flex justify-between items-center mb-6">
         <p className="bg-yellow-100 text-xs text-semi-primary font-medium px-3 py-1 rounded-[20px] border border-semi-primary">
-          Wooden house
+          {kind}
         </p>
 
         <div className="flex items-center gap-7">
@@ -55,15 +65,15 @@ const DetailTopSection = () => {
         </div>
       </div>
 
-      <p className="text-4xl font-semibold mb-6 text-black-800">
-        Beach House in Collingwood
-      </p>
+      <p className="text-4xl font-semibold mb-6 text-black-800">{name}</p>
 
       <div className="flex items-center gap-4 mb-6">
         <div className="flex items-center gap-1">
           <StarIcon />
-          <span className="text-sm text-black-800 font-medium">4.5</span>
-          <span className="text-sm text-text-blar font-normal">(112)</span>
+          <span className="text-sm text-black-800 font-medium">
+            {star_rating}
+          </span>
+          {/* <span className="text-sm text-text-blar font-normal">(112)</span> */}
         </div>
 
         <svg
@@ -79,17 +89,17 @@ const DetailTopSection = () => {
         <div className="flex items-center gap-1.5">
           <MapIcon />
 
-          <p className="text-base text-black font-normal">Tokyo, Japan</p>
+          <p className="text-base text-black font-normal">{address}</p>
         </div>
       </div>
 
-      <div className="flex items-center gap-2.5 pb-6 mb-6 border-b border-border-primary">
+      {/* <div className="flex items-center gap-2.5 pb-6 mb-6 border-b border-border-primary">
         <Image src={team} alt="image" className="w-11 h-11 rounded-full" />
 
         <p className="text-black text-base font-medium">
           <span className="text-text-blar">Hosted by </span> Kevin Francis
         </p>
-      </div>
+      </div> */}
 
       <div className="flex items-center flex-wrap gap-5 md:gap-14">
         <div className="flex items-center gap-3">

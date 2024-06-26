@@ -18,7 +18,16 @@ export const hotelDetailApi = createApi({
       }),
       invalidatesTags: ["hotel-detail"],
     }),
+    getHotelBookHash: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/search/hotel-hash-id",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["hotel-detail"],
+    }),
   }),
 });
 
-export const { useGetHotelDetailMutation } = hotelDetailApi;
+export const { useGetHotelDetailMutation, useGetHotelBookHashMutation } =
+  hotelDetailApi;

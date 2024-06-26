@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["localhost", "https://cdn.worldota.net", "cdn.worldota.net"],
+  },
+};
 
 export default nextConfig;
