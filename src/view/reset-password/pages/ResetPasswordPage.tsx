@@ -3,14 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
 import LockIcon from "@/assets/icons/LockIcon";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
 import InputGroup from "@/components/inputs/InputGroup";
 import { useSearchParams, useRouter } from "next/navigation";
 import ButtonPrimary from "@/components/buttons/ButtonPrimary";
-import { useResetPasswordMutation } from "../slice/reset-password.slice";
-import { toast } from "react-toastify";
 import { resetPasswordSchema } from "../schema/reset-password.schema";
+import { useResetPasswordMutation } from "../slice/reset-password.slice";
 
 const ResetPasswordPage = () => {
   const router = useRouter();

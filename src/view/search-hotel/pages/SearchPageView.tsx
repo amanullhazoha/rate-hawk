@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import map from "@/assets/images/map.jpg";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
 import {
@@ -50,8 +50,6 @@ const SearchPageView = () => {
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
   }, [data, page]);
 
-  console.log(data, hotelData);
-
   return (
     <main className="pt-24 pb-28 bg-white">
       <div className="container mx-auto px-[35px]">
@@ -94,7 +92,11 @@ const SearchPageView = () => {
             {data?.data?.data?.hotels
               ?.slice(4 * (page - 1), page * 4)
               ?.map((item: any) => (
-                <ProductCard product={item} hotelData={hotelData?.data} />
+                <ProductCard
+                  product={item}
+                  key={item?.id}
+                  hotelData={hotelData?.data}
+                />
               ))}
           </div>
 

@@ -2,7 +2,6 @@
 
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useRouter, useSearchParams } from "next/navigation";
-import { string } from "yup";
 
 const SearchSection = () => {
   const router = useRouter();

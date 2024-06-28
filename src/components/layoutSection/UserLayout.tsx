@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import EmailIcon from "@/assets/icons/Email";
+import { usePathname } from "next/navigation";
 import BlogImage from "@/assets/images/blog.jpg";
 import SearchIcon from "@/assets/icons/SearchIcon";
 import TwitterIcon from "@/assets/icons/social/TwitterIcon";
@@ -14,6 +17,8 @@ const UserLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const pathName = usePathname();
+
   return (
     <>
       <header>
@@ -68,11 +73,30 @@ const UserLayout = ({
               <div className="hidden md:flex items-center gap-12">
                 <Link href="/" className="text-base text-black-800 font-normal">
                   Home
-                  <p className="w-7 h-[3px] bg-primary-color"></p>
+                  {pathName === "/" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
                 </Link>
-                <Link href="/about-us">About Us</Link>
-                <Link href="/">Blog & News</Link>
-                <Link href="/">Contact</Link>
+
+                <Link href="/about-us">
+                  About Us
+                  {pathName === "/about-us" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
+                </Link>
+
+                <Link href="/blog">
+                  Blog & News
+                  {pathName === "/blog" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
+                </Link>
+                <Link href="/contact">
+                  Contact
+                  {pathName === "/contact" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
+                </Link>
               </div>
 
               <div className="hidden md:hidden flex-col gap-3 absolute left-0 top-0 bottom-0 bg-yellow-bg px-6 py-10 border-r w-[50%]">
@@ -82,11 +106,24 @@ const UserLayout = ({
 
                 <Link href="/" className="text-base text-black-800 font-normal">
                   Home
-                  <p className="w-7 h-[3px] bg-primary-color"></p>
+                  {pathName === "/" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
                 </Link>
-                <Link href="/about-us">About Us</Link>
-                <Link href="/">Blog & News</Link>
-                <Link href="/">Contact</Link>
+
+                <Link href="/about-us">
+                  About Us
+                  {pathName === "/about-us" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
+                </Link>
+
+                <Link href="/contact">
+                  Contact
+                  {pathName === "/contact" && (
+                    <p className="w-7 h-[3px] bg-primary-color"></p>
+                  )}
+                </Link>
               </div>
             </div>
 

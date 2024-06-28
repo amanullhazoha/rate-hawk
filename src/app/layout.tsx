@@ -1,6 +1,5 @@
 "use client";
 
-import UserLayout from "@/components/layout/UserLayout";
 import "@/styles/globals.css";
 // import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -11,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-multi-carousel/lib/styles.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+// import UserLayout from "@/components/layout/UserLayout";
+import UserLayout from "@/components/layoutSection/UserLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <Provider store={store}>
         <body className={inter.className}>
-          <UserLayout>{children}</UserLayout>
+          {children}
           <ToastContainer />
         </body>
       </Provider>

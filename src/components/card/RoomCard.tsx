@@ -59,7 +59,7 @@ const RoomCard = ({
             </>
           ) : (
             productImage?.map((image: string) => (
-              <div className="h-[200px] w-[200px]">
+              <div className="h-[200px] w-[200px]" key={image}>
                 <Image
                   fill
                   src={image}

@@ -29,7 +29,7 @@ const ProductImageSection = ({ images }: { images: any }) => {
         <div className="relative overflow-hidden">
           <Carousel responsive={responsive}>
             {productImage?.map((image: string) => (
-              <div className="w-full h-[410px] overflow-hidden">
+              <div className="w-full h-[410px] overflow-hidden" key={image}>
                 <Image
                   fill
                   alt="image"

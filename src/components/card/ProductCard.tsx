@@ -57,7 +57,7 @@ const ProductCard = ({
                 </>
               ) : (
                 data?.images?.map((image: string) => (
-                  <div className="h-[200px] w-full">
+                  <div className="h-[200px] w-full" key={image}>
                     <Image
                       fill
                       alt={product?.name}
@@ -78,7 +78,7 @@ const ProductCard = ({
         </div>
       )}
 
-      <Link href="/hotel-detail">
+      <Link href={`/hotel-detail/${product?.id}`}>
         <div className="mt-3.5">
           <div className="flex items-center gap-1 mb-2 text-sm font-medium text-text-blar">
             <span>Entire cabin</span>

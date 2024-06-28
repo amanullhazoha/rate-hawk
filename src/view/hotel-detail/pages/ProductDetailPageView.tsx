@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { format, addDays } from "date-fns";
+import { useSearchParams, useParams } from "next/navigation";
 import DetailSection from "@/components/section/DetailSection";
 import {
   useGetHotelDetailMutation,
@@ -9,6 +11,9 @@ import {
 import ProductImageSection from "@/components/section/ProductImageSection";
 
 const ProductDetailPageView = () => {
+  const searchParams = useSearchParams();
+  const params: { id: string } = useParams();
+
   const [getHotelDetail, { isLoading, isError, data }] =
     useGetHotelDetailMutation();
   const [getHotelBookHash, { isLoading: isBookHashLoading, data: bookHash }] =
@@ -16,23 +21,37 @@ const ProductDetailPageView = () => {
 
   useEffect(() => {
     const payload = {
-      id: "bergs_hotel_2",
-      language: "en",
+      id: params.id,
+      language: searchParams.get("language")
+        ? searchParams.get("language")
+        : "en",
     };
 
     const bookHashPayload = {
-      checkin: "2024-06-29",
-      checkout: "2024-06-30",
-      residency: "gb",
-      language: "en",
+      id: params.id,
+      checkin: searchParams.get("check-in")
+        ? searchParams.get("check-in")
+        : format(new Date(), "yyyy-MM-dd"),
+      checkout: searchParams.get("check-out")
+        ? searchParams.get("check-out")
+        : format(addDays(new Date(), 1), "yyyy-MM-dd"),
+      language: searchParams.get("language")
+        ? searchParams.get("language")
+        : "en",
+      currency: searchParams.get("currency")
+        ? searchParams.get("currency")
+        : "USD",
+      residency: searchParams.get("residency")
+        ? searchParams.get("residency")
+        : "gb",
       guests: [
         {
-          adults: 2,
+          adults: Number(searchParams.get("adults"))
+            ? Number(searchParams.get("adults"))
+            : 1,
           children: [],
         },
       ],
-      id: "bergs_hotel_2",
-      currency: "EUR",
     };
 
     getHotelDetail(payload);

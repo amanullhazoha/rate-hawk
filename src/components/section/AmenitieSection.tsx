@@ -14,8 +14,8 @@ const AmenitiesSection = ({ amenity_groups }: { amenity_groups: any }) => {
       </div>
 
       <div className="flex flex-col gap-4">
-        {amenity_groups?.map((amenity: any) => (
-          <div>
+        {amenity_groups?.map((amenity: any, index: number) => (
+          <div key={index}>
             <h4 className="flex items-center gap-3.5 mb-2">
               <KeyIcon />
 
@@ -25,8 +25,11 @@ const AmenitiesSection = ({ amenity_groups }: { amenity_groups: any }) => {
             </h4>
 
             <div className="flex flex-wrap gap-2">
-              {amenity?.amenities?.map((item: string) => (
-                <p className="text-sm bg-text-blar px-2 py-.5 text-white rounded">
+              {amenity?.amenities?.map((item: string, index: number) => (
+                <p
+                  className="text-sm bg-text-blar px-2 py-.5 text-white rounded"
+                  key={index}
+                >
                   {item}
                 </p>
               ))}

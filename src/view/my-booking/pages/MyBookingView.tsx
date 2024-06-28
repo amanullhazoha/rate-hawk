@@ -4,7 +4,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import Link from "next/link";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import HomeIcon from "@/assets/icons/HomeIcon";
-import ProductCard from "../components/card/ProductCard";
+import ProductCard from "@/components/card/ProductCard";
 
 const MyBookingView = () => {
   return (
@@ -114,10 +114,10 @@ const MyBookingView = () => {
               <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                {/* <ProductCard />
                 <ProductCard />
                 <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                <ProductCard /> */}
               </div>
             </div>
 

@@ -1,3 +1,5 @@
+"use client";
+
 import Direction from "@/assets/icons/Direction";
 import EmailIcon from "@/assets/icons/EmailIcon";
 import LocationIcon from "@/assets/icons/LocationIcon";
