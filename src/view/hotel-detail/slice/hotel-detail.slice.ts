@@ -26,8 +26,18 @@ export const hotelDetailApi = createApi({
       }),
       invalidatesTags: ["hotel-detail"],
     }),
+    createStripePayment: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/stripe/payment",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetHotelDetailMutation, useGetHotelBookHashMutation } =
-  hotelDetailApi;
+export const {
+  useGetHotelDetailMutation,
+  useGetHotelBookHashMutation,
+  useCreateStripePaymentMutation,
+} = hotelDetailApi;

@@ -1,35 +1,56 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import map from "@/assets/images/map.jpg";
+import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
-import { useGetSearchHotelMutation } from "../slice/search-hotel.slice";
+import {
+  useGetSearchHotelMutation,
+  useGetHotelDataMutation,
+} from "../slice/search-hotel.slice";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const SearchPageView = () => {
+  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
   const [getSearchHotel, { isLoading: isHotelSearching, data }] =
     useGetSearchHotelMutation();
+  const [getHotelData, { isLoading: isGetHotelData, data: hotelData }] =
+    useGetHotelDataMutation();
 
   useEffect(() => {
     const payload = {
-      checkin: "2024-06-25",
-      checkout: "2024-06-26",
-      residency: "gb",
-      language: "en",
+      checkin: searchParams.get("check-in"),
+      checkout: searchParams.get("check-out"),
+      residency: searchParams.get("residency"),
+      language: searchParams.get("language"),
       guests: [
         {
-          adults: 2,
+          adults: Number(searchParams.get("adults")),
           children: [],
         },
       ],
-      region_id: 1798,
-      currency: "EUR",
+      region_id: Number(searchParams.get("region_id")),
+      currency: searchParams.get("currency"),
     };
 
     getSearchHotel(payload);
   }, []);
 
-  console.log(data);
+  useEffect(() => {
+    const payload = {
+      hotel_ids: data?.data?.data?.hotels
+        ?.slice(4 * (page - 1), page * 4)
+        ?.map((item: any) => item.id),
+      language: searchParams.get("language"),
+      region_id: Number(searchParams.get("region_id")),
+    };
+
+    if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
+  }, [data, page]);
+
+  console.log(data, hotelData);
 
   return (
     <main className="pt-24 pb-28 bg-white">
@@ -70,15 +91,24 @@ const SearchPageView = () => {
 
         <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {data?.data?.data?.hotels
+              ?.slice(4 * (page - 1), page * 4)
+              ?.map((item: any) => (
+                <ProductCard product={item} hotelData={hotelData?.data} />
+              ))}
           </div>
 
           <div>
             <Image src={map} alt="map" className="h-full" />
           </div>
+        </div>
+
+        <div className="mt-4">
+          <GlobalPagination
+            page={page}
+            total_element={data?.data?.data?.total_hotels}
+            handlePagination={(value: number) => setPage(value)}
+          />
         </div>
       </div>
     </main>

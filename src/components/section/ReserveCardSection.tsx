@@ -1,9 +1,15 @@
 import { format } from "date-fns";
+import { loadStripe } from "@stripe/stripe-js";
 import StarIcon from "@/assets/icons/StarIcon";
 import { useState, useRef, useEffect } from "react";
 import RangeCalender from "../calender/RangeCalender";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
+);
 
 const ReserveCardSection = () => {
   const router = useRouter();
@@ -12,6 +18,11 @@ const ReserveCardSection = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const [openCalender, setOpenCalender] = useState(false);
   const { setQueryParams, deleteParams } = useSearchQueryParam();
+
+  const [
+    createStripePayment,
+    { isLoading: isPaymentLoading, data: paymentData },
+  ] = useCreateStripePaymentMutation();
 
   const checkIn: string | null = searchParams.get("check-in");
   const checkOut: string | null = searchParams.get("check-out");
@@ -31,6 +42,18 @@ const ReserveCardSection = () => {
       : deleteParams(url, "check-out");
 
     router.push(`${pathName}${url ? `?${url}` : ""}`);
+  };
+
+  const handleReserved = async () => {
+    const data: any = await createStripePayment({});
+
+    if (data?.data?.id) {
+      const stripe = await stripePromise;
+
+      if (stripe) {
+        await stripe.redirectToCheckout({ sessionId: data?.data?.id });
+      }
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -114,6 +137,7 @@ const ReserveCardSection = () => {
       <div className="w-full">
         <button
           type="button"
+          onClick={handleReserved}
           className="px-10 py-2 w-full rounded-md bg-primary-color mt-4"
         >
           Reserve

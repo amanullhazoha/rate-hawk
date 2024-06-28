@@ -1,5 +1,3 @@
-// import { MetaData } from "@/types/global.type";
-// import { User } from "@/types/user.type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const searchHotelApi = createApi({
@@ -18,7 +16,16 @@ export const searchHotelApi = createApi({
       }),
       invalidatesTags: ["search-hotel"],
     }),
+    getHotelData: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/search/hotel-data",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["search-hotel"],
+    }),
   }),
 });
 
-export const { useGetSearchHotelMutation } = searchHotelApi;
+export const { useGetSearchHotelMutation, useGetHotelDataMutation } =
+  searchHotelApi;

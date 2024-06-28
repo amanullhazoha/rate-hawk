@@ -1,7 +1,52 @@
-import ArrowIcon from "@/assets/icons/ArrowIcon";
+"use client";
+
+import { useEffect, useState } from "react";
+import { format, addDays } from "date-fns";
 import ProductCard from "../card/ProductCard";
+import ArrowIcon from "@/assets/icons/ArrowIcon";
+import {
+  useGetHotelDataMutation,
+  useGetSearchHotelMutation,
+} from "@/view/search-hotel/slice/search-hotel.slice";
 
 const FeaturedPlaceSection = () => {
+  const [region_id, setRegion_id] = useState(234);
+  const [getSearchHotel, { isLoading: isHotelSearching, data }] =
+    useGetSearchHotelMutation();
+  const [getHotelData, { isLoading: isGetHotelData, data: hotelData }] =
+    useGetHotelDataMutation();
+
+  useEffect(() => {
+    const payload = {
+      region_id,
+      residency: "gb",
+      language: "en",
+      checkin: format(new Date(), "yyyy-MM-dd"),
+      checkout: format(addDays(new Date(), 1), "yyyy-MM-dd"),
+      guests: [
+        {
+          adults: 1,
+          children: [],
+        },
+      ],
+      currency: "USD",
+    };
+
+    getSearchHotel(payload);
+  }, [region_id]);
+
+  useEffect(() => {
+    const payload = {
+      region_id,
+      language: "en",
+      hotel_ids: data?.data?.data?.hotels
+        ?.slice(0, 12)
+        ?.map((item: any) => item.id),
+    };
+
+    if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
+  }, [data, region_id]);
+
   return (
     <section className="py-[100px] bg-white">
       <div className="container max-md:px-2.5 mx-auto overflow-hidden">
@@ -21,7 +66,12 @@ const FeaturedPlaceSection = () => {
               <div>
                 <button
                   type="button"
-                  className="w-[140px] px-6 py-2 rounded-full text-base font-medium bg-primary-color text-black"
+                  onClick={() => setRegion_id(234)}
+                  className={`w-[140px] px-6 py-2 rounded-full text-base font-medium ${
+                    region_id === 234
+                      ? "bg-primary-color text-black"
+                      : "text-black-400"
+                  }`}
                 >
                   New York
                 </button>
@@ -29,21 +79,36 @@ const FeaturedPlaceSection = () => {
 
               <button
                 type="button"
-                className="px-6 py-2 rounded-full text-black-400 text-base font-medium"
+                onClick={() => setRegion_id(3593)}
+                className={`w-[140px] px-6 py-2 rounded-full text-base font-medium ${
+                  region_id === 3593
+                    ? "bg-primary-color text-black"
+                    : "text-black-400"
+                }`}
               >
                 Tokyo
               </button>
 
               <button
                 type="button"
-                className="px-6 py-2 rounded-full text-black-400 text-base font-medium"
+                onClick={() => setRegion_id(2734)}
+                className={`w-[140px] px-6 py-2 rounded-full text-base font-medium ${
+                  region_id === 2734
+                    ? "bg-primary-color text-black"
+                    : "text-black-400"
+                }`}
               >
                 Paris
               </button>
 
               <button
                 type="button"
-                className="px-6 py-2 rounded-full text-black-400 text-base font-medium"
+                onClick={() => setRegion_id(2114)}
+                className={`w-[140px] px-6 py-2 rounded-full text-base font-medium ${
+                  region_id === 2114
+                    ? "bg-primary-color text-black"
+                    : "text-black-400"
+                }`}
               >
                 London
               </button>
@@ -58,16 +123,17 @@ const FeaturedPlaceSection = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-          </div>
+          {isGetHotelData || isHotelSearching ? (
+            <div className="w-full">
+              <p className="text-center w-full">Loading.....</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {data?.data?.data?.hotels?.slice(0, 12)?.map((item: any) => (
+                <ProductCard product={item} hotelData={hotelData?.data} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
