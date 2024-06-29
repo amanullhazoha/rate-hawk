@@ -2,22 +2,44 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import ProfileNav from "../nav/ProfileNav";
 import EmailIcon from "@/assets/icons/Email";
 import { usePathname } from "next/navigation";
 import BlogImage from "@/assets/images/blog.jpg";
 import SearchIcon from "@/assets/icons/SearchIcon";
+import { useEffect, useRef, useState } from "react";
 import TwitterIcon from "@/assets/icons/social/TwitterIcon";
 import LinkedInIcon from "@/assets/icons/social/LinkedInIcon";
 import FacebookIcon from "@/assets/icons/social/FacebookIcon";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
+import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
+import { useGetLoggedInProfileQuery } from "@/view/profile/slice";
 
 const UserLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [openMenu, setOpenMenu] = useState(false);
+  const access_token = localStorage.getItem("access_token");
+
   const pathName = usePathname();
+  const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   return (
     <>
@@ -64,7 +86,7 @@ const UserLayout = ({
         </div>
 
         <div className="bg-white border-b border-yellow-50">
-          <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-6 overflow-hidden">
+          <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-6">
             <div className="flex items-center gap-14">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
                 Logo
@@ -127,13 +149,39 @@ const UserLayout = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-5">
+            {/* <div className="flex items-center gap-5">
               <div className="flex items-center gap-3">
                 <div>USD</div>
                 <div>ENG</div>
               </div>
 
               <SearchIcon />
+            </div> */}
+            <div className="flex items-center gap-5">
+              {!access_token && <Link href="/login">Login</Link>}
+
+              {/* {access_token && (
+                <Link href="/my-booking">
+                  <LoggedInUserIcon className="w-[50px] h-[50px]" />
+                </Link>
+              )} */}
+
+              {access_token && (
+                <div className="relative">
+                  <button type="button" onClick={() => setOpenMenu(true)}>
+                    <LoggedInUserIcon className="w-[50px] h-[50px]" />
+                  </button>
+
+                  {openMenu && (
+                    <div
+                      ref={menuRef}
+                      className="absolute top-[50px] right-0 min-w-40 z-50"
+                    >
+                      <ProfileNav />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

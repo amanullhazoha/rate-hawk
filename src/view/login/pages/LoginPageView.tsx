@@ -26,6 +26,8 @@ const LoginPageView = () => {
     if (data?.error) {
       toast.error(data?.error?.data?.message);
     } else {
+      localStorage.setItem("access_token", data?.data?.access_token);
+
       toast.success("User Login Successfully.");
 
       if (data) {
@@ -85,6 +87,7 @@ const LoginPageView = () => {
                           <label htmlFor="password" className="text-black-800">
                             Password
                           </label>
+
                           <Link
                             href="/forget-password"
                             className="text-black-400 text-sm font-medium underline"
@@ -106,19 +109,16 @@ const LoginPageView = () => {
                         Continue
                       </ButtonPrimary>
                     </div>
-
-                    <div className="flex items-center justify-center gap-2 mt-6">
-                      <p className="text-text-blar">New user? </p>
-                      <Link
-                        href="/signup"
-                        className=" text-black-600 font-semibold"
-                      >
-                        Create an account
-                      </Link>
-                    </div>
                   </Form>
                 )}
               </Formik>
+
+              <div className="flex items-center justify-center gap-2 mt-6">
+                <p className="text-text-blar">New user? </p>
+                <Link href="/signup" className=" text-black-600 font-semibold">
+                  Create an account
+                </Link>
+              </div>
             </div>
           </div>
 

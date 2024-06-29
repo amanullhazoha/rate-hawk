@@ -1,42 +1,36 @@
 import { Field, ErrorMessage } from "formik";
-import PassEyeIcon from "@/assets/icons/PassEyeIcon";
 
-interface Types {
-  label: string;
+interface InputTextAreaProps {
   name: string;
-  type: string;
-  placeholder: string;
-  icon?: React.ReactNode;
+  rows?: number;
+  label: string;
+  width?: string;
+  required?: string;
+  placeholder?: string;
 }
 
-const InputGroup = ({
+const InputTextArea = ({
   label,
   name,
-  icon,
+  width,
+  required,
+  rows = 4,
   placeholder,
-  type = "text",
-}: Types) => {
+}: InputTextAreaProps) => {
   return (
     <div>
       <label htmlFor={name} className="text-black-800">
-        {label}
+        {label} <span className="text-red-500">{required}</span>
       </label>
 
       <div className="border border-border-primary rounded-lg  flex items-center pl-4 gap-[10px] mt-2">
-        <div>{icon}</div>
-
         <Field
           name={name}
-          type={type}
+          as="textarea"
+          rows={rows}
           placeholder={placeholder}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pr-4 py-[14px] bg-transparent"
         />
-
-        {type === "password" && (
-          <button className="px-4">
-            <PassEyeIcon />
-          </button>
-        )}
       </div>
 
       <ErrorMessage
@@ -48,4 +42,4 @@ const InputGroup = ({
   );
 };
 
-export default InputGroup;
+export default InputTextArea;
