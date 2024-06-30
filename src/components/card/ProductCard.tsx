@@ -6,6 +6,7 @@ import Carousel from "react-multi-carousel";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
+import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
 
 const responsive = {
@@ -22,24 +23,11 @@ const ProductCard = ({
   product: any;
   hotelData: any;
 }) => {
+  const searchParams = useSearchParams();
   const data = hotelData?.find((item: any) => item.hotel_id === product.id);
 
   return (
     <div>
-      {/* <div className="rounded-[10px] relative">
-        <Image src={product_image} alt="image" className="w-full" />
-
-        <div className="absolute top-3 flex justify-between items-center left-0 right-0">
-          <p className="bg-primary-color text-white text-xs font-medium px-2 rounded-r-[10px] py-1">
-            -10% today
-          </p>
-
-          <span className="w-8 h-8 rounded-full bg-black-400 flex justify-center items-center mr-2">
-            <HeartIcon />
-          </span>
-        </div>
-      </div> */}
-
       {data && (
         <div className="rounded-[10px] relative">
           <div className="w-full">
@@ -78,7 +66,11 @@ const ProductCard = ({
         </div>
       )}
 
-      <Link href={`/hotel-detail/${product?.id}`}>
+      <Link
+        href={`/hotel-detail/${product?.id}${
+          searchParams.toString() ? `?${searchParams.toString()}` : ""
+        }`}
+      >
         <div className="mt-3.5">
           <div className="flex items-center gap-1 mb-2 text-sm font-medium text-text-blar">
             <span>Entire cabin</span>

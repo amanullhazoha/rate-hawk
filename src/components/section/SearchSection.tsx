@@ -134,6 +134,8 @@ const SearchSection = () => {
 
     if (locationItem) {
       url = region_id && setQueryParams(url, "region_id", region_id);
+      url =
+        locationItem && setQueryParams(url, "region_name", locationItem?.name);
 
       router.push(`/search-hotel${url ? `?${url}` : ""}`);
     }
