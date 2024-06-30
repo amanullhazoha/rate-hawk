@@ -1,12 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
-import { useState, useEffect, useRef, ChangeEvent, useCallback } from "react";
 import RangeCalender from "../calender/RangeCalender";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocationSearchMutation } from "@/view/home/slice";
-import { debounce } from "@/lib/debounce";
+import { useState, useEffect, useRef, ChangeEvent, useCallback } from "react";
 
 const SearchSection = () => {
   const router = useRouter();
