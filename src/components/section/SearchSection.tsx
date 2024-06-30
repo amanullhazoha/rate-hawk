@@ -1,7 +1,10 @@
 "use client";
 
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 import RangeCalender from "../calender/RangeCalender";
+import { countryData } from "@/assets/data/countryData";
+import { childrenData } from "@/assets/data/childrenData";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocationSearchMutation } from "@/view/home/slice";
@@ -11,14 +14,23 @@ const SearchSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const [guest, setGuest] = useState(0);
   const divRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const childrenRef = useRef<HTMLDivElement>(null);
+  const residencyRef = useRef<HTMLDivElement>(null);
   const { setQueryParams } = useSearchQueryParam();
-  const [selectDate, setSelectDate] = useState(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [openCalender, setOpenCalender] = useState(false);
+  const [residency, setResidency] = useState<any>(null);
+  const [selectDate, setSelectDate] = useState<any>(null);
   const [openSearch, setOpenSearch] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [locationItem, setLocationItem] = useState<any>(null);
+  const [selectHotel, setSelectHotel] = useState<any>(null);
+  const [openCalender, setOpenCalender] = useState(false);
+  const [openChildren, setOpenChildren] = useState(false);
+  const [children, setChildren] = useState<any[]>([]);
   const [searchLocation, setSearchLocation] = useState("");
+  const [openResidency, setOpenResidency] = useState(false);
   const [locationSearch, { isLoading, data }] = useLocationSearchMutation();
 
   const handleSearchLocation = useCallback(
@@ -44,31 +56,91 @@ const SearchSection = () => {
     [],
   );
 
+  const handleSelect = useCallback((value: any) => {
+    setOpenSearch(false);
+    setSelectHotel(null);
+    setLocationItem(value);
+    setSearchLocation(value.name);
+  }, []);
+
+  const handleSelectHotel = useCallback((value: any) => {
+    setOpenSearch(false);
+    setLocationItem(null);
+    setSelectHotel(value);
+    setSearchLocation(value.name);
+  }, []);
+
   const handleDateRange = (dates: any) => {
     console.log(dates);
     setSelectDate(dates);
   };
 
-  const handleSearch = () => {
-    const checkIn = "2024-06-25";
-    const checkOut = "2024-06-26";
-    const residency = "gb";
-    const language = "en";
-    const region_id = "1798";
-    const currency = "USD";
-    const adults = "2";
+  const handleChildren = (item: any) => {
+    const exists = children.some(
+      (obj: any) => obj.value === item.value && obj.name === item.name,
+    );
 
-    let url = searchParams.toString();
+    console.log(children?.map((item: any) => item.value).toString());
+
+    if (exists) {
+      const filterData = children?.filter(
+        (data: any) => data.value !== item.value,
+      );
+
+      return setChildren(filterData);
+    } else {
+      const newData = [...children, item];
+      setChildren(newData);
+    }
+  };
+
+  const handleSearch = () => {
+    const language = "en";
+    const currency = "USD";
+    const adults = guest;
+    const selectResidency = residency?.code;
+    const region_id = locationItem ? locationItem?.id : null;
+    const checkIn =
+      selectDate && format(new Date(selectDate[0]?.startDate), "yyyy-MM-dd");
+    const checkOut =
+      selectDate && format(new Date(selectDate[0]?.endDate), "yyyy-MM-dd");
+
+    if (!checkIn) return toast.error("Please select check in time.");
+    if (!checkOut) return toast.error("Please select check out time.");
+    if (!selectResidency) return toast.error("Please select your residency.");
+    if (!region_id && locationItem)
+      return toast.error("Please select area or hotel 1.");
+    if (!locationItem && !selectHotel)
+      return toast.error("Please select area or hotel.");
+    if (!currency) return toast.error("Please select currency.");
+    if (!adults) return toast.error("Please input adults.");
+
+    let url: string = searchParams.toString();
 
     url = checkIn && setQueryParams(url, "check-in", checkIn);
     url = checkOut && setQueryParams(url, "check-out", checkOut);
-    url = residency && setQueryParams(url, "residency", residency);
     url = language && setQueryParams(url, "language", language);
-    url = region_id && setQueryParams(url, "region_id", region_id);
     url = currency && setQueryParams(url, "currency", currency);
-    url = adults && setQueryParams(url, "adults", adults);
+    url = adults > 0 ? setQueryParams(url, "adults", adults.toString()) : url;
+    url = selectResidency && setQueryParams(url, "residency", selectResidency);
+    url =
+      children?.length > 0
+        ? setQueryParams(
+            url,
+            "children",
+            children?.map((item: any) => item.value).toString(),
+          )
+        : url;
 
-    router.push(`/search-hotel${url ? `?${url}` : ""}`);
+    if (locationItem) {
+      url = region_id && setQueryParams(url, "region_id", region_id);
+
+      router.push(`/search-hotel${url ? `?${url}` : ""}`);
+    }
+
+    if (selectHotel) {
+      router.push(`/hotel-detail/${selectHotel?.id}${url ? `?${url}` : ""}`);
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -100,12 +172,46 @@ const SearchSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        residencyRef.current &&
+        !residencyRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenResidency(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        childrenRef.current &&
+        !childrenRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenChildren(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  console.log(locationItem);
+
   return (
     <section className="py-20 bg-yellow-bg">
       <div className="container mx-auto">
         <div className="w-[90%] mx-auto bg-white rounded-[20px] py-20 px-12">
           <div className="flex gap-5 flex-col">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div ref={searchRef}>
                 <div>
                   <label
@@ -131,11 +237,23 @@ const SearchSection = () => {
                   <div className="relative w-full">
                     <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2">
                       {data?.data?.data?.regions?.map((item: any) => (
-                        <li key={item?.id}>{item?.name}</li>
+                        <li
+                          key={item?.id}
+                          onClick={() => handleSelect(item)}
+                          className="cursor-pointer"
+                        >
+                          {item?.name}
+                        </li>
                       ))}
 
                       {data?.data?.data?.hotels?.map((item: any) => (
-                        <li key={item?.id}>{item?.name}</li>
+                        <li
+                          key={item?.id}
+                          onClick={() => handleSelectHotel(item)}
+                          className="cursor-pointer"
+                        >
+                          {item?.name}
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -180,47 +298,115 @@ const SearchSection = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label
                   htmlFor="search"
                   className="text-base font-medium text-black-800"
                 >
-                  Rooms
+                  Guests
                 </label>
 
                 <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
-                  <p>2 Guests</p>
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      disabled={guest <= 0 ? true : false}
+                      onClick={() => setGuest((prev) => prev - 1)}
+                      className="bg-yellow-500 text-white px-2 rounded-md"
+                    >
+                      -
+                    </button>
+                    <p>{guest ? guest : "0"} Guests</p>
+                    <button
+                      type="button"
+                      onClick={() => setGuest((prev) => prev + 1)}
+                      className="bg-yellow-500 text-white px-2 rounded-md"
+                    >
+                      +
+                    </button>
+                  </div>
                   <p className="text-xs text-text-light">1 room - infront</p>
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="search"
-                  className="text-base font-medium text-black-800"
-                >
-                  Children
-                </label>
+              <div ref={childrenRef}>
+                <div onClick={() => setOpenChildren(true)}>
+                  <label
+                    htmlFor="search"
+                    className="text-base font-medium text-black-800"
+                  >
+                    Children
+                  </label>
 
-                <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
-                  <p>2 Guests</p>
-                  <p className="text-xs text-text-light">1 room - infront</p>
+                  <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
+                    <p>{children.length} Children</p>
+                    <p className="text-xs text-text-light">1 room - infront</p>
+                  </div>
                 </div>
+
+                {openChildren && (
+                  <div className="relative w-full">
+                    <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+                      {childrenData?.map((item: any) => (
+                        <li
+                          key={item?.code}
+                          onClick={() => handleChildren(item)}
+                          className="cursor-pointer flex gap-2 items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={
+                              children.some(
+                                (obj: any) =>
+                                  obj.value === item.value &&
+                                  obj.name === item.name,
+                              )
+                                ? true
+                                : false
+                            }
+                          />
+                          {item?.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
 
-              <div>
-                <label
-                  htmlFor="search"
-                  className="text-base font-medium text-black-800"
-                >
-                  Resindency
-                </label>
+              <div ref={residencyRef}>
+                <div onClick={() => setOpenResidency(true)}>
+                  <label
+                    htmlFor="search"
+                    className="text-base font-medium text-black-800"
+                  >
+                    Residency
+                  </label>
 
-                <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
-                  <p>2 Guests</p>
-                  <p className="text-xs text-text-light">1 room - infront</p>
+                  <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
+                    <p>{residency ? residency?.name : "Select Residency"}</p>
+                    <p className="text-xs text-text-light">1 room - infront</p>
+                  </div>
                 </div>
+
+                {openResidency && (
+                  <div className="relative w-full">
+                    <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+                      {countryData?.map((item: any) => (
+                        <li
+                          key={item?.code}
+                          onClick={() => {
+                            setResidency(item);
+                            setOpenResidency(false);
+                          }}
+                          className="cursor-pointer"
+                        >
+                          {item?.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
 
