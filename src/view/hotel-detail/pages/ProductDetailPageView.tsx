@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useSearchParams, useParams } from "next/navigation";
 import DetailSection from "@/components/section/DetailSection";
+import ProductImageSection from "@/components/section/ProductImageSection";
 import {
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
 } from "../slice/hotel-detail.slice";
-import ProductImageSection from "@/components/section/ProductImageSection";
 
 const ProductDetailPageView = () => {
   const searchParams = useSearchParams();
@@ -49,14 +49,19 @@ const ProductDetailPageView = () => {
           adults: Number(searchParams.get("adults"))
             ? Number(searchParams.get("adults"))
             : 1,
-          children: [],
+          children: searchParams.get("children")
+            ? searchParams
+                .get("children")
+                ?.split(",")
+                .map((item) => Number(item))
+            : [],
         },
       ],
     };
 
     getHotelDetail(payload);
     getHotelBookHash(bookHashPayload);
-  }, []);
+  }, [searchParams]);
 
   return (
     <main className="bg-white pt-2 pb-32">

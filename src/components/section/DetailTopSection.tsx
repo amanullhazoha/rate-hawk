@@ -1,7 +1,7 @@
-import MapIcon from "@/assets/icons/MapIcon";
-import StarIcon from "@/assets/icons/StarIcon";
 import Image from "next/image";
 import team from "@/assets/images/team.jpg";
+import MapIcon from "@/assets/icons/MapIcon";
+import StarIcon from "@/assets/icons/StarIcon";
 import PeopleIcon from "@/assets/icons/PeopleIcon";
 
 const DetailTopSection = ({
@@ -67,7 +67,7 @@ const DetailTopSection = ({
 
       <p className="text-4xl font-semibold mb-6 text-black-800">{name}</p>
 
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4">
         <div className="flex items-center gap-1">
           <StarIcon />
           <span className="text-sm text-black-800 font-medium">
@@ -101,7 +101,7 @@ const DetailTopSection = ({
         </p>
       </div> */}
 
-      <div className="flex items-center flex-wrap gap-5 md:gap-14">
+      {/* <div className="flex items-center flex-wrap gap-5 md:gap-14">
         <div className="flex items-center gap-3">
           <PeopleIcon />
 
@@ -125,7 +125,7 @@ const DetailTopSection = ({
 
           <p className="text-sm font-medium">6 guests</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

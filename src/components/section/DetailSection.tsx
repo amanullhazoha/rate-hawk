@@ -7,6 +7,7 @@ import AvailabilitySection from "./AvailabilitySection";
 import ThinksToKnowSection from "./ThinksToKnowSection";
 import RangeCalender from "../calender/RangeCalender";
 import ReserveCardSection from "./ReserveCardSection";
+import { useState } from "react";
 
 const DetailSection = ({
   bookHash,
@@ -15,6 +16,9 @@ const DetailSection = ({
   bookHash: any;
   hotelInfo: any;
 }) => {
+  const [selectRoom, setSelectRoom] = useState<any>(null);
+
+  console.log(selectRoom);
   return (
     <div className="grid gap-10 grid-cols-12">
       <div className="w-full col-span-8">
@@ -27,8 +31,9 @@ const DetailSection = ({
         <StayInfoSection description_struct={hotelInfo?.description_struct} />
         <AmenitiesSection amenity_groups={hotelInfo?.amenity_groups} />
         <RoomRateSection
-          room_groups={hotelInfo?.room_groups}
           bookHash={bookHash}
+          room_groups={hotelInfo?.room_groups}
+          handleSelectRoom={(rate: any) => setSelectRoom(rate)}
         />
 
         {/* <AvailabilitySection /> */}
@@ -41,7 +46,10 @@ const DetailSection = ({
       </div>
 
       <div className="w-full col-span-4">
-        <ReserveCardSection />
+        <ReserveCardSection
+          selectRoom={selectRoom}
+          setSelectRoom={setSelectRoom}
+        />
       </div>
     </div>
   );

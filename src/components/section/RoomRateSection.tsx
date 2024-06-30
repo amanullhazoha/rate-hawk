@@ -3,9 +3,11 @@ import RoomCard from "../card/RoomCard";
 const RoomRateSection = ({
   bookHash,
   room_groups,
+  handleSelectRoom,
 }: {
   bookHash: any;
   room_groups: any;
+  handleSelectRoom: (rate: any) => void;
 }) => {
   return (
     <div className="p-8 border border-border-primary rounded-[20px] mb-8">
@@ -25,8 +27,9 @@ const RoomRateSection = ({
             <RoomCard
               room={room}
               key={index}
-              rates={bookHash[0]?.rates}
               images={room?.images}
+              rates={bookHash[0]?.rates}
+              handleSelectRoom={handleSelectRoom}
             />
           ))}
       </div>

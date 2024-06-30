@@ -15,12 +15,14 @@ const responsive = {
 
 const RoomCard = ({
   room,
-  images,
   rates,
+  images,
+  handleSelectRoom,
 }: {
   room: any;
   rates: any;
   images: any;
+  handleSelectRoom: (rate: any) => void;
 }) => {
   const [productImage, setProductImage] = useState([]);
 
@@ -218,6 +220,13 @@ const RoomCard = ({
 
           <button
             type="button"
+            onClick={() =>
+              handleSelectRoom(
+                rates?.find((item: any) =>
+                  room?.name?.includes(item?.room_data_trans?.main_name),
+                ),
+              )
+            }
             className="px-10 py-2 rounded-md bg-primary-color"
           >
             Select

@@ -11,7 +11,13 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
 );
 
-const ReserveCardSection = () => {
+const ReserveCardSection = ({
+  selectRoom,
+  setSelectRoom,
+}: {
+  selectRoom: any;
+  setSelectRoom: (data: any) => void;
+}) => {
   const router = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -42,6 +48,7 @@ const ReserveCardSection = () => {
       : deleteParams(url, "check-out");
 
     router.push(`${pathName}${url ? `?${url}` : ""}`);
+    setSelectRoom(null);
   };
 
   const handleReserved = async () => {
@@ -71,21 +78,18 @@ const ReserveCardSection = () => {
 
   return (
     <div className="p-6 shadow-shadow-primary border border-border-primary rounded-[20px]">
-      <div className="w-full flex items-center justify-between">
-        <div>
-          <p className="text-xl font-medium text-black">
-            $119
-            <sub className="text-sm font-normal text-black-400"> /night</sub>
-          </p>
+      {selectRoom?.daily_prices[0] && (
+        <div className="w-full flex items-center justify-between mb-4">
+          <div>
+            <p className="text-xl font-medium text-black">
+              ${selectRoom?.daily_prices[0]}
+              <sub className="text-sm font-normal text-black-400"> /night</sub>
+            </p>
+          </div>
         </div>
+      )}
 
-        <p className="flex items-center gap-1">
-          <StarIcon className="w-4 h-4" />
-          4.5
-        </p>
-      </div>
-
-      <div className="rounded-lg border border-border-primary mt-4 mb-2">
+      <div className="rounded-lg border border-border-primary mb-2">
         <div className="flex items-center gap-3 px-2.5 py-2.5">
           <StarIcon />
 
@@ -122,27 +126,49 @@ const ReserveCardSection = () => {
         </div>
       </div>
 
-      <div className="flex justify-between items-center border-b border-border-primary pb-2 mt-3">
-        <p className="text-text-blar text-base">3 Night</p>
+      {selectRoom && (
+        <div className="flex justify-between items-center border-b border-border-primary pb-2 mt-3">
+          <p className="text-text-blar text-base">
+            {selectRoom?.daily_prices.length} Night
+          </p>
 
-        <p className="text-text-blar text-base">$357</p>
-      </div>
+          <p className="text-text-blar text-base">
+            ${selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+          </p>
+        </div>
+      )}
 
-      <div className="flex justify-between items-center mt-3">
-        <p className="text-black font-medium text-base">Total</p>
+      {selectRoom && (
+        <div className="flex justify-between items-center mt-3">
+          <p className="text-black font-medium text-base">Total</p>
 
-        <p className="text-black font-medium text-base">$357</p>
-      </div>
+          <p className="text-black font-medium text-base">
+            ${selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+          </p>
+        </div>
+      )}
 
-      <div className="w-full">
-        <button
-          type="button"
-          onClick={handleReserved}
-          className="px-10 py-2 w-full rounded-md bg-primary-color mt-4"
-        >
-          Reserve
-        </button>
-      </div>
+      {selectRoom ? (
+        <div className="w-full">
+          <button
+            type="button"
+            onClick={handleReserved}
+            className="px-10 py-2 w-full rounded-md bg-primary-color mt-4"
+          >
+            Reserve
+          </button>
+        </div>
+      ) : (
+        <div className="w-full">
+          <button
+            type="button"
+            disabled={true}
+            className="px-10 py-2 w-full rounded-md bg-yellow-200 mt-4"
+          >
+            Select A Room
+          </button>
+        </div>
+      )}
     </div>
   );
 };
