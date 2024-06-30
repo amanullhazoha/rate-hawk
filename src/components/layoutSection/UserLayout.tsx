@@ -14,7 +14,6 @@ import FacebookIcon from "@/assets/icons/social/FacebookIcon";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
 import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
-import { useGetLoggedInProfileQuery } from "@/view/profile/slice";
 
 const UserLayout = ({
   children,
@@ -23,10 +22,9 @@ const UserLayout = ({
 }>) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const access_token = localStorage.getItem("access_token");
+  const access_token = localStorage?.getItem("access_token");
 
   const pathName = usePathname();
-  const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

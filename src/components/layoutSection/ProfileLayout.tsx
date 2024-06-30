@@ -6,13 +6,12 @@ import team from "@/assets/images/team.jpg";
 import { usePathname } from "next/navigation";
 import StarIcon from "@/assets/icons/StarIcon";
 import HomeIcon from "@/assets/icons/HomeIcon";
-import ProductCard from "@/components/card/ProductCard";
 import TwitterIcon from "@/assets/icons/social/TwitterIcon";
 import FacebookIcon from "@/assets/icons/social/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/social/LinkedInIcon";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
-import { useGetLoggedInProfileQuery } from "@/view/profile/slice";
+import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
 
 const ProfileLayout = ({
   children,
@@ -22,13 +21,11 @@ const ProfileLayout = ({
   const pathName = usePathname();
   const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
 
-  console.log(data);
-
   return (
     <main className="bg-white py-20">
       <div className="container mx-auto px-2.5">
-        <div className="w-full md:w-[90%] mx-auto grid grid-cols-3 gap-14">
-          <div className="col-span-1 p-14 border border-border-primary rounded-[20px] mb-8">
+        <div className="w-full md:w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-14">
+          <div className="w-full col-span-1 p-14 border border-border-primary rounded-[20px] mb-8 h-fit">
             <div className="flex items-center flex-col gap-4 pb-6">
               <Image
                 src={team}
@@ -53,7 +50,7 @@ const ProfileLayout = ({
               {data?.data?.about_you}
             </p>
 
-            <div className="mt-9 flex items-center gap-2">
+            <div className="mt-9 flex items-center justify-center gap-2">
               <Link
                 href="/"
                 className="w-8 h-8 rounded-full flex justify-center items-center bg-black-400"
@@ -116,8 +113,9 @@ const ProfileLayout = ({
             </div>
           </div>
 
-          <div className="col-span-2">
-            <div className="flex gap-6 pb-4 border-b border-border-primary mb-5">
+          <div className="col-span-1 md:col-span-2">
+            {/* <div className="flex gap-6 pb-4 border-b border-border-primary mb-5"> */}
+            <div className="flex gap-6 pb-4 border-b border-border-primary mb-5 overflow-auto w-[full] md:w-fit">
               <Link
                 href="/profile"
                 className={`px-6 py-2 rounded-full font-medium ${

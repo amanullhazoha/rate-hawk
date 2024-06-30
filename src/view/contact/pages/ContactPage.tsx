@@ -1,25 +1,43 @@
 "use client";
 
-import Direction from "@/assets/icons/Direction";
-import EmailIcon from "@/assets/icons/EmailIcon";
-import LocationIcon from "@/assets/icons/LocationIcon";
+import Link from "next/link";
+import Image from "next/image";
+import { Form, Formik } from "formik";
+import { toast } from "react-toastify";
 import MailIcon from "@/assets/icons/MailIcon";
+import UserIcon from "@/assets/icons/UserIcon";
+import { createContactSchema } from "../schema";
+import EmailIcon from "@/assets/icons/EmailIcon";
+import Direction from "@/assets/icons/Direction";
 import NumberOne from "@/assets/icons/NumberOne";
 import NumberTwo from "@/assets/icons/NumberTwo";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
-import DribbleIcon from "@/assets/icons/social/DribbleIcon";
-import FbIcon from "@/assets/icons/social/FbIcon";
-import LinkdinIcon from "@/assets/icons/social/LinkdinIcon";
-import PinterestIcon from "@/assets/icons/social/PinterestIcon";
-import XIcon from "@/assets/icons/social/XIcon";
 import SocialIcon from "@/assets/icons/SocialIcon";
-import UserIcon from "@/assets/icons/UserIcon";
-import ButtonPrimary from "@/components/buttons/ButtonPrimary";
+import { useCreateContactMutation } from "../slice";
+import LocationIcon from "@/assets/icons/LocationIcon";
 import InputGroup from "@/components/inputs/InputGroup";
-import Image from "next/image";
-import Link from "next/link";
+import TwitterIcon from "@/assets/icons/social/TwitterIcon";
+import LinkedInIcon from "@/assets/icons/social/LinkedInIcon";
+import FacebookIcon from "@/assets/icons/social/FacebookIcon";
+import ButtonPrimary from "@/components/buttons/ButtonPrimary";
+import InstagramIcon from "@/assets/icons/social/InstagramIcon";
+import PinterestIcon from "@/assets/icons/social/PinterestIcon";
+import InputTextArea from "@/components/inputs/InputTextarea";
+import NewsLetterSection from "@/components/section/NewsLetterSection";
 
 const ContactPage = () => {
+  const [crateContact, { isLoading, isError }] = useCreateContactMutation();
+
+  const handleSubmit = async (values: object) => {
+    const data: any = await crateContact(values);
+
+    if (data?.error) {
+      toast.error(data?.error?.data?.message);
+    } else {
+      toast.success("Send contact message successfully.");
+    }
+  };
+
   return (
     <div>
       <div className="container w-full px-2.5 md:w-[90%] mx-auto">
@@ -100,62 +118,91 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 mt-2">
-                  <Link href="">
-                    <FbIcon />
+                <div className="mt-2 flex items-center gap-4">
+                  <Link
+                    href="/"
+                    className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                  >
+                    <FacebookIcon className="w-6 h-6 text-white" />
                   </Link>
-                  <Link href="">
-                    <DribbleIcon />
+
+                  <Link
+                    href="/"
+                    className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                  >
+                    <TwitterIcon className="w-6 h-6 text-white" />
                   </Link>
-                  <Link href="">
-                    <XIcon />
+
+                  <Link
+                    href="/"
+                    className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                  >
+                    <InstagramIcon className="w-6 h-6 text-white" />
                   </Link>
-                  <Link href="">
-                    <LinkdinIcon />
+
+                  <Link
+                    href="/"
+                    className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                  >
+                    <LinkedInIcon className="w-6 h-6 text-white" />
                   </Link>
-                  <Link href="">
-                    <PinterestIcon />
+
+                  <Link
+                    href="/"
+                    className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
+                  >
+                    <PinterestIcon className="w-6 h-6 text-white" />
                   </Link>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="lg:w-1/2 w-full">
-            <div className="flex flex-col gap-6 w-full">
-              <InputGroup
-                label="Full name"
-                type="text"
-                placeholder="Example Doe"
-                name="username"
-                icon={<UserIcon />}
-              />
-
-              <InputGroup
-                label="Email address"
-                type="email"
-                placeholder="example@example.com"
-                name="email"
-                icon={<MailIcon />}
-              />
-
-              <div className="">
-                <label htmlFor="msg" className="text-black-800 mb-2">
-                  Message
-                </label>
-                <div className="mt-2">
-                  <textarea
-                    id="msg"
-                    className="border border-border-primary rounded-lg outline-none focus:outline-none placeholder:text-blar placeholder:text-sm w-full h-full p-2 min-h-[170px] bg-transparent text-sm"
+          <Formik
+            initialValues={{
+              email: "",
+              message: "",
+              user_name: "",
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={createContactSchema}
+          >
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit} className="lg:w-1/2 w-full">
+                <div className="flex flex-col gap-6 w-full">
+                  <InputGroup
+                    type="text"
+                    name="user_name"
+                    label="Full name"
+                    icon={<UserIcon />}
+                    placeholder="Example Doe"
                   />
-                </div>
-              </div>
 
-              <ButtonPrimary className="lg:max-w-[286px]  md:!text-xl text-md">
-                Send Message
-              </ButtonPrimary>
-            </div>
-          </div>
+                  <InputGroup
+                    type="email"
+                    name="email"
+                    icon={<MailIcon />}
+                    label="Email address"
+                    placeholder="example@example.com"
+                  />
+
+                  <InputTextArea
+                    rows={9}
+                    name="message"
+                    label="Message"
+                    placeholder="Write message"
+                  />
+
+                  <ButtonPrimary
+                    disabled={isLoading}
+                    className="lg:max-w-[286px]  md:!text-xl text-md"
+                  >
+                    Send Message
+                  </ButtonPrimary>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
 
         <div className="w-full h-[250px] mt-14 lg:mb-40 mb-20">
@@ -172,7 +219,7 @@ const ContactPage = () => {
       </div>
 
       {/* Newslatter */}
-      <div className="bg-yellow-100 lg:py-[100px] md:py-20 py-14 ">
+      {/* <div className="bg-yellow-100 lg:py-[100px] md:py-20 py-14 ">
         <div className="max-w-[1152px] mx-auto  flex items-center justify-center gap-[124px]">
           <div className="lg:w-1/2 w-full max-lg:px-5">
             <h2 className="heading mb-3">Join our newsletter</h2>
@@ -243,7 +290,8 @@ const ContactPage = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
+      <NewsLetterSection />
     </div>
   );
 };

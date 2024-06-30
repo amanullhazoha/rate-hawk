@@ -66,7 +66,11 @@ const ProductDetailPageView = () => {
   return (
     <main className="bg-white pt-2 pb-32">
       <div className="container mx-auto px-2.5">
-        {isLoading && <h2>Loading.....</h2>}
+        {isLoading && (
+          <div className="w-full">
+            <h3 className="text-center">Loading.....</h3>
+          </div>
+        )}
 
         {!isLoading && !isError && (
           <div className="w-full md:w-[90%] mx-auto">

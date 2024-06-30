@@ -23,11 +23,10 @@ export function middleware(request: NextRequest) {
   ];
 
   const userRoutes = [
-    "/name-search",
-    "/dashboard",
-    "/settings",
-    "/subscription",
-    "/membership-plan",
+    "/profile",
+    "/save-list",
+    "/my-booking",
+    "/change-password",
   ];
 
   const path = request?.nextUrl?.pathname;

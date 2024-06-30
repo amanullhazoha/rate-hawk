@@ -4,7 +4,6 @@ interface InputTextAreaProps {
   name: string;
   rows?: number;
   label: string;
-  width?: string;
   required?: string;
   placeholder?: string;
 }
@@ -12,7 +11,6 @@ interface InputTextAreaProps {
 const InputTextArea = ({
   label,
   name,
-  width,
   required,
   rows = 4,
   placeholder,

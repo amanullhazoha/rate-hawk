@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import StarIcon from "@/assets/icons/StarIcon";
 import { useState, useRef, useEffect } from "react";
 import RangeCalender from "../calender/RangeCalender";
+import { childrenData } from "@/assets/data/childrenData";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
@@ -20,9 +21,13 @@ const ReserveCardSection = ({
 }) => {
   const router = useRouter();
   const pathName = usePathname();
+  const [guest, setGuest] = useState(0);
   const searchParams = useSearchParams();
   const divRef = useRef<HTMLDivElement>(null);
+  const childrenRef = useRef<HTMLDivElement>(null);
+  const [children, setChildren] = useState<any[]>([]);
   const [openCalender, setOpenCalender] = useState(false);
+  const [openChildren, setOpenChildren] = useState(false);
   const { setQueryParams, deleteParams } = useSearchQueryParam();
 
   const [
@@ -51,6 +56,23 @@ const ReserveCardSection = ({
     setSelectRoom(null);
   };
 
+  const handleChildren = (item: any) => {
+    const exists = children.some(
+      (obj: any) => obj.value === item.value && obj.name === item.name,
+    );
+
+    if (exists) {
+      const filterData = children?.filter(
+        (data: any) => data.value !== item.value,
+      );
+
+      return setChildren(filterData);
+    } else {
+      const newData = [...children, item];
+      setChildren(newData);
+    }
+  };
+
   const handleReserved = async () => {
     const data: any = await createStripePayment({});
 
@@ -70,6 +92,22 @@ const ReserveCardSection = ({
   };
 
   useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        childrenRef.current &&
+        !childrenRef?.current?.contains(event.target as Node)
+      ) {
+        setOpenChildren(false);
+      }
+    };
+
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -116,12 +154,91 @@ const ReserveCardSection = ({
 
         <div className="border-b border-border-primary"></div>
 
-        <div className="flex items-center gap-3 px-2.5 py-2.5">
+        {/* <div className="flex items-center gap-3 px-2.5 py-2.5">
           <StarIcon />
 
           <div>
             <p className="text-black text-lg font-semibold">4 Guests</p>
             <p className="text-text-blar text-base">Guests</p>
+          </div>
+        </div> */}
+
+        <div className="grid grid-cols-1">
+          <div>
+            <div className="px-3 py-2">
+              <label
+                htmlFor="search"
+                className="text-black text-lg font-semibold"
+              >
+                Guests
+              </label>
+
+              <div className="flex items-center gap-3 mt-1">
+                <button
+                  type="button"
+                  disabled={guest <= 0 ? true : false}
+                  onClick={() => setGuest((prev) => prev - 1)}
+                  className="bg-yellow-500 text-white px-2 rounded-md"
+                >
+                  -
+                </button>
+                <p>{guest ? guest : "0"} Guests</p>
+                <button
+                  type="button"
+                  onClick={() => setGuest((prev) => prev + 1)}
+                  className="bg-yellow-500 text-white px-2 rounded-md"
+                >
+                  +
+                </button>
+              </div>
+              <p className="text-xs text-text-light">1 room - infront</p>
+            </div>
+          </div>
+
+          <div className="border-b border-border-primary"></div>
+
+          <div ref={childrenRef}>
+            <div onClick={() => setOpenChildren(true)}>
+              {/* <label
+                htmlFor="search"
+                className="text-base font-medium text-black-800"
+              >
+                Children
+              </label> */}
+
+              <div className="px-3 py-2 mt-1">
+                <p>{children.length} Children</p>
+                <p className="text-xs text-text-light">1 room - infront</p>
+              </div>
+            </div>
+
+            {openChildren && (
+              <div className="relative w-full">
+                <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+                  {childrenData?.map((item: any) => (
+                    <li
+                      key={item?.code}
+                      onClick={() => handleChildren(item)}
+                      className="cursor-pointer flex gap-2 items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={
+                          children.some(
+                            (obj: any) =>
+                              obj.value === item.value &&
+                              obj.name === item.name,
+                          )
+                            ? true
+                            : false
+                        }
+                      />
+                      {item?.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

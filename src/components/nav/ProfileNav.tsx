@@ -1,6 +1,22 @@
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
 
 const ProfileNav = () => {
+  const [userLogout, { isLoading, isError }] = useUserLogoutMutation();
+
+  const handleLogout = async () => {
+    const data: any = await userLogout("");
+
+    if (!data?.error) {
+      localStorage.removeItem("access_token");
+
+      return toast.success("User logout successfully.");
+    }
+
+    toast.error(data?.error?.data);
+  };
+
   return (
     <div
       className="flex flex-col gap-2 border
@@ -10,8 +26,16 @@ const ProfileNav = () => {
         Home
       </Link>
 
-      <Link href="/" className="px-3 py-1">
+      <Link href="/profile" className="px-3 py-1">
         Profile
+      </Link>
+
+      <Link href="/my-booking" className="px-3 py-1">
+        My Booking
+      </Link>
+
+      <Link href="/save-list" className="px-3 py-1">
+        Save List
       </Link>
 
       <Link href="/" className="px-3 py-1">
@@ -22,13 +46,19 @@ const ProfileNav = () => {
         About Us
       </Link>
 
-      <Link href="/" className="px-3 py-1">
+      <Link href="/contact" className="px-3 py-1">
         Contact
       </Link>
 
-      <Link href="/" className="px-3 py-1">
-        Log out
-      </Link>
+      <div className="w-full">
+        <button
+          type="button"
+          className="px-3 py-1 w-full text-left"
+          onClick={handleLogout}
+        >
+          Log out
+        </button>
+      </div>
     </div>
   );
 };

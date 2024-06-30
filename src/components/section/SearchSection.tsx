@@ -80,8 +80,6 @@ const SearchSection = () => {
       (obj: any) => obj.value === item.value && obj.name === item.name,
     );
 
-    console.log(children?.map((item: any) => item.value).toString());
-
     if (exists) {
       const filterData = children?.filter(
         (data: any) => data.value !== item.value,
@@ -205,8 +203,6 @@ const SearchSection = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-  console.log(locationItem);
 
   return (
     <section className="py-20 bg-yellow-bg">

@@ -8,4 +8,13 @@ const userChangePasswordSchema = object().shape({
     .required("User confirm password is required."),
 });
 
-export { userChangePasswordSchema };
+const userProfileUpdateSchema = object().shape({
+  phone: string().required("User phone is required."),
+  gender: string().required("User gender is required."),
+  address: string().required("User address is required."),
+  user_name: string().required("User name is required."),
+  bath_date: string().required("User birth date is required."),
+  about_you: string().required("User about is required."),
+});
+
+export { userChangePasswordSchema, userProfileUpdateSchema };

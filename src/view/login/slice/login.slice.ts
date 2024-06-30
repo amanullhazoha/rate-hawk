@@ -6,7 +6,7 @@ export const loginApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`,
     credentials: "include",
   }),
-  tagTypes: ["hotel-detail"],
+  tagTypes: ["login", "logout"],
   endpoints: (builder) => ({
     userLogin: builder.mutation({
       query: (data: any) => ({
@@ -14,9 +14,27 @@ export const loginApi = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["hotel-detail"],
+      invalidatesTags: ["login"],
+    }),
+    userLogout: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/user/logout",
+        method: "POST",
+        body: {},
+      }),
+      invalidatesTags: ["logout"],
+    }),
+    getLoggedInProfile: builder.query({
+      query: () => ({
+        url: "/secured/user/profile",
+      }),
+      providesTags: ["login", "logout"],
     }),
   }),
 });
 
-export const { useUserLoginMutation } = loginApi;
+export const {
+  useUserLoginMutation,
+  useUserLogoutMutation,
+  useGetLoggedInProfileQuery,
+} = loginApi;

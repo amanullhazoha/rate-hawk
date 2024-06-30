@@ -7,6 +7,7 @@ interface Types {
   type: string;
   placeholder: string;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const InputGroup = ({
@@ -15,6 +16,7 @@ const InputGroup = ({
   icon,
   placeholder,
   type = "text",
+  disabled = false,
 }: Types) => {
   return (
     <div>
@@ -28,6 +30,7 @@ const InputGroup = ({
         <Field
           name={name}
           type={type}
+          disabled={disabled}
           placeholder={placeholder}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pr-4 py-[14px] bg-transparent"
         />
