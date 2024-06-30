@@ -22,7 +22,7 @@ const UserLayout = ({
 }>) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const access_token = localStorage?.getItem("access_token");
+  const [access_token, setAccessToken] = useState<string | null>(null);
 
   const pathName = usePathname();
 
@@ -38,6 +38,11 @@ const UserLayout = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openMenu]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setAccessToken(token);
+  }, []);
 
   return (
     <>
