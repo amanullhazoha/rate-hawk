@@ -14,6 +14,7 @@ import FacebookIcon from "@/assets/icons/social/FacebookIcon";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
 import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
+import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
 
 const UserLayout = ({
   children,
@@ -23,6 +24,7 @@ const UserLayout = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [access_token, setAccessToken] = useState<string | null>(null);
+  const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
 
   const pathName = usePathname();
 
@@ -43,6 +45,8 @@ const UserLayout = ({
     const token = localStorage.getItem("access_token");
     setAccessToken(token);
   }, []);
+
+  console.log("hi", data);
 
   return (
     <>
@@ -161,15 +165,7 @@ const UserLayout = ({
               <SearchIcon />
             </div> */}
             <div className="flex items-center gap-5">
-              {!access_token && <Link href="/login">Login</Link>}
-
-              {/* {access_token && (
-                <Link href="/my-booking">
-                  <LoggedInUserIcon className="w-[50px] h-[50px]" />
-                </Link>
-              )} */}
-
-              {access_token && (
+              {data?.data && !isError ? (
                 <div className="relative">
                   <button type="button" onClick={() => setOpenMenu(true)}>
                     <LoggedInUserIcon className="w-[50px] h-[50px]" />
@@ -184,6 +180,8 @@ const UserLayout = ({
                     </div>
                   )}
                 </div>
+              ) : (
+                <Link href="/login">Login</Link>
               )}
             </div>
           </div>
