@@ -10,6 +10,7 @@ import {
   useGetSearchHotelMutation,
   useGetHotelDataMutation,
 } from "../slice/search-hotel.slice";
+import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 
 const SearchPageView = () => {
   const [page, setPage] = useState(1);
@@ -130,7 +131,8 @@ const SearchPageView = () => {
               </div>
 
               <div>
-                <Image src={map} alt="map" className="h-full" />
+                <MultiMarkerLocation hotelData={hotelData?.data} />
+                {/* <Image src={map} alt="map" className="h-full" /> */}
               </div>
             </div>
 
