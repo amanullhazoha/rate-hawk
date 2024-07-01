@@ -5,16 +5,19 @@ import map from "@/assets/images/map.jpg";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
+import { useGetUserAllSaveListQuery } from "@/view/save-list/slice.ts";
+import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 import {
   useGetSearchHotelMutation,
   useGetHotelDataMutation,
 } from "../slice/search-hotel.slice";
-import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 
 const SearchPageView = () => {
   const [page, setPage] = useState(1);
   const searchParams = useSearchParams();
+
+  const { data: favoriteData } = useGetUserAllSaveListQuery("");
   const [getSearchHotel, { isLoading: isHotelSearching, data }] =
     useGetSearchHotelMutation();
   const [getHotelData, { isLoading: isGetHotelData, data: hotelData }] =
@@ -55,6 +58,8 @@ const SearchPageView = () => {
 
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
   }, [data, page]);
+
+  console.log(favoriteData);
 
   return (
     <main className="pt-24 pb-28 bg-white">
@@ -126,6 +131,7 @@ const SearchPageView = () => {
                       product={item}
                       key={item?.id}
                       hotelData={hotelData?.data}
+                      favoriteData={favoriteData?.data}
                     />
                   ))}
               </div>

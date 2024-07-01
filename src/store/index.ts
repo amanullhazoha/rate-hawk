@@ -10,6 +10,7 @@ import { resetPasswordApi } from "@/view/reset-password/slice";
 import { forgotPasswordApi } from "@/view/forgot-password/slice";
 import { userProfileApi } from "@/view/profile/slice";
 import { homePageApi } from "@/view/home/slice";
+import { userHotelSaveListApi } from "@/view/save-list/slice.ts";
 
 const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
     [searchHotelApi.reducerPath]: searchHotelApi.reducer,
     [resetPasswordApi.reducerPath]: resetPasswordApi.reducer,
     [forgotPasswordApi.reducerPath]: forgotPasswordApi.reducer,
+    [userHotelSaveListApi.reducerPath]: userHotelSaveListApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -32,6 +34,7 @@ const store = configureStore({
       searchHotelApi.middleware,
       resetPasswordApi.middleware,
       forgotPasswordApi.middleware,
+      userHotelSaveListApi.middleware,
     ),
 });
 

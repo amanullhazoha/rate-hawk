@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
+import {
+  useUserAddFavoriteMutation,
+  useUserRemoveFavoriteMutation,
+} from "@/view/save-list/slice.ts";
 
 const responsive = {
   mobile: {
@@ -19,12 +24,53 @@ const responsive = {
 const ProductCard = ({
   product,
   hotelData,
+  favoriteData,
 }: {
   product: any;
   hotelData: any;
+  favoriteData: any;
 }) => {
   const searchParams = useSearchParams();
+  const [userAddFavorite] = useUserAddFavoriteMutation();
+  const [userRemoveFavorite] = useUserRemoveFavoriteMutation();
   const data = hotelData?.find((item: any) => item.hotel_id === product.id);
+
+  const isFavorite = favoriteData?.find(
+    (item: any) => item?.hotel_id === data?.hotel_id,
+  )
+    ? true
+    : false;
+
+  const handleFavorite = async ({
+    hotel,
+    hotel_id,
+    isFavorite = false,
+  }: {
+    hotel: any;
+    hotel_id: string;
+    isFavorite: boolean;
+  }) => {
+    if (isFavorite) {
+      const data: any = await userRemoveFavorite(hotel_id);
+
+      console.log(data);
+
+      if (data?.isError) return toast.error("Not remove favorite.");
+
+      toast.success("Remove Favorite successfully.");
+    } else {
+      const payload = {
+        hotel,
+        hotel_id,
+      };
+
+      const data: any = await userAddFavorite(payload);
+
+      if (data?.isError) return toast.error("Hotel not added to favorite.");
+
+      toast.success("Add Favorite successfully.");
+    }
+  };
 
   return (
     <div>
@@ -59,7 +105,18 @@ const ProductCard = ({
           </div>
 
           <div className="absolute top-3 flex justify-end items-center left-0 right-0">
-            <span className="w-8 h-8 rounded-full bg-black-400 flex justify-center items-center mr-2">
+            <span
+              onClick={() =>
+                handleFavorite({
+                  isFavorite,
+                  hotel: data,
+                  hotel_id: data.hotel_id,
+                })
+              }
+              className={`w-8 h-8 rounded-full flex justify-center items-center mr-2 cursor-pointer ${
+                isFavorite ? "bg-black-800" : "bg-black-400"
+              }`}
+            >
               <HeartIcon />
             </span>
           </div>

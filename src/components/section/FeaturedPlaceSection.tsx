@@ -6,6 +6,7 @@ import ProductCard from "../card/ProductCard";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useGetUserAllSaveListQuery } from "@/view/save-list/slice.ts";
 import {
   useGetHotelDataMutation,
   useGetSearchHotelMutation,
@@ -16,6 +17,8 @@ const FeaturedPlaceSection = () => {
   const searchParams = useSearchParams();
   const [region_id, setRegion_id] = useState(234);
   const { setQueryParams } = useSearchQueryParam();
+
+  const { data: favoriteData } = useGetUserAllSaveListQuery("");
   const [getSearchHotel, { isLoading: isHotelSearching, data }] =
     useGetSearchHotelMutation();
   const [getHotelData, { isLoading: isGetHotelData, data: hotelData }] =
@@ -162,6 +165,7 @@ const FeaturedPlaceSection = () => {
                   product={item}
                   key={item?.id}
                   hotelData={hotelData?.data}
+                  favoriteData={favoriteData?.data}
                 />
               ))}
             </div>

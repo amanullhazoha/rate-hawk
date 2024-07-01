@@ -1,6 +1,11 @@
-import ProductCard from "../../../components/card/ProductCard";
+"use client";
+
+import { useGetUserAllSaveListQuery } from "../slice.ts";
+import FavoriteProductCard from "@/components/card/FavoriteProductCard";
 
 const SaveListPageView = () => {
+  const { data, isLoading, isError } = useGetUserAllSaveListQuery("");
+
   return (
     <main className="bg-white pt-[40px] pb-[150px]">
       <div className="container mx-auto">
@@ -14,24 +19,27 @@ const SaveListPageView = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
-            {/* <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard /> */}
+            {data && !isLoading && !isError ? (
+              data?.data?.map((favorite: any) => (
+                <>
+                  <FavoriteProductCard favorite={favorite} />
+                </>
+              ))
+            ) : (
+              <div className="w-full">
+                <h3 className="text-center">loading....</h3>
+              </div>
+            )}
           </div>
 
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button
               type="button"
               className="bg-primary-color px-11 py-2 text-black-600 font-semibold text-xl rounded-lg"
             >
               Show more
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

@@ -33,7 +33,7 @@ const ProfileLayout = ({
                 className="w-[128px] h-[128px] rounded-full border border-primary-color"
               />
 
-              <p className="text-black-800 text-3xl font-semibold">
+              <p className="text-black-800 text-3xl font-semibold text-center">
                 {data?.data?.user_name}
               </p>
 
