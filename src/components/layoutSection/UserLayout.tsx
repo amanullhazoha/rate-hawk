@@ -46,8 +46,6 @@ const UserLayout = ({
     setAccessToken(token);
   }, []);
 
-  console.log("hi", data);
-
   return (
     <>
       <header>
@@ -93,7 +91,7 @@ const UserLayout = ({
         </div>
 
         <div className="bg-white border-b border-yellow-50">
-          <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-6">
+          <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
             <div className="flex items-center gap-14">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
                 Logo
@@ -191,7 +189,7 @@ const UserLayout = ({
       <main className="min-h-[calc(100vh-690px)]">{children}</main>
 
       <footer className="bg-black-800">
-        <div className="container max-md:px-2.5 mx-auto py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-2">
+        <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-2">
           <div className="flex gap-10 flex-col md:flex-row">
             <div className="w-full md:w-1/2 lg:w-4/6">
               <Link

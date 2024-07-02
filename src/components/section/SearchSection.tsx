@@ -205,9 +205,9 @@ const SearchSection = () => {
   }, []);
 
   return (
-    <section className="py-20 bg-yellow-bg">
+    <section className="py-10 md:py-20 bg-yellow-bg">
       <div className="container mx-auto">
-        <div className="w-[90%] mx-auto bg-white rounded-[20px] py-20 px-12">
+        <div className="w-[95%] md:w-[90%] mx-auto bg-white rounded-[20px] py-10 md:py-20 px-5 md:px-12">
           <div className="flex gap-5 flex-col">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div ref={searchRef}>

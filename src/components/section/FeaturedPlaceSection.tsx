@@ -78,20 +78,20 @@ const FeaturedPlaceSection = () => {
   }, [data, region_id]);
 
   return (
-    <section className="py-[100px] bg-white">
+    <section className="py-12 md:py-[100px] bg-white">
       <div className="container max-md:px-2.5 mx-auto overflow-hidden">
         <div className="w-full md:w-[90%] mx-auto">
-          <div className="mb-14">
-            <h2 className="text-[40px] font-semibold text-black-800 mb-3">
+          <div className="mb-7 mb:mb-14">
+            <h2 className="text-3xl md:text-[40px] font-semibold text-black-800 mb-3">
               Featured places to stay
             </h2>
 
-            <p className="text-lg text-text-blar font-medium">
+            <p className="text-base md:text-lg text-text-blar font-medium">
               Popular places to stay that Chisfis recommends for you
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-14 gap-3">
+          <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-3 mb-7 mb:mb-14">
             <div className="flex gap-2 overflow-auto w-full md:w-fit">
               <div>
                 <button
