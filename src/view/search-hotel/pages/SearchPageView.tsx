@@ -23,6 +23,7 @@ const SearchPageView = () => {
 
   useEffect(() => {
     const payload = {
+      star: searchParams.get("star"),
       checkin: searchParams.get("check-in"),
       checkout: searchParams.get("check-out"),
       residency: searchParams.get("residency"),
@@ -56,6 +57,8 @@ const SearchPageView = () => {
 
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
   }, [data, page]);
+
+  console.log(data);
 
   return (
     <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">

@@ -13,9 +13,11 @@ const stripePromise = loadStripe(
 );
 
 const ReserveCardSection = ({
+  hotelInfo,
   selectRoom,
   setSelectRoom,
 }: {
+  hotelInfo: any;
   selectRoom: any;
   setSelectRoom: (data: any) => void;
 }) => {
@@ -74,7 +76,27 @@ const ReserveCardSection = ({
   };
 
   const handleReserved = async () => {
-    const data: any = await createStripePayment({});
+    const payload = {
+      currency: "EUR",
+      residency: "gb",
+      hotel_id: hotelInfo?.id,
+      hotel_name: hotelInfo?.name,
+      address: hotelInfo?.address,
+      hash: selectRoom?.book_hash,
+      star_rating: hotelInfo?.star_rating,
+      checkIn: searchParams.get("check-out"),
+      checkOut: searchParams.get("check-out"),
+      total_night: selectRoom?.daily_prices.length,
+      total_amount: Number(
+        selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
+      ),
+      adults: guest,
+      children: children?.length,
+    };
+
+    console.log(payload);
+
+    const data: any = await createStripePayment(payload);
 
     if (data?.data?.id) {
       const stripe = await stripePromise;

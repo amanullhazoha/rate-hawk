@@ -17,18 +17,20 @@ const RoomCard = ({
   room,
   rates,
   images,
+  selectRoom,
   handleSelectRoom,
 }: {
   room: any;
   rates: any;
   images: any;
+  selectRoom: any;
   handleSelectRoom: (rate: any) => void;
 }) => {
   const [productImage, setProductImage] = useState([]);
 
   useEffect(() => {
     if (images?.length > 0) {
-      const newImages = images.map((image: string) =>
+      const newImages: any = images.map((image: string) =>
         image.replace("{size}", "200x200"),
       );
 
@@ -229,15 +231,18 @@ const RoomCard = ({
             <button
               type="button"
               onClick={() =>
-                handleSelectRoom(
-                  rates?.find((item: any) =>
+                handleSelectRoom({
+                  ...rates?.find((item: any) =>
                     room?.name?.includes(item?.room_data_trans?.main_name),
                   ),
-                )
+                  room_group_id: room?.room_group_id,
+                })
               }
               className="px-10 py-2 rounded-md bg-primary-color"
             >
-              Select
+              {room?.room_group_id === selectRoom?.room_group_id
+                ? "Selected"
+                : "Select"}
             </button>
           </div>
         </div>

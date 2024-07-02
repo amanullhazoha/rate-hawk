@@ -51,7 +51,7 @@ const LoginPageView = () => {
               <div className="mb-4">
                 <SocialButton
                   icon={<FacebookIcon />}
-                  authLink={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/google-login`}
+                  authLink={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/facebook-login`}
                 >
                   Continue with Facebook
                 </SocialButton>

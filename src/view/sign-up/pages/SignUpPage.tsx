@@ -46,13 +46,19 @@ const SignUpPage = () => {
         <div className="lg:w-1/2  w-full">
           <div className="px-4 md:px-8 py-9 border border-border-primary rounded-[20px]">
             <div className="mb-4">
-              <SocialButton icon={<FacebookIcon />}>
+              <SocialButton
+                icon={<FacebookIcon />}
+                authLink={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/facebook-login`}
+              >
                 Continue with Facebook
               </SocialButton>
             </div>
 
             <div className="mb-4">
-              <SocialButton icon={<GoogleIcon />}>
+              <SocialButton
+                icon={<GoogleIcon />}
+                authLink={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/google-login`}
+              >
                 Continue with Google
               </SocialButton>
             </div>

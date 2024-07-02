@@ -25,7 +25,7 @@ const FavoriteProductCard = ({ favorite }: { favorite: any }) => {
   const handleRemoveFavorite = async (hotel_id: string) => {
     const data: any = await userRemoveFavorite(hotel_id);
 
-    if (data?.isError) return toast.error("Not remove favorite.");
+    if (data?.error) return toast.error(data?.error.data);
 
     toast.success("Remove Favorite successfully.");
   };

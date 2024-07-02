@@ -20,8 +20,6 @@ const DetailSection = ({
 }) => {
   const [selectRoom, setSelectRoom] = useState<any>(null);
 
-  console.log(hotelInfo);
-
   return (
     <div className="max-md:flex max-md:flex-col md:grid gap-5 md:gap-10 grid-cols-12">
       <div className="w-full col-span-12 lg:col-span-8">
@@ -29,7 +27,7 @@ const DetailSection = ({
           hotelInfo={hotelInfo}
           kind={hotelInfo?.kind}
           name={hotelInfo?.name}
-          hotel_id={hotelInfo.id}
+          hotel_id={hotelInfo?.id}
           favoriteData={favoriteData}
           address={hotelInfo?.address}
           star_rating={hotelInfo?.star_rating}
@@ -41,6 +39,7 @@ const DetailSection = ({
 
         <RoomRateSection
           bookHash={bookHash}
+          selectRoom={selectRoom}
           room_groups={hotelInfo?.room_groups}
           handleSelectRoom={(rate: any) => setSelectRoom(rate)}
         />
@@ -56,6 +55,7 @@ const DetailSection = ({
 
       <div className="w-full col-span-12 lg:col-span-4">
         <ReserveCardSection
+          hotelInfo={hotelInfo}
           selectRoom={selectRoom}
           setSelectRoom={setSelectRoom}
         />

@@ -2,10 +2,12 @@ import RoomCard from "../card/RoomCard";
 
 const RoomRateSection = ({
   bookHash,
+  selectRoom,
   room_groups,
   handleSelectRoom,
 }: {
   bookHash: any;
+  selectRoom: any;
   room_groups: any;
   handleSelectRoom: (rate: any) => void;
 }) => {
@@ -28,6 +30,7 @@ const RoomRateSection = ({
               room={room}
               key={index}
               images={room?.images}
+              selectRoom={selectRoom}
               rates={bookHash[0]?.rates}
               handleSelectRoom={handleSelectRoom}
             />

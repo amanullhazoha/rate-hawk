@@ -15,6 +15,9 @@ import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
 import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
 import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
+import CurrencySelect from "../buttons/CurrencySelect";
+import LanguageSelect from "../buttons/LanguageSelect";
+import ProfileIcon from "@/assets/icons/ProfileIcon";
 
 const UserLayout = ({
   children,
@@ -74,7 +77,7 @@ const UserLayout = ({
                 href="/login"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
-                <EmailIcon />
+                <ProfileIcon />
                 Login
               </Link>
 
@@ -162,7 +165,12 @@ const UserLayout = ({
 
               <SearchIcon />
             </div> */}
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <CurrencySelect />
+                <LanguageSelect />
+              </div>
+
               {data?.data && !isError ? (
                 <div className="relative">
                   <button type="button" onClick={() => setOpenMenu(true)}>

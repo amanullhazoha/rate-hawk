@@ -20,17 +20,21 @@ const SearchSection = () => {
   const childrenRef = useRef<HTMLDivElement>(null);
   const residencyRef = useRef<HTMLDivElement>(null);
   const { setQueryParams } = useSearchQueryParam();
-  const [residency, setResidency] = useState<any>(null);
-  const [selectDate, setSelectDate] = useState<any>(null);
+  const [residency, setResidency] = useState<any>({
+    name: "Netherlands",
+    code: "nl",
+  });
+  const [star, setStar] = useState<any>(null);
   const [openSearch, setOpenSearch] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [locationItem, setLocationItem] = useState<any>(null);
-  const [selectHotel, setSelectHotel] = useState<any>(null);
-  const [openCalender, setOpenCalender] = useState(false);
-  const [openChildren, setOpenChildren] = useState(false);
   const [children, setChildren] = useState<any[]>([]);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [selectDate, setSelectDate] = useState<any>(null);
+  const [openChildren, setOpenChildren] = useState(false);
+  const [openCalender, setOpenCalender] = useState(false);
   const [searchLocation, setSearchLocation] = useState("");
+  const [selectHotel, setSelectHotel] = useState<any>(null);
   const [openResidency, setOpenResidency] = useState(false);
+  const [locationItem, setLocationItem] = useState<any>(null);
   const [locationSearch, { isLoading, data }] = useLocationSearchMutation();
 
   const handleSearchLocation = useCallback(
@@ -71,7 +75,6 @@ const SearchSection = () => {
   }, []);
 
   const handleDateRange = (dates: any) => {
-    console.log(dates);
     setSelectDate(dates);
   };
 
@@ -93,8 +96,12 @@ const SearchSection = () => {
   };
 
   const handleSearch = () => {
-    const language = "en";
-    const currency = "USD";
+    const language = localStorage.getItem("lang")
+      ? localStorage.getItem("lang")?.toLocaleLowerCase()
+      : "en";
+    const currency = localStorage.getItem("currency")
+      ? localStorage.getItem("currency")
+      : "USD";
     const adults = guest;
     const selectResidency = residency?.code;
     const region_id = locationItem ? locationItem?.id : null;
@@ -115,10 +122,11 @@ const SearchSection = () => {
 
     let url: string = searchParams.toString();
 
+    url = star && setQueryParams(url, "star", star);
     url = checkIn && setQueryParams(url, "check-in", checkIn);
     url = checkOut && setQueryParams(url, "check-out", checkOut);
-    url = language && setQueryParams(url, "language", language);
     url = currency && setQueryParams(url, "currency", currency);
+    url = language ? setQueryParams(url, "language", language) : url;
     url = adults > 0 ? setQueryParams(url, "adults", adults.toString()) : url;
     url = selectResidency && setQueryParams(url, "residency", selectResidency);
     url =
@@ -405,6 +413,69 @@ const SearchSection = () => {
                     </ul>
                   </div>
                 )}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <label
+                  htmlFor="search"
+                  className="text-base font-medium text-black-800"
+                >
+                  Hotel Type
+                </label>
+
+                <div className="flex items-center flex-wrap gap-1 mt-1">
+                  <button
+                    type="button"
+                    onClick={() => setStar(1)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 1 && "bg-yellow-200"
+                    }`}
+                  >
+                    No star
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(2)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 2 && "bg-yellow-200"
+                    }`}
+                  >
+                    2 stars
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(3)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 3 && "bg-yellow-200"
+                    }`}
+                  >
+                    3 stars
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(4)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 4 && "bg-yellow-200"
+                    }`}
+                  >
+                    4 stars
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(5)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 5 && "bg-yellow-200"
+                    }`}
+                  >
+                    5 stars
+                  </button>
+                </div>
               </div>
             </div>
 
