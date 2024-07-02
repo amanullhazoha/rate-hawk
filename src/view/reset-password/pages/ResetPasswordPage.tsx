@@ -45,7 +45,7 @@ const ResetPasswordPage = () => {
     <main>
       <div className="container w-full px-2.5 md:w-[80%] mx-auto flex items-center justify-center py-10">
         <div className="flex w-full h-full items-center justify-between ">
-          <div className="relative w-1/2 max-lg:hidden">
+          <div className="relative w-1/2 max-md:hidden">
             <Image
               src="/images/reset-pass-bg.png"
               width={500}
@@ -54,7 +54,7 @@ const ResetPasswordPage = () => {
             />
           </div>
 
-          <div className="lg:w-1/2 w-full ">
+          <div className="md:w-1/2 w-full ">
             <Formik
               onSubmit={handleResetPassword}
               validationSchema={resetPasswordSchema}
@@ -62,10 +62,12 @@ const ResetPasswordPage = () => {
             >
               {({ handleSubmit }) => (
                 <Form className="" onSubmit={handleSubmit}>
-                  <h1 className="heading">Reset Your Password</h1>
+                  <h1 className="text-3xl lg:text-5xl font-semibold text-black-800">
+                    Reset Your Password
+                  </h1>
 
-                  <div className="flex items-center justify-center gap-2 text-black-600 font-medium max-md:mb-8 mt-2">
-                    <ProfileIcon />
+                  <div className="flex items-center justify-center gap-2 text-black-600 font-medium max-md:mb-4 mt-2">
+                    <ProfileIcon className="w-10 h-10" />
                     <p className="text-center">{searchParams.get("email")}</p>
                   </div>
 

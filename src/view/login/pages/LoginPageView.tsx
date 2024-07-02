@@ -47,7 +47,7 @@ const LoginPageView = () => {
 
         <div className="flex items-center justify-between gap-10 md:my-[85px] my-12">
           <div className="lg:w-1/2 w-full">
-            <div className="px-8 py-9 border border-border-primary rounded-[20px]">
+            <div className="px-4 md:px-8 py-9 border border-border-primary rounded-[20px]">
               <div className="mb-4">
                 <SocialButton
                   icon={<FacebookIcon />}
