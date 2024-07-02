@@ -10,7 +10,7 @@ import { resetPasswordApi } from "@/view/reset-password/slice";
 import { forgotPasswordApi } from "@/view/forgot-password/slice";
 import { userProfileApi } from "@/view/profile/slice";
 import { homePageApi } from "@/view/home/slice";
-import { userHotelSaveListApi } from "@/view/save-list/slice.ts";
+import { userHotelSaveListApi } from "@/view/save-list/slice";
 
 const store = configureStore({
   reducer: {

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { format, addDays } from "date-fns";
 import { useSearchParams, useParams } from "next/navigation";
 import DetailSection from "@/components/section/DetailSection";
+import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import ProductImageSection from "@/components/section/ProductImageSection";
 import {
   useGetHotelDetailMutation,
@@ -13,6 +14,8 @@ import {
 const ProductDetailPageView = () => {
   const searchParams = useSearchParams();
   const params: { id: string } = useParams();
+
+  const { data: favoriteData } = useGetUserAllSaveListQuery("");
 
   const [getHotelDetail, { isLoading, isError, data }] =
     useGetHotelDetailMutation();
@@ -77,6 +80,7 @@ const ProductDetailPageView = () => {
             <ProductImageSection images={data?.data?.data?.images} />
             <DetailSection
               hotelInfo={data?.data?.data}
+              favoriteData={favoriteData?.data}
               bookHash={bookHash?.data?.data?.hotels}
             />
           </div>

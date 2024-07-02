@@ -1,17 +1,78 @@
+"use client";
+
+import { toast } from "react-toastify";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
+import {
+  useUserAddFavoriteMutation,
+  useUserRemoveFavoriteMutation,
+} from "@/view/save-list/slice";
 
 const DetailTopSection = ({
   kind,
   name,
   address,
+  hotel_id,
+  hotelInfo,
   star_rating,
+  favoriteData,
 }: {
   kind?: string;
   name?: string;
+  hotelInfo: any;
   address: string;
+  hotel_id: string;
+  favoriteData: any;
   star_rating?: number;
 }) => {
+  const [userAddFavorite] = useUserAddFavoriteMutation();
+  const [userRemoveFavorite] = useUserRemoveFavoriteMutation();
+
+  const isFavorite = favoriteData?.find(
+    (item: any) => item?.hotel_id === hotel_id,
+  )
+    ? true
+    : false;
+
+  const handleFavorite = async ({
+    hotel,
+    hotel_id,
+    isFavorite = false,
+  }: {
+    hotel: any;
+    hotel_id: string;
+    isFavorite: boolean;
+  }) => {
+    if (isFavorite) {
+      const data: any = await userRemoveFavorite(hotel_id);
+
+      if (data?.isError) return toast.error("Not remove favorite.");
+
+      toast.success("Remove Favorite successfully.");
+    } else {
+      const payload = {
+        hotel: {
+          kind,
+          hotel_id,
+          images: hotel?.images,
+          hotel_name: hotel?.name,
+          latitude: hotel?.latitude,
+          longitude: hotel?.longitude,
+          region_id: hotel?.region?.id,
+          star_rating: hotel?.star_rating,
+          region_name: hotel?.region?.name,
+        },
+        hotel_id,
+      };
+
+      const data: any = await userAddFavorite(payload);
+
+      if (data?.isError) return toast.error("Hotel not added to favorite.");
+
+      toast.success("Add Favorite successfully.");
+    }
+  };
+
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
       <div className="flex justify-between items-center mb-6">
@@ -42,6 +103,9 @@ const DetailTopSection = ({
 
           <button
             type="button"
+            onClick={() =>
+              handleFavorite({ hotel: hotelInfo, hotel_id, isFavorite })
+            }
             className="flex items-center gap-3 text-sm text-black font-medium"
           >
             <svg
@@ -49,11 +113,11 @@ const DetailTopSection = ({
               width="18"
               height="16"
               viewBox="0 0 18 16"
-              fill="none"
+              fill={isFavorite ? "yellow" : "black"}
             >
               <path
                 d="M9.00001 2.65279L8.62055 2.97838C8.71554 3.08909 8.85414 3.15279 9.00001 3.15279C9.14588 3.15279 9.28447 3.08909 9.37946 2.97838L9.00001 2.65279ZM2.72376 1.91959L3.04796 2.30023L3.04797 2.30023L2.72376 1.91959ZM2.01136 8.49902L1.61703 8.80644L1.61703 8.80644L2.01136 8.49902ZM8.5777 14.8632L8.90865 14.4884L8.9086 14.4884L8.5777 14.8632ZM8.88018 15.0806L9.02264 14.6014L9.02252 14.6013L8.88018 15.0806ZM9.1089 15.0806L9.25119 15.56L9.25123 15.5599L9.1089 15.0806ZM9.41138 14.8632L9.74223 15.2381L9.74229 15.238L9.41138 14.8632ZM15.9777 8.49902L16.372 8.80645L16.372 8.80643L15.9777 8.49902ZM9.37946 2.32719C7.64318 0.303721 4.65976 -0.386125 2.39956 1.53894L3.04797 2.30023C4.79584 0.811532 7.1579 1.27381 8.62055 2.97838L9.37946 2.32719ZM2.39956 1.53894C0.194141 3.41733 -0.123327 6.57401 1.61703 8.80644L2.40569 8.19161C0.998472 6.38652 1.24529 3.8356 3.04796 2.30023L2.39956 1.53894ZM1.61703 8.80644C2.29871 9.68082 3.64417 11.0108 4.95589 12.245C6.2772 13.4882 7.5961 14.6636 8.24679 15.238L8.9086 14.4884C8.26142 13.917 6.95141 12.7495 5.64114 11.5167C4.32128 10.2748 3.03251 8.99563 2.40569 8.1916L1.61703 8.80644ZM8.24674 15.238C8.31346 15.2969 8.385 15.3606 8.45148 15.4105C8.52388 15.4648 8.61717 15.5241 8.73785 15.5599L9.02252 14.6013C9.05849 14.612 9.07312 14.6267 9.05173 14.6106C9.04052 14.6022 9.02432 14.5892 8.99937 14.5678C8.97438 14.5464 8.94577 14.5212 8.90865 14.4884L8.24674 15.238ZM8.73773 15.5599C8.90461 15.6095 9.08443 15.6095 9.25119 15.56L8.9666 14.6013C8.977 14.5982 8.98629 14.5971 8.99451 14.5971C9.00273 14.5971 9.01209 14.5982 9.02264 14.6014L8.73773 15.5599ZM9.25123 15.5599C9.37197 15.5241 9.46527 15.4647 9.53761 15.4104C9.60401 15.3606 9.67556 15.2969 9.74223 15.2381L9.08054 14.4883C9.04337 14.5211 9.01473 14.5464 8.9897 14.5678C8.96471 14.5892 8.9485 14.6023 8.93727 14.6107C8.91586 14.6268 8.93053 14.612 8.96656 14.6013L9.25123 15.5599ZM9.74229 15.238C10.393 14.6636 11.7119 13.4882 13.0332 12.245C14.3449 11.0108 15.6903 9.68082 16.372 8.80645L15.5834 8.1916C14.9565 8.99563 13.6678 10.2748 12.3479 11.5167C11.0377 12.7495 9.72766 13.917 9.08048 14.4884L9.74229 15.238ZM16.372 8.80643C18.108 6.5797 17.836 3.40018 15.5843 1.53456L14.9463 2.30461C16.7715 3.81684 16.995 6.38083 15.5834 8.19161L16.372 8.80643ZM15.5843 1.53456C13.2943 -0.362687 10.3605 0.299491 8.62055 2.32719L9.37946 2.97838C10.8385 1.27804 13.1592 0.824005 14.9463 2.30461L15.5843 1.53456Z"
-                fill="black"
+                fill={isFavorite ? "yellow" : "black"}
               />
             </svg>
 

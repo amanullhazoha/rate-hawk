@@ -12,23 +12,33 @@ import ThinksToKnowSection from "./ThinksToKnowSection";
 const DetailSection = ({
   bookHash,
   hotelInfo,
+  favoriteData,
 }: {
   bookHash: any;
   hotelInfo: any;
+  favoriteData: any;
 }) => {
   const [selectRoom, setSelectRoom] = useState<any>(null);
+
+  console.log(hotelInfo);
 
   return (
     <div className="max-md:flex max-md:flex-col md:grid gap-5 md:gap-10 grid-cols-12">
       <div className="w-full col-span-12 lg:col-span-8">
         <DetailTopSection
+          hotelInfo={hotelInfo}
           kind={hotelInfo?.kind}
           name={hotelInfo?.name}
+          hotel_id={hotelInfo.id}
+          favoriteData={favoriteData}
           address={hotelInfo?.address}
           star_rating={hotelInfo?.star_rating}
         />
+
         <StayInfoSection description_struct={hotelInfo?.description_struct} />
+
         <AmenitiesSection amenity_groups={hotelInfo?.amenity_groups} />
+
         <RoomRateSection
           bookHash={bookHash}
           room_groups={hotelInfo?.room_groups}

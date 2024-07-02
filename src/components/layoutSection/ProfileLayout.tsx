@@ -22,10 +22,10 @@ const ProfileLayout = ({
   const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
 
   return (
-    <main className="bg-white py-20">
-      <div className="container mx-auto px-2.5">
-        <div className="w-full md:w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-14">
-          <div className="w-full col-span-1 p-14 border border-border-primary rounded-[20px] mb-8 h-fit">
+    <main className="bg-white py-10 md:py-14">
+      <div className="container mx-auto px-2.5 md:px-0">
+        <div className="w-full lg:w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-14">
+          <div className="w-full col-span-1 px-4 lg:px-10 py-4 lg:py-10 border border-border-primary rounded-[20px] h-fit">
             <div className="flex items-center flex-col gap-4 pb-6">
               <Image
                 src={team}
@@ -33,7 +33,7 @@ const ProfileLayout = ({
                 className="w-[128px] h-[128px] rounded-full border border-primary-color"
               />
 
-              <p className="text-black-800 text-3xl font-semibold text-center">
+              <p className="text-black-800 text-xl lg:text-2xl font-semibold text-center">
                 {data?.data?.user_name}
               </p>
 
@@ -115,50 +115,52 @@ const ProfileLayout = ({
 
           <div className="col-span-1 md:col-span-2">
             {/* <div className="flex gap-6 pb-4 border-b border-border-primary mb-5"> */}
-            <div className="flex gap-6 pb-4 border-b border-border-primary mb-5 overflow-auto w-[full] md:w-fit">
-              <Link
-                href="/profile"
-                className={`px-6 py-2 rounded-full font-medium ${
-                  pathName === "/profile"
-                    ? "bg-yellow-500 text-white"
-                    : "text-black-400"
-                }`}
-              >
-                Profile
-              </Link>
+            <div className="overflow-auto">
+              <div className="flex gap-6 pb-4 border-b border-border-primary mb-5  w-[630px] md:w-fit">
+                <Link
+                  href="/profile"
+                  className={`px-6 py-2 rounded-full font-medium ${
+                    pathName === "/profile"
+                      ? "bg-yellow-500 text-white"
+                      : "text-black-400"
+                  }`}
+                >
+                  Profile
+                </Link>
 
-              <Link
-                href="/my-booking"
-                className={`px-6 py-2 rounded-full font-medium ${
-                  pathName === "/my-booking"
-                    ? "bg-yellow-500 text-white"
-                    : "text-black-400"
-                }`}
-              >
-                My Booking
-              </Link>
+                <Link
+                  href="/my-booking"
+                  className={`px-6 py-2 rounded-full font-medium ${
+                    pathName === "/my-booking"
+                      ? "bg-yellow-500 text-white"
+                      : "text-black-400"
+                  }`}
+                >
+                  My Booking
+                </Link>
 
-              <Link
-                href="/save-list"
-                className={`px-6 py-2 rounded-full font-medium ${
-                  pathName === "/save-list"
-                    ? "bg-yellow-500 text-white"
-                    : "text-black-400"
-                }`}
-              >
-                Save List
-              </Link>
+                <Link
+                  href="/save-list"
+                  className={`px-6 py-2 rounded-full font-medium ${
+                    pathName === "/save-list"
+                      ? "bg-yellow-500 text-white"
+                      : "text-black-400"
+                  }`}
+                >
+                  Save List
+                </Link>
 
-              <Link
-                href="/change-password"
-                className={`px-6 py-2 rounded-full font-medium ${
-                  pathName === "/change-password"
-                    ? "bg-yellow-500 text-white"
-                    : "text-black-400"
-                }`}
-              >
-                Change Password
-              </Link>
+                <Link
+                  href="/change-password"
+                  className={`px-6 py-2 rounded-full font-medium ${
+                    pathName === "/change-password"
+                      ? "bg-yellow-500 text-white"
+                      : "text-black-400"
+                  }`}
+                >
+                  Change Password
+                </Link>
+              </div>
             </div>
 
             {children}

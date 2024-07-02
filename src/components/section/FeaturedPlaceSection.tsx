@@ -6,7 +6,7 @@ import ProductCard from "../card/ProductCard";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useGetUserAllSaveListQuery } from "@/view/save-list/slice.ts";
+import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import {
   useGetHotelDataMutation,
   useGetSearchHotelMutation,

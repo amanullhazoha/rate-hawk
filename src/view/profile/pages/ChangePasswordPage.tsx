@@ -25,9 +25,9 @@ const ChangePasswordPage = () => {
   };
 
   return (
-    <div className="px-5 py-5">
+    <div className="bg-white">
       <div className="mb-8">
-        <h3 className="text-4xl font-semibold text-black mb-8">
+        <h3 className="text-2xl lg:text-4xl font-semibold text-black mb-8">
           Update your password
         </h3>
 
@@ -71,7 +71,7 @@ const ChangePasswordPage = () => {
               />
             </div>
 
-            <div className="my-5">
+            <div className="mt-5">
               <button className="bg-primary-color font-medium text-center rounded-lg  py-2 px-5 text-md text-black-600 border border-[#DBDBDB] font-secondary">
                 Update password
               </button>

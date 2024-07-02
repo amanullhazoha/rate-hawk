@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
-import { useGetUserAllSaveListQuery } from "@/view/save-list/slice.ts";
+import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 import {

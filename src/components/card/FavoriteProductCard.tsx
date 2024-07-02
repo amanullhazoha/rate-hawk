@@ -9,7 +9,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
-import { useUserRemoveFavoriteMutation } from "@/view/save-list/slice.ts";
+import { useUserRemoveFavoriteMutation } from "@/view/save-list/slice";
 
 const responsive = {
   mobile: {

@@ -12,7 +12,7 @@ import product_image from "@/assets/images/product.jpg";
 import {
   useUserAddFavoriteMutation,
   useUserRemoveFavoriteMutation,
-} from "@/view/save-list/slice.ts";
+} from "@/view/save-list/slice";
 
 const responsive = {
   mobile: {
