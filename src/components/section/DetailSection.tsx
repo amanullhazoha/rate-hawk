@@ -1,13 +1,13 @@
-import AmenitiesSection from "./AmenitieSection";
-import DetailTopSection from "./DetailTopSection";
-import RoomRateSection from "./RoomRateSection";
+import { useState } from "react";
 import StarIcon from "@/assets/icons/StarIcon";
 import StayInfoSection from "./StayInfoSection";
-import AvailabilitySection from "./AvailabilitySection";
-import ThinksToKnowSection from "./ThinksToKnowSection";
+import RoomRateSection from "./RoomRateSection";
+import AmenitiesSection from "./AmenitieSection";
+import DetailTopSection from "./DetailTopSection";
 import RangeCalender from "../calender/RangeCalender";
 import ReserveCardSection from "./ReserveCardSection";
-import { useState } from "react";
+import AvailabilitySection from "./AvailabilitySection";
+import ThinksToKnowSection from "./ThinksToKnowSection";
 
 const DetailSection = ({
   bookHash,
@@ -18,10 +18,9 @@ const DetailSection = ({
 }) => {
   const [selectRoom, setSelectRoom] = useState<any>(null);
 
-  console.log(selectRoom);
   return (
-    <div className="grid gap-10 grid-cols-12">
-      <div className="w-full col-span-8">
+    <div className="max-md:flex max-md:flex-col md:grid gap-5 md:gap-10 grid-cols-12">
+      <div className="w-full col-span-12 lg:col-span-8">
         <DetailTopSection
           kind={hotelInfo?.kind}
           name={hotelInfo?.name}
@@ -45,7 +44,7 @@ const DetailSection = ({
         />
       </div>
 
-      <div className="w-full col-span-4">
+      <div className="w-full col-span-12 lg:col-span-4">
         <ReserveCardSection
           selectRoom={selectRoom}
           setSelectRoom={setSelectRoom}

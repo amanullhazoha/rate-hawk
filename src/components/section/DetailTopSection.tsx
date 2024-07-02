@@ -1,8 +1,5 @@
-import Image from "next/image";
-import team from "@/assets/images/team.jpg";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
 
 const DetailTopSection = ({
   kind,
@@ -16,7 +13,7 @@ const DetailTopSection = ({
   star_rating?: number;
 }) => {
   return (
-    <div className="p-8 border border-border-primary rounded-[20px] mb-8">
+    <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
       <div className="flex justify-between items-center mb-6">
         <p className="bg-yellow-100 text-xs text-semi-primary font-medium px-3 py-1 rounded-[20px] border border-semi-primary">
           {kind}
@@ -65,7 +62,9 @@ const DetailTopSection = ({
         </div>
       </div>
 
-      <p className="text-4xl font-semibold mb-6 text-black-800">{name}</p>
+      <p className="text-2xl lg:text-4xl font-semibold mb-6 text-black-800">
+        {name}
+      </p>
 
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1">

@@ -24,7 +24,7 @@ const ProductImageSection = ({ images }: { images: any }) => {
   }, [images]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-10 md:mb-16">
       <>
         <div className="relative overflow-hidden">
           <Carousel responsive={responsive}>

@@ -4,7 +4,7 @@ const StayInfoSection = ({
   description_struct: any;
 }) => {
   return (
-    <div className="p-8 border border-border-primary rounded-[20px] mb-8">
+    <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
       <div>
         <h3 className="text-2xl font-semibold text-black">Stay Information</h3>
 

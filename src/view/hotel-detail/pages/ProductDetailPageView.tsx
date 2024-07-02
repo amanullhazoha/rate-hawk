@@ -64,7 +64,7 @@ const ProductDetailPageView = () => {
   }, [searchParams]);
 
   return (
-    <main className="bg-white pt-2 pb-32">
+    <main className="bg-white pt-4 pb-10 lg:pb-32">
       <div className="container mx-auto px-2.5">
         {isLoading && (
           <div className="w-full">

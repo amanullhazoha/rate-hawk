@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import map from "@/assets/images/map.jpg";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
@@ -9,8 +7,8 @@ import { useGetUserAllSaveListQuery } from "@/view/save-list/slice.ts";
 import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 import {
-  useGetSearchHotelMutation,
   useGetHotelDataMutation,
+  useGetSearchHotelMutation,
 } from "../slice/search-hotel.slice";
 
 const SearchPageView = () => {
@@ -59,20 +57,18 @@ const SearchPageView = () => {
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
   }, [data, page]);
 
-  console.log(favoriteData);
-
   return (
-    <main className="pt-24 pb-28 bg-white">
-      <div className="container mx-auto px-[35px]">
+    <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">
+      <div className="container mx-auto px-2.5 lg:px-[35px]">
         <div>
-          <h3 className="text-4xl text-black font-semibold mb-2">
+          <h3 className="text-2xl lg:text-4xl text-black font-semibold mb-2">
             Hotels in{" "}
             {searchParams.get("region_name")
               ? searchParams.get("region_name")
               : "unknown"}
           </h3>
 
-          <p className="text-base font-normal text-text-blar flex items-center gap-2 mb-8">
+          <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2 mb-8">
             <span>
               {data?.data?.data?.total_hotels
                 ? data?.data?.data?.total_hotels
@@ -136,9 +132,8 @@ const SearchPageView = () => {
                   ))}
               </div>
 
-              <div>
+              <div className="w-full lg:w-full h-[400px] lg:h-full">
                 <MultiMarkerLocation hotelData={hotelData?.data} />
-                {/* <Image src={map} alt="map" className="h-full" /> */}
               </div>
             </div>
 
