@@ -180,14 +180,34 @@ const UserLayout = ({
                       ref={menuRef}
                       className="absolute top-[50px] right-0 min-w-40 z-50"
                     >
-                      <ProfileNav />
+                      <ProfileNav user={data?.data ? true : false} />
                     </div>
                   )}
                 </div>
               ) : (
-                <Link href="/login" className="block md:hidden">
-                  Login
-                </Link>
+                <div className="relative">
+                  <button type="button" onClick={() => setOpenMenu(true)}>
+                    <svg
+                      width="29"
+                      height="11"
+                      viewBox="0 0 29 11"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M0 1H29" stroke="black" stroke-width="2" />
+                      <path d="M0 10H29" stroke="black" stroke-width="2" />
+                    </svg>
+                  </button>
+
+                  {openMenu && (
+                    <div
+                      ref={menuRef}
+                      className="absolute top-[50px] right-0 min-w-40 z-[99999]"
+                    >
+                      <ProfileNav user={data?.data ? true : false} />
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>

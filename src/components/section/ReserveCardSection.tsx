@@ -98,8 +98,6 @@ const ReserveCardSection = ({
       children: children?.length,
     };
 
-    console.log(payload);
-
     const data: any = await createStripePayment(payload);
 
     if (data?.data?.id) {
@@ -276,7 +274,8 @@ const ReserveCardSection = ({
           </p>
 
           <p className="text-text-blar text-base">
-            ${selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+            {localStorage.getItem("currency")}{" "}
+            {selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
           </p>
         </div>
       )}
@@ -286,7 +285,8 @@ const ReserveCardSection = ({
           <p className="text-black font-medium text-base">Total</p>
 
           <p className="text-black font-medium text-base">
-            ${selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+            {localStorage.getItem("currency")}{" "}
+            {selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
           </p>
         </div>
       )}

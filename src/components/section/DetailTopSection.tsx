@@ -1,6 +1,7 @@
 "use client";
 
 import { toast } from "react-toastify";
+import ShareCard from "../card/ShareCard";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
 import {
@@ -80,11 +81,8 @@ const DetailTopSection = ({
           {kind}
         </p>
 
-        <div className="flex items-center gap-7">
-          <button
-            type="button"
-            className="flex items-center gap-3 text-sm text-black font-medium"
-          >
+        <div className="flex items-center gap-7 relative">
+          <div className="flex items-center gap-3 text-sm text-black font-medium group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -99,7 +97,11 @@ const DetailTopSection = ({
             </svg>
 
             <span>Share</span>
-          </button>
+
+            <div className="group-hover:block hidden absolute top-5 right-0 z-50">
+              <ShareCard />
+            </div>
+          </div>
 
           <button
             type="button"

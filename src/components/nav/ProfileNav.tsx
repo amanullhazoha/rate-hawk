@@ -2,7 +2,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
 
-const ProfileNav = () => {
+const ProfileNav = ({ user }: { user: boolean }) => {
   const [userLogout, { isLoading, isError }] = useUserLogoutMutation();
 
   const handleLogout = async () => {
@@ -26,39 +26,39 @@ const ProfileNav = () => {
         Home
       </Link>
 
-      <Link href="/profile" className="px-3 py-1">
-        Profile
-      </Link>
+      {user && (
+        <Link href="/profile" className="px-3 py-1">
+          Profile
+        </Link>
+      )}
 
-      <Link href="/my-booking" className="px-3 py-1">
-        My Booking
-      </Link>
+      {user && (
+        <Link href="/my-booking" className="px-3 py-1">
+          My Booking
+        </Link>
+      )}
 
-      <Link href="/save-list" className="px-3 py-1">
-        Save List
-      </Link>
-
-      <Link href="/" className="px-3 py-1">
-        Blog & News
-      </Link>
-
-      <Link href="/" className="px-3 py-1">
-        About Us
-      </Link>
+      {user && (
+        <Link href="/save-list" className="px-3 py-1">
+          Save List
+        </Link>
+      )}
 
       <Link href="/contact" className="px-3 py-1">
         Contact
       </Link>
 
-      <div className="w-full">
-        <button
-          type="button"
-          className="px-3 py-1 w-full text-left"
-          onClick={handleLogout}
-        >
-          Log out
-        </button>
-      </div>
+      {user && (
+        <div className="w-full">
+          <button
+            type="button"
+            className="px-3 py-1 w-full text-left"
+            onClick={handleLogout}
+          >
+            Log out
+          </button>
+        </div>
+      )}
     </div>
   );
 };
