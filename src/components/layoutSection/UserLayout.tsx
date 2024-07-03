@@ -18,6 +18,7 @@ import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
 import CurrencySelect from "../buttons/CurrencySelect";
 import LanguageSelect from "../buttons/LanguageSelect";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
+import logo from "@/assets/images/travelmeester-logo.png";
 
 const UserLayout = ({
   children,
@@ -97,7 +98,7 @@ const UserLayout = ({
           <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
             <div className="flex items-center gap-14">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
-                Logo
+                <Image src={logo} alt="logo" className="w-10 h-auto" />
               </Link>
 
               <div className="hidden md:flex items-center gap-12">
@@ -168,7 +169,7 @@ const UserLayout = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <CurrencySelect />
-                <LanguageSelect />
+                {/* <LanguageSelect /> */}
               </div>
 
               {data?.data && !isError ? (
@@ -204,7 +205,11 @@ const UserLayout = ({
                 href="/"
                 className="text-[32px] font-semibold text-semi-primary"
               >
-                Logo
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="w-14 h-auto bg-white px-2 py-2"
+                />
               </Link>
 
               <p className="text-base text-white font-normal mt-4">
