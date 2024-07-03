@@ -8,7 +8,11 @@ export const metadata: Metadata = {
 
 const SearchHotel = () => {
   return (
-    <Suspense fallback={<div>loading....</div>}>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-20">loading....</div>
+      }
+    >
       <SearchPageView />
     </Suspense>
   );

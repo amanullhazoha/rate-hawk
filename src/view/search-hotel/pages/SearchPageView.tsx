@@ -44,7 +44,7 @@ const SearchPageView = () => {
     };
 
     getSearchHotel(payload);
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     const payload = {
@@ -56,7 +56,9 @@ const SearchPageView = () => {
     };
 
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
-  }, [data, page]);
+  }, [data, page, searchParams]);
+
+  console.log(page);
 
   return (
     <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">

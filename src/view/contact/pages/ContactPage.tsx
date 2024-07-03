@@ -52,7 +52,7 @@ const ContactPage = () => {
         <div className="flex max-lg:flex-col mb-[57px] justify-between gap-10 lg:mt-[129px] md:mt-20 mt-12 w-full">
           <div className="lg:w-1/2 w-full ">
             <div className="py-8 px-5 flex flex-col gap-8 border border-border-primary rounded-xl lg:mt-[32px]">
-              <div>
+              {/* <div>
                 <div className="flex items-center gap-2">
                   <div>
                     <LocationIcon />
@@ -69,7 +69,7 @@ const ContactPage = () => {
                     typewriter
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <div className="flex items-center gap-2">
@@ -84,7 +84,9 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-text-blar leading-[25.6px] pt-2">
-                    info@travelmeester.nl
+                    <a href="mailto:info@travelmeester.nl">
+                      info@travelmeester.nl
+                    </a>
                   </p>
                 </div>
               </div>
@@ -102,7 +104,7 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-text-blar leading-[25.6px] pt-2">
-                    +31623963831
+                    <a href="tel:+31623963831">+31623963831</a>
                   </p>
                 </div>
               </div>

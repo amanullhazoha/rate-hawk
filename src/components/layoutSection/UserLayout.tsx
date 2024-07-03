@@ -101,9 +101,13 @@ const UserLayout = ({
 
         <div className="bg-white border-b border-yellow-50">
           <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
-            <div className="flex items-center gap-14">
+            <div className="flex items-center gap-[82px]">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
-                <Image src={logo} alt="logo" className="w-10 h-auto" />
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="w-[72px] md:w-[92px] h-auto"
+                />
               </Link>
 
               <div className="hidden md:flex items-center gap-12">
@@ -237,7 +241,7 @@ const UserLayout = ({
               </p>
 
               <div className="mt-9 flex items-center gap-4">
-                <Link
+                {/* <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
@@ -249,16 +253,17 @@ const UserLayout = ({
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
                   <TwitterIcon className="w-6 h-6 text-white" />
-                </Link>
+                </Link> */}
 
-                <Link
-                  href="/"
+                <a
+                  href="https://www.instagram.com/travelmeester.nl?igsh=MWZ3ZHAxbHg1cmRncg%3D%3D&utm_source=qr"
+                  target="_blank"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
                   <InstagramIcon className="w-6 h-6 text-white" />
-                </Link>
+                </a>
 
-                <Link
+                {/* <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
@@ -270,7 +275,7 @@ const UserLayout = ({
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
                   <PinterestIcon className="w-6 h-6 text-white" />
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
@@ -283,9 +288,9 @@ const UserLayout = ({
 
             <div className="flex flex-col gap-2 text-white text-base font-medium">
               <Link href="/">Home</Link>
-              <Link href="/">Contact</Link>
-              <Link href="/">Privacy Policy</Link>
-              <Link href="/">Terms & Conditions</Link>
+              <Link href="/contact">Contact</Link>
+              {/* <Link href="/">Privacy Policy</Link>
+              <Link href="/">Terms & Conditions</Link> */}
             </div>
           </div>
 
@@ -300,18 +305,21 @@ const UserLayout = ({
                 <p>Feel free to contact and reach us !!</p>
                 <p className="flex gap-3 items-center">
                   <PhoneIcon />
-                  +31623963831
+                  <a href="tel:+31623963831">+31623963831</a>
                 </p>
 
                 <p className="flex gap-3 items-center">
                   <EmailIcon />
-                  info@travelmeester.nl
+
+                  <a href="mailto:info@travelmeester.nl">
+                    info@travelmeester.nl
+                  </a>
                 </p>
 
-                <p className="flex gap-3 items-center">
+                {/* <p className="flex gap-3 items-center">
                   <LocationIcon />
                   USA, FLORIDA
-                </p>
+                </p> */}
               </div>
             </div>
 
@@ -350,16 +358,20 @@ const UserLayout = ({
 
         <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-5 border-t border-yellow-50 flex-col md:flex-row gap-4">
           <p className="text-white text-base font-normal max-md:text-center">
-            Copyright &copy; 2022 [name]. All rights reserved.
+            Copyright &copy; 2022{" "}
+            <Link href="/" className="text-yellow-200">
+              Travel Meester
+            </Link>
+            . All rights reserved.
           </p>
 
-          <div className="flex items-center gap-4 text-sm text-white font-semibold">
+          {/* <div className="flex items-center gap-4 text-sm text-white font-semibold">
             <Link href="/">Privacy Policy</Link>
             <div className="w-[1px] h-4 bg-white"></div>
             <Link href="/">Terms & Conditions</Link>
             <div className="w-[1px] h-4 bg-white"></div>
             <Link href="/">FAQ</Link>
-          </div>
+          </div> */}
         </div>
       </footer>
     </>
