@@ -15,4 +15,11 @@ const createContactSchema = object().shape({
     .required("Message is required."),
 });
 
-export { createContactSchema };
+const newsletterSchema = object().shape({
+  email: string()
+    .min(3, "Email at least 3 character.")
+    .max(100, "Email at most 100 character.")
+    .required("User email is required."),
+});
+
+export { createContactSchema, newsletterSchema };

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import MailIcon from "@/assets/icons/MailIcon";
@@ -28,12 +29,13 @@ import NewsLetterSection from "@/components/section/NewsLetterSection";
 const ContactPage = () => {
   const [crateContact, { isLoading, isError }] = useCreateContactMutation();
 
-  const handleSubmit = async (values: object) => {
+  const handleSubmit = async (values: object, resetForm: any) => {
     const data: any = await crateContact(values);
 
     if (data?.error) {
       toast.error(data?.error?.data?.message);
     } else {
+      resetForm();
       toast.success("Send contact message successfully.");
     }
   };
@@ -41,7 +43,6 @@ const ContactPage = () => {
   return (
     <div>
       <div className="container w-full px-2.5 md:w-[90%] mx-auto">
-        {/* heading */}
         <div className="flex items-center justify-center gap-6 mt-10">
           <span className="block md:w-[100px] w-[80px] h-[4px] bg-primary-color"></span>
           <h1 className="heading">Contact</h1>
@@ -83,7 +84,7 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-text-blar leading-[25.6px] pt-2">
-                    nc.example@example.com
+                    info@travelmeester.nl
                   </p>
                 </div>
               </div>
@@ -101,12 +102,12 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <p className="text-text-blar leading-[25.6px] pt-2">
-                    000-123-456-7890
+                    +31623963831
                   </p>
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <div className="flex items-center gap-2">
                   <div>
                     <SocialIcon />
@@ -154,17 +155,19 @@ const ContactPage = () => {
                     <PinterestIcon className="w-6 h-6 text-white" />
                   </Link>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
           <Formik
+            onSubmit={(values, { resetForm }) =>
+              handleSubmit(values, resetForm)
+            }
             initialValues={{
               email: "",
               message: "",
               user_name: "",
             }}
-            onSubmit={handleSubmit}
             validationSchema={createContactSchema}
           >
             {({ handleSubmit }) => (
@@ -218,79 +221,6 @@ const ContactPage = () => {
         </div>
       </div>
 
-      {/* Newslatter */}
-      {/* <div className="bg-yellow-100 lg:py-[100px] md:py-20 py-14 ">
-        <div className="max-w-[1152px] mx-auto  flex items-center justify-center gap-[124px]">
-          <div className="lg:w-1/2 w-full max-lg:px-5">
-            <h2 className="heading mb-3">Join our newsletter</h2>
-            <p className="lg:text-lg text-sm font-medium text-black-400">
-              Read and share new perspectives on just about any topic.
-              Everyone’s welcome.
-            </p>
-
-            <div className="my-10">
-              <div className="flex items-center gap-4 mb-3">
-                <NumberOne />
-                <p className="text-black-400 font-medium">Get more discount</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <NumberTwo />
-                <p className="text-black-400 font-medium">
-                  Get premium magazines
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between md:p-3 p-2 md:pl-8 pl-5 bg-white border-[1.5px] border-semi-primary rounded-[50px] relative">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full h-full outline-none focus:outline-none border-none placeholder:text-text-light md:placeholder:text-lg md:text-lg text-md"
-                />
-                <button>
-                  <svg
-                    width="40"
-                    height="41"
-                    viewBox="0 0 40 41"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="relative z-10"
-                  >
-                    <rect
-                      y="0.166718"
-                      width="40"
-                      height="40"
-                      rx="20"
-                      fill="#9E9012"
-                    />
-                    <path
-                      d="M10 20.1667H30M30 20.1667L21.6667 11.8334M30 20.1667L21.6667 28.5001"
-                      stroke="white"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-
-                <div className="absolute left-full -translate-x-1/2 bottom-0 max-lg:hidden">
-                  <Direction />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="w-1/2 relative max-lg:hidden">
-            <Image
-              src="/images/contact.png"
-              width={500}
-              height={517}
-              objectFit="cover"
-              alt="Contact Refiqi"
-            />
-          </div>
-        </div>
-      </div> */}
       <NewsLetterSection />
     </div>
   );

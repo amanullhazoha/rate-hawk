@@ -77,8 +77,12 @@ const ReserveCardSection = ({
 
   const handleReserved = async () => {
     const payload = {
-      currency: "EUR",
-      residency: "gb",
+      currency: searchParams.get("currency")
+        ? searchParams.get("currency")
+        : "USD",
+      residency: searchParams.get("residency")
+        ? searchParams.get("residency")
+        : "nl",
       hotel_id: hotelInfo?.id,
       hotel_name: hotelInfo?.name,
       address: hotelInfo?.address,
@@ -142,7 +146,7 @@ const ReserveCardSection = ({
         <div className="w-full flex items-center justify-between mb-4">
           <div>
             <p className="text-xl font-medium text-black">
-              ${selectRoom?.daily_prices[0]}
+              {localStorage.getItem("currency")} {selectRoom?.daily_prices[0]}
               <sub className="text-sm font-normal text-black-400"> /night</sub>
             </p>
           </div>

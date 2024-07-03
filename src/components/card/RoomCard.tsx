@@ -215,7 +215,7 @@ const RoomCard = ({
           <div className="w-full flex items-center justify-between">
             <div>
               <p className="text-xl font-medium text-black">
-                $
+                {localStorage.getItem("currency")}{" "}
                 {
                   rates?.find((item: any) =>
                     room?.name?.includes(item?.room_data_trans?.main_name),

@@ -46,7 +46,7 @@ const DetailTopSection = ({
     if (isFavorite) {
       const data: any = await userRemoveFavorite(hotel_id);
 
-      if (data?.isError) return toast.error("Not remove favorite.");
+      if (data?.error) return toast.error(data?.error.data);
 
       toast.success("Remove Favorite successfully.");
     } else {
@@ -67,7 +67,7 @@ const DetailTopSection = ({
 
       const data: any = await userAddFavorite(payload);
 
-      if (data?.isError) return toast.error("Hotel not added to favorite.");
+      if (data?.error) return toast.error(data?.error.data);
 
       toast.success("Add Favorite successfully.");
     }

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProfileNav from "../nav/ProfileNav";
-import EmailIcon from "@/assets/icons/Email";
+import EmailIcon from "@/assets/icons/EmailIcon";
+import MailIcon from "@/assets/icons/MailIcon";
 import { usePathname } from "next/navigation";
 import BlogImage from "@/assets/images/blog.jpg";
 import SearchIcon from "@/assets/icons/SearchIcon";
@@ -19,6 +20,8 @@ import CurrencySelect from "../buttons/CurrencySelect";
 import LanguageSelect from "../buttons/LanguageSelect";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
 import logo from "@/assets/images/travelmeester-logo.png";
+import PhoneIcon from "@/assets/icons/PhoneIcon";
+import LocationIcon from "@/assets/icons/LocationIcon";
 
 const UserLayout = ({
   children,
@@ -53,9 +56,10 @@ const UserLayout = ({
   return (
     <>
       <header>
-        <div className="bg-black-800">
-          <div className="container max-md:px-2.5 mx-auto justify-between items-center py-2.5 hidden md:flex">
-            <div className="flex items-center gap-7">
+        {!data && isError && (
+          <div className="bg-black-800">
+            <div className="container max-md:px-2.5 mx-auto justify-end items-center py-2.5 flex">
+              {/* <div className="flex items-center gap-7">
               <Link
                 href="/"
                 className="flex items-center gap-2 text-primary-color text-sm"
@@ -71,28 +75,29 @@ const UserLayout = ({
                 <EmailIcon />
                 0123 456 789
               </Link>
-            </div>
+            </div> */}
 
-            <div className="flex items-center gap-7">
-              <Link
-                href="/login"
-                className="flex items-center gap-2 text-primary-color text-sm"
-              >
-                <ProfileIcon />
-                Login
-              </Link>
+              <div className="flex items-center gap-7">
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 text-primary-color text-sm"
+                >
+                  <ProfileIcon />
+                  Login
+                </Link>
 
-              <div className="w-[1px] h-[16px] bg-primary-color"></div>
+                <div className="w-[1px] h-[16px] bg-primary-color"></div>
 
-              <Link
-                href="/signup"
-                className="flex items-center gap-2 text-primary-color text-sm"
-              >
-                Register
-              </Link>
+                <Link
+                  href="/signup"
+                  className="flex items-center gap-2 text-primary-color text-sm"
+                >
+                  Register
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="bg-white border-b border-yellow-50">
           <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
@@ -109,19 +114,20 @@ const UserLayout = ({
                   )}
                 </Link>
 
-                <Link href="/about-us">
+                {/* <Link href="/about-us">
                   About Us
                   {pathName === "/about-us" && (
                     <p className="w-7 h-[3px] bg-primary-color"></p>
                   )}
-                </Link>
+                </Link> */}
 
-                <Link href="/blog">
+                {/* <Link href="/blog">
                   Blog & News
                   {pathName === "/blog" && (
                     <p className="w-7 h-[3px] bg-primary-color"></p>
                   )}
-                </Link>
+                </Link> */}
+
                 <Link href="/contact">
                   Contact
                   {pathName === "/contact" && (
@@ -157,15 +163,6 @@ const UserLayout = ({
                 </Link>
               </div>
             </div>
-
-            {/* <div className="flex items-center gap-5">
-              <div className="flex items-center gap-3">
-                <div>USD</div>
-                <div>ENG</div>
-              </div>
-
-              <SearchIcon />
-            </div> */}
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <CurrencySelect />
@@ -188,7 +185,9 @@ const UserLayout = ({
                   )}
                 </div>
               ) : (
-                <Link href="/login">Login</Link>
+                <Link href="/login" className="block md:hidden">
+                  Login
+                </Link>
               )}
             </div>
           </div>
@@ -198,9 +197,9 @@ const UserLayout = ({
       <main className="min-h-[calc(100vh-690px)]">{children}</main>
 
       <footer className="bg-black-800">
-        <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-2">
+        <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-3">
           <div className="flex gap-10 flex-col md:flex-row">
-            <div className="w-full md:w-1/2 lg:w-4/6">
+            <div className="w-full ">
               <Link
                 href="/"
                 className="text-[32px] font-semibold text-semi-primary"
@@ -254,21 +253,19 @@ const UserLayout = ({
                 </Link>
               </div>
             </div>
+          </div>
 
-            <div>
-              <h3 className="text-white text-lg font-medium mb-6 min-w-[125px]">
-                COMPANY
-                <p className="w-[50px] h-[3px] bg-primary-color mt-1"></p>
-              </h3>
+          <div>
+            <h3 className="text-white text-lg font-medium mb-6 min-w-[125px]">
+              Page
+              <p className="w-[50px] h-[3px] bg-primary-color mt-1"></p>
+            </h3>
 
-              <div className="flex flex-col gap-2 text-white text-base font-medium">
-                <Link href="/">About Us</Link>
-                <Link href="/">Testimonials</Link>
-                <Link href="/">Rewards</Link>
-                <Link href="/">Work with Us</Link>
-                <Link href="/">Meet the Team</Link>
-                <Link href="/">Blog</Link>
-              </div>
+            <div className="flex flex-col gap-2 text-white text-base font-medium">
+              <Link href="/">Home</Link>
+              <Link href="/">Contact</Link>
+              <Link href="/">Privacy Policy</Link>
+              <Link href="/">Terms & Conditions</Link>
             </div>
           </div>
 
@@ -282,31 +279,31 @@ const UserLayout = ({
               <div className="flex flex-col gap-3.5 text-white text-base font-medium">
                 <p>Feel free to contact and reach us !!</p>
                 <p className="flex gap-3 items-center">
-                  <EmailIcon />
-                  +012 345 6789
+                  <PhoneIcon />
+                  +31623963831
                 </p>
 
                 <p className="flex gap-3 items-center">
                   <EmailIcon />
-                  travelta.mail@info.com
+                  info@travelmeester.nl
                 </p>
 
                 <p className="flex gap-3 items-center">
-                  <EmailIcon />
+                  <LocationIcon />
                   USA, FLORIDA
                 </p>
               </div>
             </div>
 
-            <div className="w-full md:w-1/2">
+            {/* <div className="w-full md:w-1/2">
               <h3 className="text-white text-lg font-medium mb-6">
-                RECENT POST
+                Popular Place
                 <p className="w-[50px] h-[3px] bg-primary-color mt-1"></p>
               </h3>
 
               <div className="flex flex-col gap-4">
                 <div className="flex gap-3">
-                  <Image src={BlogImage} alt="iamge" />
+                  <Image src={BlogImage} alt="image" />
 
                   <div className="flex flex-col justify-between text-white">
                     <h4 className="text-base font-medium">
@@ -327,7 +324,7 @@ const UserLayout = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

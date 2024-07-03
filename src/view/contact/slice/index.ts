@@ -14,7 +14,15 @@ export const contactApi = createApi({
         body: data,
       }),
     }),
+    createNewsletter: builder.mutation({
+      query: (data: any) => ({
+        url: "/public/newsletter",
+        method: "post",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useCreateContactMutation } = contactApi;
+export const { useCreateContactMutation, useCreateNewsletterMutation } =
+  contactApi;

@@ -154,7 +154,9 @@ const ProductCard = ({
 
           <div className="flex justify-between items-center">
             <p className="text-base font-medium text-black-800">
-              ${product?.rates[0]?.daily_prices[0]}{" "}
+              {/* ${product?.rates[0]?.daily_prices[0]}{" "} */}
+              {localStorage.getItem("currency")}{" "}
+              {product?.rates[0]?.daily_prices[0]}{" "}
               <span className="text-text-blar">/night</span>
             </p>
 
