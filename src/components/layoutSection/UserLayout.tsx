@@ -185,7 +185,7 @@ const UserLayout = ({
                   )}
                 </div>
               ) : (
-                <div className="relative">
+                <div className="relative block md:hidden">
                   <button type="button" onClick={() => setOpenMenu(true)}>
                     <svg
                       width="29"
