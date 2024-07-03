@@ -25,28 +25,24 @@ const ProductDetailPageView = () => {
   useEffect(() => {
     const payload = {
       id: params.id,
-      language: searchParams.get("language")
-        ? searchParams.get("language")
-        : "en",
+      language: "en",
     };
 
     const bookHashPayload = {
       id: params.id,
+      language: "en",
       checkin: searchParams.get("check-in")
         ? searchParams.get("check-in")
         : format(new Date(), "yyyy-MM-dd"),
       checkout: searchParams.get("check-out")
         ? searchParams.get("check-out")
         : format(addDays(new Date(), 1), "yyyy-MM-dd"),
-      language: searchParams.get("language")
-        ? searchParams.get("language")
-        : "en",
       currency: searchParams.get("currency")
         ? searchParams.get("currency")
         : "USD",
       residency: searchParams.get("residency")
         ? searchParams.get("residency")
-        : "gb",
+        : "nl",
       guests: [
         {
           adults: Number(searchParams.get("adults"))

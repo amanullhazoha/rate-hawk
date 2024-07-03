@@ -24,7 +24,7 @@ const SearchSection = () => {
     name: "Netherlands",
     code: "nl",
   });
-  const [star, setStar] = useState<any>(null);
+  // const [star, setStar] = useState<any>(null);
   const [openSearch, setOpenSearch] = useState(false);
   const [children, setChildren] = useState<any[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -96,13 +96,11 @@ const SearchSection = () => {
   };
 
   const handleSearch = () => {
-    const language = localStorage.getItem("lang")
-      ? localStorage.getItem("lang")?.toLocaleLowerCase()
-      : "en";
+    const adults = guest;
+    const language = "en";
     const currency = localStorage.getItem("currency")
       ? localStorage.getItem("currency")
       : "USD";
-    const adults = guest;
     const selectResidency = residency?.code;
     const region_id = locationItem ? locationItem?.id : null;
     const checkIn =
@@ -122,7 +120,7 @@ const SearchSection = () => {
 
     let url: string = searchParams.toString();
 
-    url = star && setQueryParams(url, "star", star);
+    // url = star && setQueryParams(url, "star", star);
     url = checkIn && setQueryParams(url, "check-in", checkIn);
     url = checkOut && setQueryParams(url, "check-out", checkOut);
     url = currency && setQueryParams(url, "currency", currency);
@@ -416,7 +414,7 @@ const SearchSection = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
+            {/* <div className="grid grid-cols-1 gap-4">
               <div>
                 <label
                   htmlFor="search"
@@ -477,7 +475,7 @@ const SearchSection = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <button
               type="button"

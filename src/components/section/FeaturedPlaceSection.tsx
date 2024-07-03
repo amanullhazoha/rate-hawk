@@ -27,21 +27,23 @@ const FeaturedPlaceSection = () => {
   const handleViewAll = () => {
     const adults = "1";
     const language = "en";
-    const residency = "gb";
-    const currency = "USD";
+    const residency = "nl";
     const regionId = region_id.toString();
+    const currency = localStorage.getItem("currency")
+      ? localStorage.getItem("currency")
+      : "USD";
     const checkIn = format(new Date(), "yyyy-MM-dd");
     const checkOut = format(addDays(new Date(), 1), "yyyy-MM-dd");
 
     let url = searchParams.toString();
 
-    url = checkIn && setQueryParams(url, "check-in", checkIn);
-    url = checkOut && setQueryParams(url, "check-out", checkOut);
-    url = residency && setQueryParams(url, "residency", residency);
-    url = language && setQueryParams(url, "language", language);
-    url = regionId && setQueryParams(url, "region_id", regionId);
-    url = currency && setQueryParams(url, "currency", currency);
     url = adults && setQueryParams(url, "adults", adults);
+    url = checkIn && setQueryParams(url, "check-in", checkIn);
+    url = language && setQueryParams(url, "language", language);
+    url = checkOut && setQueryParams(url, "check-out", checkOut);
+    url = regionId && setQueryParams(url, "region_id", regionId);
+    url = residency && setQueryParams(url, "residency", residency);
+    url = currency ? setQueryParams(url, "currency", currency) : url;
 
     router.push(`/search-hotel${url ? `?${url}` : ""}`);
   };
@@ -49,7 +51,7 @@ const FeaturedPlaceSection = () => {
   useEffect(() => {
     const payload = {
       region_id,
-      residency: "gb",
+      residency: "nl",
       language: "en",
       checkin: format(new Date(), "yyyy-MM-dd"),
       checkout: format(addDays(new Date(), 1), "yyyy-MM-dd"),
@@ -59,7 +61,9 @@ const FeaturedPlaceSection = () => {
           children: [],
         },
       ],
-      currency: "USD",
+      currency: localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
     };
 
     getSearchHotel(payload);

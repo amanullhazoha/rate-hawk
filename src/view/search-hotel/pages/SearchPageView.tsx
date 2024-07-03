@@ -23,11 +23,11 @@ const SearchPageView = () => {
 
   useEffect(() => {
     const payload = {
+      language: "en",
       star: searchParams.get("star"),
       checkin: searchParams.get("check-in"),
       checkout: searchParams.get("check-out"),
       residency: searchParams.get("residency"),
-      language: searchParams.get("language"),
       guests: [
         {
           adults: Number(searchParams.get("adults")),
@@ -51,14 +51,12 @@ const SearchPageView = () => {
       hotel_ids: data?.data?.data?.hotels
         ?.slice(4 * (page - 1), page * 4)
         ?.map((item: any) => item.id),
-      language: searchParams.get("language"),
+      language: "en",
       region_id: Number(searchParams.get("region_id")),
     };
 
     if (data?.data?.data?.hotels?.length > 0) getHotelData(payload);
   }, [data, page]);
-
-  console.log(data);
 
   return (
     <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">
