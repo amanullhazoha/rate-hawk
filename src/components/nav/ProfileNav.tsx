@@ -48,6 +48,10 @@ const ProfileNav = ({ user }: { user: boolean }) => {
         Contact
       </Link>
 
+      <Link href="/about-us" className="px-6 py-1 hover:bg-border-primary">
+        About Us
+      </Link>
+
       {user && (
         <div className="w-full">
           <button

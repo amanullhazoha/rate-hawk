@@ -118,12 +118,12 @@ const UserLayout = ({
                   )}
                 </Link>
 
-                {/* <Link href="/about-us">
+                <Link href="/about-us">
                   About Us
                   {pathName === "/about-us" && (
                     <p className="w-7 h-[3px] bg-primary-color"></p>
                   )}
-                </Link> */}
+                </Link>
 
                 {/* <Link href="/blog">
                   Blog & News
@@ -289,6 +289,7 @@ const UserLayout = ({
             <div className="flex flex-col gap-2 text-white text-base font-medium">
               <Link href="/">Home</Link>
               <Link href="/contact">Contact</Link>
+              <Link href="/about-us">About Us</Link>
               {/* <Link href="/">Privacy Policy</Link>
               <Link href="/">Terms & Conditions</Link> */}
             </div>

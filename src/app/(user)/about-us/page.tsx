@@ -1,12 +1,12 @@
 import { Metadata } from "next";
-import { AboutUsPageView } from "@/view/about-us";
+import { AboutUsNewPageView } from "@/view/about-us";
 
 export const metadata: Metadata = {
   title: "About",
 };
 
 const AboutUs = () => {
-  return <AboutUsPageView />;
+  return <AboutUsNewPageView />;
 };
 
 export default AboutUs;
