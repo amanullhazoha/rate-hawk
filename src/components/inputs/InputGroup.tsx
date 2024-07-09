@@ -41,6 +41,7 @@ const InputGroup = ({
 
         {type === "password" && (
           <button
+            type="button"
             className="absolute right-2.5"
             onClick={() =>
               setChangeType((prev) => (prev === "text" ? "password" : "text"))
