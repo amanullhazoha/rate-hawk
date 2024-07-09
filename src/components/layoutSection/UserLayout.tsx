@@ -306,7 +306,7 @@ const UserLayout = ({
               <div className="flex flex-col gap-3.5 text-white text-base font-medium">
                 <p>Feel free to contact and reach us !!</p>
                 <p className="flex gap-3 items-center">
-                  <WhatsappIcon className="w-5 h-5" />
+                  <WhatsappIcon className="w-5 h-5 text-[#8A7E0F]" />
                   <a href="tel:+31623963831">+31623963831</a>
                 </p>
 
