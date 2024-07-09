@@ -12,7 +12,7 @@ const Layout = ({
         <div className="flex justify-center items-center h-20">loading....</div>
       }
     >
-      <UserLayout>{children}</UserLayout>;
+      <UserLayout>{children}</UserLayout>
     </Suspense>
   );
 };
