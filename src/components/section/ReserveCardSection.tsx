@@ -37,8 +37,10 @@ const ReserveCardSection = ({
     { isLoading: isPaymentLoading, data: paymentData },
   ] = useCreateStripePaymentMutation();
 
+  const adults: string | null = searchParams.get("adults");
   const checkIn: string | null = searchParams.get("check-in");
   const checkOut: string | null = searchParams.get("check-out");
+  const childrenQuery: string | null = searchParams.get("children");
 
   const handleDateRange = (dates: any) => {
     let url = searchParams.toString();
@@ -136,6 +138,22 @@ const ReserveCardSection = ({
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    if (adults) {
+      setGuest(Number(adults));
+    }
+
+    if (childrenQuery) {
+      const arrayData = childrenQuery.split(",");
+
+      const filterData = childrenData.filter((item) => {
+        if (arrayData.includes(item.value)) return item;
+      });
+
+      setChildren(filterData);
+    }
   }, []);
 
   return (
