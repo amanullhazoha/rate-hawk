@@ -1,4 +1,4 @@
-const WhatsappIcon = ({ className }: { className: string }) => {
+const WhatsappIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
