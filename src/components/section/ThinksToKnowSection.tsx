@@ -1,3 +1,5 @@
+import { format, parse } from "date-fns";
+
 const ThinksToKnowSection = ({
   policy_struct,
   check_in_time,
@@ -39,12 +41,18 @@ const ThinksToKnowSection = ({
 
       <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary w-full md:w-1/2">
         <p>Check-in</p>
-        <p>{check_in_time}</p>
+        <p>
+          {check_in_time &&
+            format(parse(check_in_time, "HH:mm:ss", new Date()), "HH:mm")}
+        </p>
       </div>
 
       <div className="p-3.5 rounded-md flex items-center justify-between bg-white w-full md:w-1/2">
         <p>Check-out</p>
-        <p>{check_out_time}</p>
+        <p>
+          {check_out_time &&
+            format(parse(check_out_time, "HH:mm:ss", new Date()), "HH:mm")}
+        </p>
       </div>
     </div>
   );
