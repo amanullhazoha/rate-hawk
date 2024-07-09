@@ -36,12 +36,13 @@ const NewsLetterSection = () => {
               <NumberOne />
               <p className="text-black-400 font-medium">Get more discount</p>
             </div>
-            <div className="flex items-center gap-4">
+
+            {/* <div className="flex items-center gap-4">
               <NumberTwo />
               <p className="text-black-400 font-medium">
                 Get premium magazines
               </p>
-            </div>
+            </div> */}
           </div>
 
           <Formik

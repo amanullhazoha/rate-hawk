@@ -23,6 +23,13 @@ const DetailSection = ({
   return (
     <div className="max-md:flex max-md:flex-col md:grid gap-5 md:gap-10 grid-cols-12">
       <div className="w-full col-span-12 lg:col-span-8">
+        <RoomRateSection
+          bookHash={bookHash}
+          selectRoom={selectRoom}
+          room_groups={hotelInfo?.room_groups}
+          handleSelectRoom={(rate: any) => setSelectRoom(rate)}
+        />
+
         <DetailTopSection
           hotelInfo={hotelInfo}
           kind={hotelInfo?.kind}
@@ -36,13 +43,6 @@ const DetailSection = ({
         <StayInfoSection description_struct={hotelInfo?.description_struct} />
 
         <AmenitiesSection amenity_groups={hotelInfo?.amenity_groups} />
-
-        <RoomRateSection
-          bookHash={bookHash}
-          selectRoom={selectRoom}
-          room_groups={hotelInfo?.room_groups}
-          handleSelectRoom={(rate: any) => setSelectRoom(rate)}
-        />
 
         {/* <AvailabilitySection /> */}
 

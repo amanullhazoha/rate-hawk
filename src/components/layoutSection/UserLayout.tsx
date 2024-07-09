@@ -22,6 +22,7 @@ import ProfileIcon from "@/assets/icons/ProfileIcon";
 import logo from "@/assets/images/travelmeester-logo.png";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
 import LocationIcon from "@/assets/icons/LocationIcon";
+import WhatsappIcon from "@/assets/icons/social/WhatsappIcon";
 
 const UserLayout = ({
   children,
@@ -118,12 +119,12 @@ const UserLayout = ({
                   )}
                 </Link>
 
-                <Link href="/about-us">
+                {/* <Link href="/about-us">
                   About Us
                   {pathName === "/about-us" && (
                     <p className="w-7 h-[3px] bg-primary-color"></p>
                   )}
-                </Link>
+                </Link> */}
 
                 {/* <Link href="/blog">
                   Blog & News
@@ -235,10 +236,10 @@ const UserLayout = ({
                 />
               </Link>
 
-              <p className="text-base text-white font-normal mt-4">
+              {/* <p className="text-base text-white font-normal mt-4">
                 Quisque imperdiet sapien porttito the bibendum sellentesque the
                 commodo erat acar accumsa lobortis, enim diam the nesuen.
-              </p>
+              </p> */}
 
               <div className="mt-9 flex items-center gap-4">
                 {/* <Link
@@ -263,14 +264,14 @@ const UserLayout = ({
                   <InstagramIcon className="w-6 h-6 text-white" />
                 </a>
 
-                {/* <Link
-                  href="/"
+                <a
+                  href="tel:+31623963831"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
-                  <LinkedInIcon className="w-6 h-6 text-white" />
-                </Link>
+                  <WhatsappIcon className="w-6 h-6 text-white" />
+                </a>
 
-                <Link
+                {/* <Link
                   href="/"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
@@ -289,7 +290,7 @@ const UserLayout = ({
             <div className="flex flex-col gap-2 text-white text-base font-medium">
               <Link href="/">Home</Link>
               <Link href="/contact">Contact</Link>
-              <Link href="/about-us">About Us</Link>
+              {/* <Link href="/about-us">About Us</Link> */}
               {/* <Link href="/">Privacy Policy</Link>
               <Link href="/">Terms & Conditions</Link> */}
             </div>
@@ -359,20 +360,20 @@ const UserLayout = ({
 
         <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-5 border-t border-yellow-50 flex-col md:flex-row gap-4">
           <p className="text-white text-base font-normal max-md:text-center">
-            Copyright &copy; 2022{" "}
+            Copyright &copy; {new Date().getFullYear()}{" "}
             <Link href="/" className="text-yellow-200">
               Travel Meester
             </Link>
             . All rights reserved.
           </p>
 
-          {/* <div className="flex items-center gap-4 text-sm text-white font-semibold">
-            <Link href="/">Privacy Policy</Link>
-            <div className="w-[1px] h-4 bg-white"></div>
-            <Link href="/">Terms & Conditions</Link>
-            <div className="w-[1px] h-4 bg-white"></div>
-            <Link href="/">FAQ</Link>
-          </div> */}
+          <div className="flex items-center gap-4 text-sm text-white font-semibold">
+            {/* <Link href="/">Privacy Policy</Link>
+            <div className="w-[1px] h-4 bg-white"></div> */}
+            <Link href="/terms-and-conditions">Terms & Conditions</Link>
+            {/* <div className="w-[1px] h-4 bg-white"></div>
+            <Link href="/">FAQ</Link> */}
+          </div>
         </div>
       </footer>
     </>

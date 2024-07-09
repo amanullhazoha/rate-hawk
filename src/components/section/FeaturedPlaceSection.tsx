@@ -91,7 +91,7 @@ const FeaturedPlaceSection = () => {
             </h2>
 
             <p className="text-base md:text-lg text-text-blar font-medium">
-              Popular places to stay that Chisfis recommends for you
+              Popular places to stay that travelmeesters recommends for you
             </p>
           </div>
 
@@ -148,14 +148,14 @@ const FeaturedPlaceSection = () => {
               </button>
             </div>
 
-            <button
+            {/* <button
               type="button"
               onClick={handleViewAll}
               className="px-6 py-2 rounded-full text-base font-medium bg-white text-black-600 border border-text-black-600 flex items-center gap-2"
             >
               View all
               <ArrowIcon />
-            </button>
+            </button> */}
           </div>
 
           {isGetHotelData || isHotelSearching ? (

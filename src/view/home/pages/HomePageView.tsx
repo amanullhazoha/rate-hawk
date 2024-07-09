@@ -1,6 +1,6 @@
 import SearchSection from "@/components/section/SearchSection";
 import ExploreSection from "@/components/section/ExploreSection";
-import NewsLetterSection from "@/components/section/NewsLetterSection";
+// import NewsLetterSection from "@/components/section/NewsLetterSection";
 import FeaturedPlaceSection from "@/components/section/FeaturedPlaceSection";
 
 const HomePageView = () => {
@@ -8,7 +8,7 @@ const HomePageView = () => {
     <main>
       <SearchSection />
       <FeaturedPlaceSection />
-      <NewsLetterSection />
+      {/* <NewsLetterSection /> */}
       <ExploreSection />
     </main>
   );

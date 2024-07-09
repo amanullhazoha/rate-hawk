@@ -24,7 +24,7 @@ import ButtonPrimary from "@/components/buttons/ButtonPrimary";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
 import PinterestIcon from "@/assets/icons/social/PinterestIcon";
 import InputTextArea from "@/components/inputs/InputTextarea";
-import NewsLetterSection from "@/components/section/NewsLetterSection";
+import WhatsappIcon from "@/assets/icons/social/WhatsappIcon";
 
 const ContactPage = () => {
   const [crateContact, { isLoading, isError }] = useCreateContactMutation();
@@ -94,7 +94,7 @@ const ContactPage = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <div>
-                    <PhoneIcon />
+                    <WhatsappIcon className="text-[#9E9012] w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="uppercase text-sm text-black-800 font-semibold tracking-[0.28px]">
@@ -222,8 +222,6 @@ const ContactPage = () => {
           ></iframe>
         </div>
       </div>
-
-      <NewsLetterSection />
     </div>
   );
 };
