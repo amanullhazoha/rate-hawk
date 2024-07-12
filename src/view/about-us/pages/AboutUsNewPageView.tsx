@@ -312,7 +312,7 @@ const AboutUsNewPageView = () => {
               11. Wijzigingen en Annuleringen door het Reisbureau
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Het reisbureau heeft het recht de reisovereenkomst op te zeggen
                 of te wijzigen in geval van overmacht of onvoldoende deelname of
