@@ -160,7 +160,7 @@ const AboutUsNewPageView = () => {
                 betalingsvaluta, kan uw bank of de aanbieder van de betaalwijze
                 (of hun aanbieders van betaaldiensten) extra kosten in rekening
                 brengen. Dit kan bijvoorbeeld gebeuren als uw creditcard in
-                euro's is, maar het hotel in dollars rekent. Als dit gaat
+                euro&apos;s is, maar het hotel in dollars rekent. Als dit gaat
                 gebeuren, informeren we u tijdens het boekingsproces. * Dit
                 verwijst alleen naar de standaardvaluta van uw betaalwijze.
               </li>
