@@ -31,7 +31,7 @@ const RoomCard = ({
   useEffect(() => {
     if (images?.length > 0) {
       const newImages: any = images.map((image: string) =>
-        image.replace("{size}", "200x200"),
+        image.replace("{size}", "1024x768"),
       );
 
       setProductImage(newImages);

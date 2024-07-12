@@ -2,7 +2,7 @@ import ExploreCard from "../card/ExploreCard";
 
 const ExploreSection = () => {
   return (
-    <section className="pt-14 md:pt-[150px] pb-14 md:pb-[120px]">
+    <section className="pb-14 md:pb-[120px]">
       <div className="container max-md:px-2.5 mx-auto">
         <div className="mb-14">
           <h2 className="text-center text-3xl md:text-[40px] font-semibold text-black-800 mb-3">

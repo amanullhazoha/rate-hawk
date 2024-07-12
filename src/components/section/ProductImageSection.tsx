@@ -16,7 +16,7 @@ const ProductImageSection = ({ images }: { images: any }) => {
   useEffect(() => {
     if (images?.length > 0) {
       const newImages = images.map((image: string) =>
-        image.replace("{size}", "200x200"),
+        image.replace("{size}", "1024x768"),
       );
 
       setProductImage(newImages);

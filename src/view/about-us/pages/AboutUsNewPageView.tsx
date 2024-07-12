@@ -5,12 +5,18 @@ const AboutUsNewPageView = () => {
     <section className="bg-white py-10 md:py-20">
       <div className="container mx-auto px-2.5 md:px-0">
         <div className="w-full md:w-[80%] lg:w-[70%] mx-auto">
+          {/* <div>
+            Algemene voorwaarden travel meester
+            <p>E-mail: info@travelmeester.nl</p>
+            Website: www.travelmeester.nl
+          </div> */}
+
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Definities en Begrippen
+              1. Definities en Begrippen
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Reisbureau: Travel meester, gevestigd te Tubbergenbrink 10,
                 ingeschreven bij de Kamer van Koophandel onder nummer 93844220
@@ -24,7 +30,7 @@ const AboutUsNewPageView = () => {
               <li className="text-text-blar text-base">
                 Reisovereenkomst: De overeenkomst waarbij het reisbureau zich
                 verbindt tot het verschaffen van een door haar aangeboden
-                reisarrangement.
+                reisarrangement
               </li>
 
               <li className="text-text-blar text-base">
@@ -45,10 +51,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Toepasselijkheid
+              2. Toepasselijkheid
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Deze algemene voorwaarden zijn van toepassing op alle
                 aanbiedingen, overeenkomsten en leveringen van het reisbureau
@@ -65,15 +71,21 @@ const AboutUsNewPageView = () => {
                 Travel meester en de klant kunnen alleen afwijken van deze
                 voorwaarden als dat schriftelijk is afgesproken.
               </li>
+
+              <li className="text-text-blar text-base">
+                Wanneer u een Boeking maakt, gaat u akkoord met het betalen van
+                de kosten van de Reiservaring, met inbegrip van eventuele kosten
+                en belastingen die mogelijk van toepassing zijn.
+              </li>
             </ol>
           </div>
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Aanbod en Overeenkomst
+              3. Aanbod en Overeenkomst
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Alle aanbiedingen op de website zijn vrijblijvend en onder
                 voorbehoud van beschikbaarheid.
@@ -87,17 +99,17 @@ const AboutUsNewPageView = () => {
 
               <li className="text-text-blar text-base">
                 Eventuele fouten of vergissingen in het aanbod binden het
-                reisbureau niet
+                reisbureau niet.
               </li>
             </ol>
           </div>
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Prijzen en Betalingen
+              4. Prijzen en Betalingen
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De op de website vermelde prijzen zijn inclusief BTW en andere
                 van overheidswege opgelegde heffingen.
@@ -115,7 +127,7 @@ const AboutUsNewPageView = () => {
               <li className="text-text-blar text-base">
                 Na ontvangst van de boekingsbevestiging dient de reiziger een
                 aanbetaling van 25% van de totale reissom te doen binnen 14
-                dagen, tenzij het anders is aangegeven.
+                dagen, tenzij het anders is aangegeven
               </li>
 
               <li className="text-text-blar text-base">
@@ -134,19 +146,37 @@ const AboutUsNewPageView = () => {
                 voor de reisovereenkomst te annuleren, waarbij de
                 annuleringsvoorwaarden van toepassing zijn.
               </li>
+
+              <li className="text-text-blar text-base">
+                Duidelijke fouten en duidelijke drukfouten zijn niet bindend.
+                Bijvoorbeeld: als u een premium auto of een overnachting in een
+                luxueuze suite boekt, die per ongeluk voor €1 wordt aangeboden,
+                kan uw Boeking worden geannuleerd en betalen we het door u
+                betaalde bedrag terug.
+              </li>
+
+              <li className="text-text-blar text-base">
+                Als uw betaalwijze in een andere valuta* is dan de
+                betalingsvaluta, kan uw bank of de aanbieder van de betaalwijze
+                (of hun aanbieders van betaaldiensten) extra kosten in rekening
+                brengen. Dit kan bijvoorbeeld gebeuren als uw creditcard in
+                euro's is, maar het hotel in dollars rekent. Als dit gaat
+                gebeuren, informeren we u tijdens het boekingsproces. * Dit
+                verwijst alleen naar de standaardvaluta van uw betaalwijze.
+              </li>
             </ol>
           </div>
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Informatieverstrekking door de Klant
+              5. Informatieverstrekking door de Klant
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De Klant stelt alle informatie, gegevens en bescheiden die
                 relevant zijn voor de correcte uitvoering van de overeenkomst
-                tijdig en in gewenste vorm en op gewenste wijze beschik-baar aan
+                tijdig en in gewenste vorm en op gewenste wijze beschikbaar aan
                 travel meester.
               </li>
 
@@ -170,10 +200,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Reisdocumenten
+              6. Reisdocumenten
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De reiziger is verantwoordelijk voor het in bezit hebben van
                 geldige reisdocumenten, zoals paspoort, visa en
@@ -190,10 +220,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Vrijwaring
+              7. Vrijwaring
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De Klant vrijwaart travel meester tegen alle aanspraken van
                 anderen die verband houden met de door travel meester geleverde
@@ -204,10 +234,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Verzekeringen
+              8. Verzekeringen
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De reiziger wordt geadviseerd een reis- en
                 annuleringsverzekering af te sluiten.
@@ -222,10 +252,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Wijzigingen door de Reiziger
+              9. Wijzigingen door de Reiziger
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 De reiziger kan schriftelijk wijzigingen in de overeenkomst
                 verzoeken. Het reisbureau zal deze naar vermogen doorvoeren,
@@ -241,41 +271,45 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Annuleringen
+              10. Annuleringen
             </h3>
 
-            <div className="flex flex-col gap-2">
-              <p className="text-text-blar text-base">
-                Bij annulering door de reiziger gelden de volgende
-                annuleringskosten :
-              </p>
+            <p className="text-text-blar text-base">
+              Bij annulering door de reiziger gelden de volgende
+              annuleringskosten :
+            </p>
 
-              <p className="text-text-blar text-base">
-                - Tot 8 weken voor vertrek: 25% van de reissom
-              </p>
+            <ol className="list-decimal list-inside flex flex-col gap-2 ml-10">
+              <li className="text-text-blar text-base">
+                Als u een reservering annuleert binnen een toegestane
+                annuleringsperiode die mogelijk van toepassing is, betalen we u
+                exact hetzelfde bedrag terug als we u in eerste instantie in
+                rekening hebben gebracht (exclusief eventuele van toepassing
+                zijnde kosten met betrekking tot de Service Betalen in uw eigen
+                valuta).
+              </li>
 
-              <p className="text-text-blar text-base">
-                - 8 tot 4 weken voor vertrek: 50% van de reissom
-              </p>
+              <li className="text-text-blar text-base">
+                Bepaalde Boekingen kunnen niet gratis worden geannuleerd,
+                terwijl andere boekingen alleen voor een bepaalde deadline
+                gratis kunnen worden geannuleerd.
+              </li>
 
-              <p className="text-text-blar text-base">
-                - 4 tot 2 weken voor vertrek: 75% van de reissom
-              </p>
-
-              <p className="text-text-blar text-base">
-                - Binnen 2 weken voor vertrek: 100% van de reissom
-              </p>
-
-              <p className="text-text-blar text-base">
-                - Als het anders is aangegeven tijdens het boeken of op het
-                boeking factuur dan zijn de bovenste punten niet van toepassing.
-              </p>
-            </div>
+              <li className="text-text-blar text-base">
+                Als u denkt dat u niet op tijd zult aankomen, neem dan contact
+                op met uw Dienstverlener en leg uit wanneer ze u kunnen
+                verwachten. Het is uw verantwoordelijkheid om ervoor te zorgen
+                dat u op tijd bent - en als u dat niet bent, zijn wij niet
+                verantwoordelijk voor eventuele bijbehorende kosten (bijv. de
+                annulering van uw Boeking of eventuele kosten die de
+                Dienstverlener in rekening kan brengen).
+              </li>
+            </ol>
           </div>
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Wijzigingen en Annuleringen door het Reisbureau
+              11. Wijzigingen en Annuleringen door het Reisbureau
             </h3>
 
             <ol className="list-disc list-inside flex flex-col gap-2">
@@ -294,10 +328,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Aansprakelijkheid
+              12. Aansprakelijkheid
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Het reisbureau is niet aansprakelijk voor schade die het gevolg
                 is van:
@@ -307,7 +341,7 @@ const AboutUsNewPageView = () => {
                   derden.
                 </p>
                 <p>
-                  - Overmachtssituaties zoals oorlog, stakingen, natuurrampen,
+                  -- Overmachtssituaties zoals oorlog, stakingen, natuurrampen,
                   pandemieën, enz.
                 </p>
               </li>
@@ -321,17 +355,17 @@ const AboutUsNewPageView = () => {
                 Elk recht van de Klant op schadevergoeding van travel meester
                 vervalt 12 maanden na de gebeurtenis waaruit de
                 aansprakelijkheid direct of indirect voortvloeit. Hiermee wordt
-                niet uitgesloten het bepaalde in artikel 6:89 BW.
+                niet uitgesloten het bepaalde in artikel 6:89 BW
               </li>
             </ol>
           </div>
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Klachtenprocedure
+              13. Klachtenprocedure
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Klachten tijdens de reis dienen direct bij de betrokken
                 dienstverlener en bij het reisbureau gemeld te worden om een
@@ -352,10 +386,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Overmacht
+              14. Overmacht
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Onder overmacht wordt verstaan omstandigheden die de uitvoering
                 van de overeenkomst verhinderen en die niet aan het reisbureau
@@ -378,10 +412,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Bescherming van Persoonsgegevens
+              15. Bescherming van Persoonsgegevens
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Het reisbureau respecteert de privacy van de reiziger en zorgt
                 ervoor dat de persoonlijke informatie vertrouwelijk wordt
@@ -403,7 +437,7 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Wijziging algemene voorwaarden
+              16. Wijziging algemene voorwaarden
             </h3>
 
             <ol className="list-decimal list-inside flex flex-col gap-2">
@@ -430,10 +464,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Toepasselijk Recht en Geschillen
+              17. Toepasselijk Recht en Geschillen
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Op alle overeenkomsten is Nederlands recht van toepassing.
               </li>
@@ -447,10 +481,10 @@ const AboutUsNewPageView = () => {
 
           <div className="mb-10">
             <h3 className="text-black-800 text-2xl md:text-3xl font-semibold mb-4">
-              Slotbepalingen
+              18. Slotbepalingen
             </h3>
 
-            <ol className="list-disc list-inside flex flex-col gap-2">
+            <ol className="list-decimal list-inside flex flex-col gap-2">
               <li className="text-text-blar text-base">
                 Afwijkingen van en aanvullingen op deze algemene voorwaarden
                 zijn slechts geldig indien deze schriftelijk tussen partijen

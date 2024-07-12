@@ -93,7 +93,7 @@ const ProductCard = ({
                     <Image
                       fill
                       alt={product?.name}
-                      src={image.replace("{size}", "200x200")}
+                      src={image.replace("{size}", "1024x768")}
                       className="h-full object-cover rounded-md"
                     />
                   </div>
