@@ -8,12 +8,7 @@ export function middleware(request: NextRequest) {
 
   const user: any = access_token && jwtDecode(access_token);
 
-  const adminRoutes = [
-    "/admin/name",
-    "/admin/blog",
-    "/admin/dashboard",
-    "/admin/name-requested",
-  ];
+  const adminRoutes = ["/admin/dashboard", "/admin/user", "/admin/order"];
 
   const publicRoutes = [
     "/login",

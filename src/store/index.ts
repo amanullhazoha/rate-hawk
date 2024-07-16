@@ -11,9 +11,11 @@ import { forgotPasswordApi } from "@/view/forgot-password/slice";
 import { userProfileApi } from "@/view/profile/slice";
 import { homePageApi } from "@/view/home/slice";
 import { userHotelSaveListApi } from "@/view/save-list/slice";
+import { adminApi } from "@/view/admin/slice";
 
 const store = configureStore({
   reducer: {
+    [adminApi.reducerPath]: adminApi.reducer,
     [loginApi.reducerPath]: loginApi.reducer,
     [signUpApi.reducerPath]: signUpApi.reducer,
     [homePageApi.reducerPath]: homePageApi.reducer,
@@ -26,6 +28,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
+      adminApi.middleware,
       loginApi.middleware,
       signUpApi.middleware,
       homePageApi.middleware,
