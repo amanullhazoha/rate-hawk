@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { v4 as uuidv4 } from "uuid";
 import { loadStripe } from "@stripe/stripe-js";
 import StarIcon from "@/assets/icons/StarIcon";
 import { useState, useRef, useEffect } from "react";
@@ -6,7 +7,10 @@ import RangeCalender from "../calender/RangeCalender";
 import { childrenData } from "@/assets/data/childrenData";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
+import {
+  useCreateOrderMutation,
+  useCreateStripePaymentMutation,
+} from "@/view/hotel-detail/slice/hotel-detail.slice";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
@@ -36,6 +40,8 @@ const ReserveCardSection = ({
     createStripePayment,
     { isLoading: isPaymentLoading, data: paymentData },
   ] = useCreateStripePaymentMutation();
+  const [createOrder, { isLoading: isCreateLoading, data: orderData }] =
+    useCreateOrderMutation();
 
   const adults: string | null = searchParams.get("adults");
   const checkIn: string | null = searchParams.get("check-in");
@@ -79,37 +85,50 @@ const ReserveCardSection = ({
 
   const handleReserved = async () => {
     const payload = {
-      currency: searchParams.get("currency")
-        ? searchParams.get("currency")
-        : "USD",
-      residency: searchParams.get("residency")
-        ? searchParams.get("residency")
-        : "nl",
-      hotel_id: hotelInfo?.id,
-      hotel_name: hotelInfo?.name,
-      address: hotelInfo?.address,
-      hash: selectRoom?.book_hash,
-      star_rating: hotelInfo?.star_rating,
-      checkIn: searchParams.get("check-out"),
-      checkOut: searchParams.get("check-out"),
-      total_night: selectRoom?.daily_prices.length,
-      total_amount: Number(
-        selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
-      ),
-      adults: guest,
-      children: children?.length,
+      language: "en",
+      user_ip: "82.29.0.86",
+      partner_order_id: uuidv4(),
+      book_hash: selectRoom?.book_hash,
     };
 
-    const data: any = await createStripePayment(payload);
+    // const data: any = await createOrder(payload);
 
-    if (data?.data?.id) {
-      const stripe = await stripePromise;
-
-      if (stripe) {
-        await stripe.redirectToCheckout({ sessionId: data?.data?.id });
-      }
-    }
+    console.log(payload);
   };
+
+  // const handleReserved = async () => {
+  //   const payload = {
+  //     currency: searchParams.get("currency")
+  //       ? searchParams.get("currency")
+  //       : "USD",
+  //     residency: searchParams.get("residency")
+  //       ? searchParams.get("residency")
+  //       : "nl",
+  //     hotel_id: hotelInfo?.id,
+  //     hotel_name: hotelInfo?.name,
+  //     address: hotelInfo?.address,
+  //     hash: selectRoom?.book_hash,
+  //     star_rating: hotelInfo?.star_rating,
+  //     checkIn: searchParams.get("check-out"),
+  //     checkOut: searchParams.get("check-out"),
+  //     total_night: selectRoom?.daily_prices.length,
+  //     total_amount: Number(
+  //       selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
+  //     ),
+  //     adults: guest,
+  //     children: children?.length,
+  //   };
+
+  //   const data: any = await createStripePayment(payload);
+
+  //   if (data?.data?.id) {
+  //     const stripe = await stripePromise;
+
+  //     if (stripe) {
+  //       await stripe.redirectToCheckout({ sessionId: data?.data?.id });
+  //     }
+  //   }
+  // };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (divRef.current && !divRef?.current?.contains(event.target as Node)) {

@@ -12,7 +12,7 @@ export const hotelDetailApi = createApi({
   endpoints: (builder) => ({
     getHotelDetail: builder.mutation({
       query: (data: any) => ({
-        url: "/secured/search/hotel-info",
+        url: "/public/search/hotel-info",
         method: "POST",
         body: data,
       }),
@@ -20,11 +20,18 @@ export const hotelDetailApi = createApi({
     }),
     getHotelBookHash: builder.mutation({
       query: (data: any) => ({
-        url: "/secured/search/hotel-hash-id",
+        url: "/public/search/hotel-hash-id",
         method: "POST",
         body: data,
       }),
       invalidatesTags: ["hotel-detail"],
+    }),
+    createOrder: builder.mutation({
+      query: (data: any) => ({
+        url: "/api/v1/secured/order/create",
+        method: "POST",
+        body: data,
+      }),
     }),
     createStripePayment: builder.mutation({
       query: (data: any) => ({
@@ -37,6 +44,7 @@ export const hotelDetailApi = createApi({
 });
 
 export const {
+  useCreateOrderMutation,
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
   useCreateStripePaymentMutation,

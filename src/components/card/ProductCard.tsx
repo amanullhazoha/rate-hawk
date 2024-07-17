@@ -33,10 +33,10 @@ const ProductCard = ({
   const searchParams = useSearchParams();
   const [userAddFavorite] = useUserAddFavoriteMutation();
   const [userRemoveFavorite] = useUserRemoveFavoriteMutation();
-  const data = hotelData?.find((item: any) => item.hotel_id === product.id);
+  const data = hotelData?.find((item: any) => item.id === product.id);
 
   const isFavorite = favoriteData?.find(
-    (item: any) => item?.hotel_id === data?.hotel_id,
+    (item: any) => item?.hotel_id === product?.id,
   )
     ? true
     : false;
@@ -70,13 +70,15 @@ const ProductCard = ({
     }
   };
 
+  console.log(data);
+
   return (
     <div>
-      {data && (
+      {product && (
         <div className="rounded-[10px] relative">
           <div className="w-full">
             <Carousel responsive={responsive}>
-              {data?.images?.length <= 0 ? (
+              {product?.images?.length <= 0 ? (
                 <>
                   <div className="h-[200px] w-[200px]">
                     <Image
@@ -88,7 +90,7 @@ const ProductCard = ({
                   </div>
                 </>
               ) : (
-                data?.images?.map((image: string) => (
+                product?.images?.map((image: string) => (
                   <div className="h-[200px] w-full" key={image}>
                     <Image
                       fill
@@ -108,7 +110,7 @@ const ProductCard = ({
                 handleFavorite({
                   isFavorite,
                   hotel: data,
-                  hotel_id: data.hotel_id,
+                  hotel_id: product?.id,
                 })
               }
               className={`w-8 h-8 rounded-full flex justify-center items-center mr-2 cursor-pointer ${
@@ -122,7 +124,8 @@ const ProductCard = ({
       )}
 
       <Link
-        href={`/hotel-detail/${product?.id}${
+        // href={`/hotel-detail/${product?.id}${
+        href={`/hotel-detail/test_hotel${
           searchParams.toString() ? `?${searchParams.toString()}` : ""
         }`}
       >
@@ -141,28 +144,33 @@ const ProductCard = ({
             <span>{product?.rates?.length} beds</span>
           </div>
 
-          <p className="text-base font-semibold text-black-800 mb-2">
-            {data?.hotel_name}
+          <p className="text-base font-semibold text-black-800 mb-2 truncate ">
+            {product?.name}
           </p>
 
           <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
             <MapIcon />
-            {data?.region_name}
+            {product?.region?.name}
           </p>
 
           <div className="h-[1px] bg-text-light w-14 my-2"></div>
 
           <div className="flex justify-between items-center">
-            <p className="text-base font-medium text-black-800">
-              {/* ${product?.rates[0]?.daily_prices[0]}{" "} */}
-              {localStorage.getItem("currency")}{" "}
-              {product?.rates[0]?.daily_prices[0]}{" "}
-              <span className="text-text-blar">/night</span>
-            </p>
+            {data?.rates[0]?.daily_prices[0] ? (
+              <p className="text-base font-medium text-black-800">
+                {data?.rates[0]?.daily_prices[0]}{" "}
+                {localStorage.getItem("currency")}{" "}
+                <span className="text-text-blar">/night</span>
+              </p>
+            ) : (
+              <p className="bg-yellow-300 px-1 py-0.5 rounded-md text-text-blar">
+                Booked
+              </p>
+            )}
 
             <div className="flex items-center gap-1">
               <StarIcon className="w-4 h-4" />
-              <span>{data?.star_rating}</span>
+              <span>{product?.star_rating}</span>
             </div>
           </div>
         </div>

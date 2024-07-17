@@ -10,7 +10,7 @@ export const homePageApi = createApi({
   endpoints: (builder) => ({
     locationSearch: builder.mutation({
       query: (data: any) => ({
-        url: "/secured/search/multi-complete",
+        url: "/public/search/multi-complete",
         method: "POST",
         body: data,
       }),

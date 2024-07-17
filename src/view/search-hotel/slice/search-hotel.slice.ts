@@ -8,9 +8,22 @@ export const searchHotelApi = createApi({
   }),
   tagTypes: ["search-hotel"],
   endpoints: (builder) => ({
+    getHotelDumpData: builder.query({
+      query: ({ region_id, page, star }) => ({
+        url: "/public/dump-hotel",
+        params: { region_id, page, star },
+      }),
+    }),
+    getSearchHotelByIds: builder.mutation({
+      query: (data: any) => ({
+        url: "/public/search/hotel-by-ids",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getSearchHotel: builder.mutation({
       query: (data: any) => ({
-        url: "/secured/search/hotel-by-region",
+        url: "/public/search/hotel-by-region",
         method: "POST",
         body: data,
       }),
@@ -18,7 +31,7 @@ export const searchHotelApi = createApi({
     }),
     getHotelData: builder.mutation({
       query: (data: any) => ({
-        url: "/secured/search/hotel-data",
+        url: "/public/search/hotel-data",
         method: "POST",
         body: data,
       }),
@@ -27,5 +40,9 @@ export const searchHotelApi = createApi({
   }),
 });
 
-export const { useGetSearchHotelMutation, useGetHotelDataMutation } =
-  searchHotelApi;
+export const {
+  useGetHotelDataMutation,
+  useGetHotelDumpDataQuery,
+  useGetSearchHotelMutation,
+  useGetSearchHotelByIdsMutation,
+} = searchHotelApi;

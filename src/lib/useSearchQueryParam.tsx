@@ -3,7 +3,7 @@ import { useCallback } from "react";
 const useSearchQueryParam = () => {
   const setQueryParams = useCallback(
     (searchParams: any, key: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams?.toString());
       params.set(key, value);
 
       return params.toString();

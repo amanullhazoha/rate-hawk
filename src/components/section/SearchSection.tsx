@@ -24,7 +24,7 @@ const SearchSection = () => {
     name: "Netherlands",
     code: "nl",
   });
-  // const [star, setStar] = useState<any>(null);
+  const [star, setStar] = useState<any>(null);
   const [openSearch, setOpenSearch] = useState(false);
   const [children, setChildren] = useState<any[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -120,7 +120,7 @@ const SearchSection = () => {
 
     let url: string = searchParams.toString();
 
-    // url = star && setQueryParams(url, "star", star);
+    url = star && setQueryParams(url, "star", star);
     url = checkIn && setQueryParams(url, "check-in", checkIn);
     url = checkOut && setQueryParams(url, "check-out", checkOut);
     url = currency && setQueryParams(url, "currency", currency);
@@ -414,13 +414,13 @@ const SearchSection = () => {
               </div>
             </div>
 
-            {/* <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
                   htmlFor="search"
                   className="text-base font-medium text-black-800"
                 >
-                  Hotel Type
+                  Hotel Star
                 </label>
 
                 <div className="flex items-center flex-wrap gap-1 mt-1">
@@ -475,7 +475,68 @@ const SearchSection = () => {
                   </button>
                 </div>
               </div>
-            </div> */}
+
+              <div className=" flex items-end">
+                {/* <label
+                  htmlFor="search"
+                  className="text-base font-medium text-black-800"
+                >
+                  Hotel Star
+                </label> */}
+
+                <div className="flex items-center flex-wrap gap-1 mt-1">
+                  <button
+                    type="button"
+                    onClick={() => setStar(1)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 1 && "bg-yellow-200"
+                    }`}
+                  >
+                    RO
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(2)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 2 && "bg-yellow-200"
+                    }`}
+                  >
+                    BB
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(3)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 3 && "bg-yellow-200"
+                    }`}
+                  >
+                    HB
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(4)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 4 && "bg-yellow-200"
+                    }`}
+                  >
+                    FB
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStar(5)}
+                    className={`border border-border-primary rounded-md px-3 py-3 ${
+                      star === 5 && "bg-yellow-200"
+                    }`}
+                  >
+                    AI
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <button
               type="button"
