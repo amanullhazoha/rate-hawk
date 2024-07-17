@@ -12,13 +12,13 @@ export const adminApi = createApi({
         url: "/secured/user",
       }),
     }),
-    // createContact: builder.mutation({
-    //   query: (data: any) => ({
-    //     url: "/secured/user",
-    //     method: "post",
-    //     body: data,
-    //   }),
-    // }),
+    getOrderInfo: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/order/info",
+        method: "post",
+        body: data,
+      }),
+    }),
     // createNewsletter: builder.mutation({
     //   query: (data: any) => ({
     //     url: "/public/newsletter",
@@ -29,4 +29,4 @@ export const adminApi = createApi({
   }),
 });
 
-export const { useGetUserQuery } = adminApi;
+export const { useGetUserQuery, useGetOrderInfoMutation } = adminApi;

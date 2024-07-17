@@ -105,7 +105,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       <div className="max-w-[1600px] mx-auto hidden md:flex">
-        <aside className="w-[310px] h-screen flex flex-col justify-between px-6 py-4 bg-primary-color shadow-md">
+        <aside className="w-[310px] h-screen flex flex-col justify-between px-6 py-4 bg-primary-color shadow-md sticky top-0 left-0 bottom-0">
           <div>
             <div className="md:h-16 md:w-44 relative w-[88px] h-8 mb-6">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
@@ -135,6 +135,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                   fill={activePath === "/admin/user" ? "#fff" : ""}
                 />
               </AdminLink>
+
+              <AdminLink href="/admin/order-info" title="Order Info">
+                <OrderListIcon
+                  fill={activePath === "/admin/order-info" ? "#fff" : ""}
+                />
+              </AdminLink>
+
+              <AdminLink href="/admin/transaction-history" title="Transaction">
+                <OrderListIcon
+                  fill={
+                    activePath === "/admin/transaction-history" ? "#fff" : ""
+                  }
+                />
+              </AdminLink>
             </div>
           </div>
 
@@ -151,7 +165,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </aside>
 
         <div className="w-[1200px]">
-          <div className="bg-white shadow-md py-3 px-4 flex justify-between items-center">
+          <div className="bg-white shadow-md py-3 px-4 flex justify-between items-center sticky top-0">
             <h3 className="text-black font-medium text-xl">Dashboard</h3>
 
             <UserListIcon className="w-10 h-10" />

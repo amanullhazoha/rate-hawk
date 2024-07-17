@@ -26,7 +26,7 @@ const Table: React.FC<TableBodyComponentProps> = ({
   return (
     <div className="bg-white shadow-sm rounded-sm px-3 py-4 mt-8 overflow-hidden">
       <div className=" w-full overflow-hidden overflow-x-auto">
-        <table className={`min-w-[900px] ${className}`}>
+        <table className={`${className}`}>
           <TableHead columns={columns} />
           <TableBody items={items} columns={columns} />
         </table>

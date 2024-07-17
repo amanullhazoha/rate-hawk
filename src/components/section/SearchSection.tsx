@@ -476,13 +476,13 @@ const SearchSection = () => {
                 </div>
               </div>
 
-              <div className=" flex items-end">
-                {/* <label
+              {/* <div className=" flex items-end">
+                <label
                   htmlFor="search"
                   className="text-base font-medium text-black-800"
                 >
                   Hotel Star
-                </label> */}
+                </label>
 
                 <div className="flex items-center flex-wrap gap-1 mt-1">
                   <button
@@ -535,7 +535,7 @@ const SearchSection = () => {
                     AI
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <button
