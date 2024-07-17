@@ -4,11 +4,13 @@ const RoomRateSection = ({
   bookHash,
   selectRoom,
   room_groups,
+  setOriginalRoom,
   handleSelectRoom,
 }: {
   bookHash: any;
   selectRoom: any;
   room_groups: any;
+  setOriginalRoom: (room: any) => void;
   handleSelectRoom: (rate: any) => void;
 }) => {
   return (
@@ -32,7 +34,10 @@ const RoomRateSection = ({
               images={room?.images}
               selectRoom={selectRoom}
               rates={bookHash[0]?.rates}
-              handleSelectRoom={handleSelectRoom}
+              handleSelectRoom={(value) => {
+                setOriginalRoom(room);
+                handleSelectRoom(value);
+              }}
             />
           ))}
       </div>

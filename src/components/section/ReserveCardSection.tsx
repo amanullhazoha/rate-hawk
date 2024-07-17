@@ -11,6 +11,7 @@ import {
   useCreateOrderMutation,
   useCreateStripePaymentMutation,
 } from "@/view/hotel-detail/slice/hotel-detail.slice";
+import { toast } from "react-toastify";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
@@ -19,11 +20,15 @@ const stripePromise = loadStripe(
 const ReserveCardSection = ({
   hotelInfo,
   selectRoom,
+  originalRoom,
   setSelectRoom,
+  setOriginalRoom,
 }: {
   hotelInfo: any;
   selectRoom: any;
+  originalRoom: any;
   setSelectRoom: (data: any) => void;
+  setOriginalRoom: (data: any) => void;
 }) => {
   const router = useRouter();
   const pathName = usePathname();
@@ -47,6 +52,12 @@ const ReserveCardSection = ({
   const checkIn: string | null = searchParams.get("check-in");
   const checkOut: string | null = searchParams.get("check-out");
   const childrenQuery: string | null = searchParams.get("children");
+  const residency: string | null = searchParams.get("residency")
+    ? searchParams.get("residency")
+    : "nl";
+  const currency: string | null = searchParams.get("currency")
+    ? searchParams.get("currency")
+    : "USD";
 
   const handleDateRange = (dates: any) => {
     let url = searchParams.toString();
@@ -64,6 +75,7 @@ const ReserveCardSection = ({
 
     router.push(`${pathName}${url ? `?${url}` : ""}`);
     setSelectRoom(null);
+    setOriginalRoom(null);
   };
 
   const handleChildren = (item: any) => {
@@ -84,16 +96,46 @@ const ReserveCardSection = ({
   };
 
   const handleReserved = async () => {
-    const payload = {
-      language: "en",
-      user_ip: "82.29.0.86",
-      partner_order_id: uuidv4(),
-      book_hash: selectRoom?.book_hash,
-    };
+    try {
+      const payload = {
+        language: "en",
+        adults: guest,
+        check_in: checkIn,
+        room: originalRoom,
+        currency: currency,
+        check_out: checkOut,
+        residency: residency,
+        user_ip: "82.29.0.86",
+        choose_room: selectRoom,
+        hotel_id: hotelInfo?.id,
+        partner_order_id: uuidv4(),
+        address: hotelInfo?.address,
+        hotel_name: hotelInfo?.name,
+        book_hash: selectRoom?.book_hash,
+        star_rating: hotelInfo?.star_rating,
+        price_per_night: selectRoom?.daily_prices[0],
+        total_night: selectRoom?.daily_prices.length,
+        total_amount: Number(
+          selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
+        ),
+        children: childrenData?.filter((item: any) =>
+          children.some(
+            (obj: any) => obj.value === item.value && obj.name === item.name,
+          ),
+        ),
+      };
 
-    // const data: any = await createOrder(payload);
+      const data: any = await createOrder(payload);
 
-    console.log(payload);
+      console.log(data);
+
+      if (data) {
+        router.push(`/reserve/${data?.data?.data?.data?.order_id}`);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("There was an error.");
+    }
   };
 
   // const handleReserved = async () => {

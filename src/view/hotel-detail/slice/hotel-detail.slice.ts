@@ -28,7 +28,14 @@ export const hotelDetailApi = createApi({
     }),
     createOrder: builder.mutation({
       query: (data: any) => ({
-        url: "/api/v1/secured/order/create",
+        url: "/secured/order/create",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    orderFinish: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/order/finish",
         method: "POST",
         body: data,
       }),

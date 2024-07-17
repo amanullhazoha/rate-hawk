@@ -19,6 +19,7 @@ const DetailSection = ({
   favoriteData: any;
 }) => {
   const [selectRoom, setSelectRoom] = useState<any>(null);
+  const [originalRoom, setOriginalRoom] = useState<any>(null);
 
   return (
     <div className="max-md:flex max-md:flex-col md:grid gap-5 md:gap-10 grid-cols-12">
@@ -26,6 +27,7 @@ const DetailSection = ({
         <RoomRateSection
           bookHash={bookHash}
           selectRoom={selectRoom}
+          setOriginalRoom={setOriginalRoom}
           room_groups={hotelInfo?.room_groups}
           handleSelectRoom={(rate: any) => setSelectRoom(rate)}
         />
@@ -57,7 +59,9 @@ const DetailSection = ({
         <ReserveCardSection
           hotelInfo={hotelInfo}
           selectRoom={selectRoom}
+          originalRoom={originalRoom}
           setSelectRoom={setSelectRoom}
+          setOriginalRoom={setOriginalRoom}
         />
       </div>
     </div>

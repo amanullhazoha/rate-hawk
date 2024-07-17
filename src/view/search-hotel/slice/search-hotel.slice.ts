@@ -37,12 +37,18 @@ export const searchHotelApi = createApi({
       }),
       invalidatesTags: ["search-hotel"],
     }),
+    getUserOrderById: builder.query({
+      query: ({ order_id }: { order_id: string }) => ({
+        url: `/secured/user/order/${order_id}`,
+      }),
+    }),
   }),
 });
 
 export const {
   useGetHotelDataMutation,
   useGetHotelDumpDataQuery,
+  useGetUserOrderByIdQuery,
   useGetSearchHotelMutation,
   useGetSearchHotelByIdsMutation,
 } = searchHotelApi;
