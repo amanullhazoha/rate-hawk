@@ -69,10 +69,6 @@ const ForgetPasswordPage = () => {
                       />
                     </div>
 
-                    {/* <button className="text-sm text-semi-primary font-medium py-6">
-                      Try another way
-                    </button> */}
-
                     <ButtonPrimary disabled={isLoading}>Next</ButtonPrimary>
                   </Form>
                 )}

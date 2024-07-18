@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
 
 const ProfileNav = ({ user }: { user: boolean }) => {
+  const router = useRouter();
   const [userLogout, { isLoading, isError }] = useUserLogoutMutation();
 
   const handleLogout = async () => {
@@ -11,6 +13,7 @@ const ProfileNav = ({ user }: { user: boolean }) => {
     if (!data?.error) {
       localStorage.removeItem("access_token");
 
+      router.push("/login");
       return toast.success("User logout successfully.");
     }
 

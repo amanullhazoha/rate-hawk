@@ -1,5 +1,10 @@
 "use client";
+
 import { useCallback, useRef, useState } from "react";
+import {
+  useUploadHotelJsonDataMutation,
+  useDownloadHotelDumpDataMutation,
+} from "@/view/admin/slice";
 
 const HotelManageModal = ({
   handleClose,
@@ -11,13 +16,31 @@ const HotelManageModal = ({
   const [fieldValue, setFieldValue] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (event: any) => {
+  const [downloadHotelDumpData, { isLoading: downloadLoading }] =
+    useDownloadHotelDumpDataMutation();
+  const [uploadHotelJsonData, { isLoading: uploadLoading }] =
+    useUploadHotelJsonDataMutation();
+
+  const handleDownloadDumpData = async () => {
+    const download = await downloadHotelDumpData("");
+
+    if (download?.data?.code === 200) {
+      window.open(download?.data?.data?.data?.url, "_blank");
+      handleClose();
+    }
+  };
+
+  const handleFileUpload = async (event: any) => {
     const file = event.target.files[0];
     // Do something with the selected file
     console.log("Selected file:", file);
     const formData = new FormData();
     formData.append("file", file);
     console.log(formData);
+
+    const upload = await uploadHotelJsonData(formData);
+
+    console.log(upload);
   };
 
   const handleClick = useCallback((): void => {
@@ -72,20 +95,39 @@ const HotelManageModal = ({
           <div className="flex justify-center flex-col gap-3">
             <button
               type="button"
-              onClick={handleClick}
+              disabled={downloadLoading}
+              onClick={handleDownloadDumpData}
               className="py-2.5 w-full rounded-lg bg-border-primary text-text-primary text-base font-medium"
             >
-              Upload Json File
+              Download Hotel Dump Data
             </button>
 
-            <input
-              hidden
-              type="file"
-              name="file"
-              accept=".jsonl"
-              ref={inputRef}
-              onChange={handleFileUpload}
-            />
+            <div>
+              <button
+                type="button"
+                onClick={handleClick}
+                disabled={uploadLoading}
+                className="py-2.5 w-full rounded-lg bg-green-700 text-white text-base font-medium"
+              >
+                Upload Hotel JSON Data
+              </button>
+
+              <input
+                hidden
+                type="file"
+                name="file"
+                accept=".jsonl"
+                ref={inputRef}
+                onChange={handleFileUpload}
+              />
+            </div>
+
+            <button
+              type="button"
+              className="py-2.5 w-full rounded-lg bg-red-500 text-white text-base font-medium"
+            >
+              Delete All Hotel Data
+            </button>
           </div>
         </div>
       </div>

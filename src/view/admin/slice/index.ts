@@ -12,6 +12,16 @@ export const adminApi = createApi({
         url: "/secured/user",
       }),
     }),
+    getDashboardData: builder.query({
+      query: () => ({
+        url: "/secured/admin-dashboard",
+      }),
+    }),
+    getUserOrderListForAdmin: builder.query({
+      query: () => ({
+        url: "/secured/all/order",
+      }),
+    }),
     getOrderInfo: builder.mutation({
       query: (data: any) => ({
         url: "/secured/order/info",
@@ -19,6 +29,21 @@ export const adminApi = createApi({
         body: data,
       }),
     }),
+    downloadHotelDumpData: builder.mutation({
+      query: () => ({
+        url: "/secured/dump-data/download",
+        method: "post",
+        body: {},
+      }),
+    }),
+    uploadHotelJsonData: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/dump-data/upload",
+        method: "post",
+        body: data,
+      }),
+    }),
+
     // createNewsletter: builder.mutation({
     //   query: (data: any) => ({
     //     url: "/public/newsletter",
@@ -29,4 +54,11 @@ export const adminApi = createApi({
   }),
 });
 
-export const { useGetUserQuery, useGetOrderInfoMutation } = adminApi;
+export const {
+  useGetUserQuery,
+  useGetOrderInfoMutation,
+  useGetDashboardDataQuery,
+  useUploadHotelJsonDataMutation,
+  useDownloadHotelDumpDataMutation,
+  useGetUserOrderListForAdminQuery,
+} = adminApi;

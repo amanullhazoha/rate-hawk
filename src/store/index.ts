@@ -12,6 +12,7 @@ import { userProfileApi } from "@/view/profile/slice";
 import { homePageApi } from "@/view/home/slice";
 import { userHotelSaveListApi } from "@/view/save-list/slice";
 import { adminApi } from "@/view/admin/slice";
+import { userOrderListApi } from "@/view/my-booking/slices";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     [userProfileApi.reducerPath]: userProfileApi.reducer,
     [hotelDetailApi.reducerPath]: hotelDetailApi.reducer,
     [searchHotelApi.reducerPath]: searchHotelApi.reducer,
+    [userOrderListApi.reducerPath]: userOrderListApi.reducer,
     [resetPasswordApi.reducerPath]: resetPasswordApi.reducer,
     [forgotPasswordApi.reducerPath]: forgotPasswordApi.reducer,
     [userHotelSaveListApi.reducerPath]: userHotelSaveListApi.reducer,
@@ -35,6 +37,7 @@ const store = configureStore({
       userProfileApi.middleware,
       hotelDetailApi.middleware,
       searchHotelApi.middleware,
+      userOrderListApi.middleware,
       resetPasswordApi.middleware,
       forgotPasswordApi.middleware,
       userHotelSaveListApi.middleware,

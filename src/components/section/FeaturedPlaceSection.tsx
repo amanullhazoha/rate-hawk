@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { format, addDays } from "date-fns";
+import { useEffect, useState } from "react";
 import ProductCard from "../card/ProductCard";
 import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@/view/search-hotel/slice/search-hotel.slice";
 
 const FeaturedPlaceSection = () => {
+  const [currency, setCurrency] = useState<string | null>(null);
   const [region_id, setRegion_id] = useState(234);
 
   const { data: favoriteData } = useGetUserAllSaveListQuery("");
@@ -29,7 +30,13 @@ const FeaturedPlaceSection = () => {
   }, [region_id]);
 
   useEffect(() => {
-    if (hotelDumpData?.data) {
+    if (localStorage.getItem("currency")) {
+      setCurrency(localStorage.getItem("currency"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (hotelDumpData?.data?.length > 0) {
       const payload = {
         region_id,
         residency: "nl",
@@ -42,15 +49,13 @@ const FeaturedPlaceSection = () => {
             children: [],
           },
         ],
-        currency: localStorage.getItem("currency")
-          ? localStorage.getItem("currency")
-          : "USD",
+        currency: currency ? currency : "USD",
         ids: hotelDumpData?.data?.map((item: any) => item.id),
       };
 
       getHotelData(payload);
     }
-  }, [hotelDumpData]);
+  }, [hotelDumpData, currency]);
 
   return (
     <section className="py-12 md:py-[100px] bg-white">

@@ -16,7 +16,7 @@ const CurrencySelect = () => {
 
     let url = searchParams.toString();
 
-    url = value &&  setQueryParams(url, "currency", value);
+    url = value && setQueryParams(url, "currency", value);
 
     router.push(`${pathName}${url ? `?${url}` : ""}`);
   };
@@ -72,6 +72,13 @@ const CurrencySelect = () => {
           onClick={() => handleSelectCurrency("GBP")}
         >
           GBP
+        </li>
+
+        <li
+          className="cursor-pointer mb-1"
+          onClick={() => handleSelectCurrency("SEK")}
+        >
+          SEK
         </li>
       </ul>
     </div>

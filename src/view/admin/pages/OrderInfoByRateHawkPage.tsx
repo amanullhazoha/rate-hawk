@@ -128,8 +128,6 @@ const OrderInfoByRateHawkPage = () => {
     getOrderInfo(payload);
   }, []);
 
-  console.log(orderInfo);
-
   return (
     <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">Order Info By Rate Hawk</h2>

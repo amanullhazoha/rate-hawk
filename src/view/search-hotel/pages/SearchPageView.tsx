@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import ProductCard from "../../../components/card/ProductCard";
 import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
@@ -12,9 +13,12 @@ import {
 } from "../slice/search-hotel.slice";
 
 const SearchPageView = () => {
-  const [page, setPage] = useState(1);
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
   const star: string | null = searchParams.get("star");
+  const activePage: string | null = searchParams.get("page");
   const region_id: string | null = searchParams.get("region_id");
 
   const skipQuery = !region_id || !page;
@@ -41,8 +45,24 @@ const SearchPageView = () => {
     isFetching,
   } = useGetHotelDumpDataQuery(filter, { skip: skipQuery });
 
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/search-hotel${url ? `?${url}` : ""}`);
+  };
+
   const [getSearchHotelByIds, { isLoading: isLoadingByIds, data: dataByIds }] =
     useGetSearchHotelByIdsMutation();
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
 
   useEffect(() => {
     const payload = {
@@ -68,7 +88,7 @@ const SearchPageView = () => {
     };
 
     if (hotelDumpData?.data?.length > 0) getSearchHotelByIds(payload);
-  }, [hotelDumpData, page, searchParams]);
+  }, [hotelDumpData, searchParams]);
 
   return (
     <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">
@@ -156,7 +176,9 @@ const SearchPageView = () => {
                   <GlobalPagination
                     page={page}
                     total_element={hotelDumpData?.pagination?.totalItems}
-                    handlePagination={(value: number) => setPage(value)}
+                    handlePagination={(value: number) =>
+                      handlePagination(value)
+                    }
                   />
                 </div>
               )}

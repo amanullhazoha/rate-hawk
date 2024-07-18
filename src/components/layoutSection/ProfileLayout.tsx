@@ -24,7 +24,7 @@ const ProfileLayout = ({
   return (
     <main className="bg-white py-10 md:py-14">
       <div className="container mx-auto px-2.5 md:px-0">
-        <div className="w-full lg:w-[90%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-14">
+        <div className="w-full lg:w-[90%] mx-auto grid grid-cols-1 gap-8 lg:gap-14">
           {/* <div className="w-full col-span-1 px-4 lg:px-10 py-4 lg:py-10 border border-border-primary rounded-[20px] h-fit">
             <div className="flex items-center flex-col gap-4 pb-6">
               <Image
@@ -113,7 +113,7 @@ const ProfileLayout = ({
             </div>
           </div> */}
 
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1">
             {/* <div className="flex gap-6 pb-4 border-b border-border-primary mb-5"> */}
             <div className="overflow-auto">
               <div className="flex gap-6 pb-4 border-b border-border-primary mb-5  w-[630px] md:w-fit">

@@ -426,7 +426,9 @@ const SearchSection = () => {
                 <div className="flex items-center flex-wrap gap-1 mt-1">
                   <button
                     type="button"
-                    onClick={() => setStar(1)}
+                    onClick={() =>
+                      setStar((prev: any) => (prev === 1 ? null : 1))
+                    }
                     className={`border border-border-primary rounded-md px-3 py-3 ${
                       star === 1 && "bg-yellow-200"
                     }`}
@@ -436,7 +438,9 @@ const SearchSection = () => {
 
                   <button
                     type="button"
-                    onClick={() => setStar(2)}
+                    onClick={() =>
+                      setStar((prev: any) => (prev === 2 ? null : 2))
+                    }
                     className={`border border-border-primary rounded-md px-3 py-3 ${
                       star === 2 && "bg-yellow-200"
                     }`}
@@ -446,7 +450,9 @@ const SearchSection = () => {
 
                   <button
                     type="button"
-                    onClick={() => setStar(3)}
+                    onClick={() =>
+                      setStar((prev: any) => (prev === 3 ? null : 3))
+                    }
                     className={`border border-border-primary rounded-md px-3 py-3 ${
                       star === 3 && "bg-yellow-200"
                     }`}
@@ -456,7 +462,9 @@ const SearchSection = () => {
 
                   <button
                     type="button"
-                    onClick={() => setStar(4)}
+                    onClick={() =>
+                      setStar((prev: any) => (prev === 4 ? null : 4))
+                    }
                     className={`border border-border-primary rounded-md px-3 py-3 ${
                       star === 4 && "bg-yellow-200"
                     }`}
@@ -466,7 +474,9 @@ const SearchSection = () => {
 
                   <button
                     type="button"
-                    onClick={() => setStar(5)}
+                    onClick={() =>
+                      setStar((prev: any) => (prev === 5 ? null : 5))
+                    }
                     className={`border border-border-primary rounded-md px-3 py-3 ${
                       star === 5 && "bg-yellow-200"
                     }`}

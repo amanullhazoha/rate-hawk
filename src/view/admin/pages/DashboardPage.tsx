@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Table from "@/components/table/Table";
 import AdminCard from "@/components/card/AdminCard";
+import { useGetDashboardDataQuery } from "../slice";
 import HotelManageModal from "@/components/modal/HotelManageModal";
 
 const transactionItems = [
@@ -180,83 +181,97 @@ const columns = [
     content: (row: any) => (
       <td className="p-2">
         <img
-          src={row.imageUrl}
-          alt={row.productName}
+          alt={row.name}
           className="w-10 h-10 rounded-lg"
+          src={row?.images[0]?.replace("{size}", "1024x768")}
         />
       </td>
     ),
   },
   {
     label: "Hotel Name",
-    path: "productName",
-    content: (row: any) => <td className="p-2">{row.productName}</td>,
+    path: "name",
+    content: (row: any) => <td className="p-2">{row.name}</td>,
   },
   {
-    label: "Price",
-    path: "pricePerItem",
-    content: (row: any) => <td className="p-2">{row.pricePerItem} ৳</td>,
+    label: "kind",
+    path: "kind",
+    content: (row: any) => <td className="p-2">{row.kind}</td>,
   },
   {
-    label: "Start Date",
-    path: "quantity",
-    content: (row: any) => <td className="p-2">{row.quantity}</td>,
+    label: "Star",
+    path: "star_rating",
+    content: (row: any) => <td className="p-2">{row.star_rating}</td>,
   },
   {
-    label: "End Date",
-    path: "quantity",
-    content: (row: any) => <td className="p-2">{row.quantity}</td>,
+    label: "Region",
+    path: "name",
+    content: (row: any) => <td className="p-2">{row.region.name}</td>,
   },
   {
-    label: "Created Date",
-    path: "totalPrice",
-    content: (row: any) => <td className="p-2">{row.totalPrice} ৳</td>,
+    label: "Country Code",
+    path: "country_code",
+    content: (row: any) => <td className="p-2">{row?.region?.country_code}</td>,
   },
   {
-    label: "User Name",
-    path: "media",
-    content: (row: any) => <td className="p-2">{row.media}</td>,
+    label: "Check In Time",
+    path: "check_in_time",
+    content: (row: any) => <td className="p-2">{row.check_in_time}</td>,
   },
   {
-    label: "Status",
-    path: "status",
-    content: (row: any) => <td className="p-2">{row.status}</td>,
+    label: "Check Out Time",
+    path: "check_out_time",
+    content: (row: any) => <td className="p-2">{row.check_out_time}</td>,
   },
 ];
 
 const DashboardPage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { data, isLoading, isError } = useGetDashboardDataQuery("");
 
   return (
     <main>
-      <div className="grid grid-cols-4 gap-4">
-        <AdminCard title="Total Earning" value="5784 Tk" />
-        <AdminCard title="Total User" value="578" />
-        <AdminCard title="Total Order" value="200" />
-        <AdminCard title="Total Hotel" value="18000" />
-      </div>
-
-      <div className="mt-4">
-        <div className="flex justify-between items-center">
-          <p className="text-black font-medium text-lg">Hotel List</p>
-
-          <button
-            type="button"
-            onClick={() => setOpenModal(true)}
-            className="bg-yellow-400 text-sm px-2.5 py-1 rounded-md"
-          >
-            Manage Hotel
-          </button>
+      {isLoading && !isError && (
+        <div className="flex justify-center items-center py-10">
+          <h3>loading...</h3>
         </div>
+      )}
 
-        <div className="">
-          <Table
-            columns={columns}
-            items={transactionItems}
-            className="min-w-[1000px]"
-          />
-        </div>
-      </div>
+      {data?.data && !isLoading && !isError && (
+        <>
+          <div className="grid grid-cols-4 gap-4">
+            <AdminCard title="Total Order" value={data?.data?.total_order} />
+            <AdminCard title="Total Hotel" value={data?.data?.total_hotel} />
+            <AdminCard title="Total User" value={data?.data?.total_user} />
+            <AdminCard
+              title="Total Transaction"
+              value={data?.data?.total_transaction}
+            />
+          </div>
+
+          <div className="mt-4">
+            <div className="flex justify-between items-center">
+              <p className="text-black font-medium text-lg">Hotel List</p>
+
+              <button
+                type="button"
+                onClick={() => setOpenModal(true)}
+                className="bg-yellow-400 text-sm px-2.5 py-1 rounded-md"
+              >
+                Manage Hotel
+              </button>
+            </div>
+
+            <div className="">
+              <Table
+                columns={columns}
+                items={data?.data?.hotels}
+                className="min-w-[1000px]"
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       {openModal && (
         <HotelManageModal handleClose={() => setOpenModal(false)} />

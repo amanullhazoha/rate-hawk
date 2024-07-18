@@ -30,7 +30,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full md:w-[500px]">
       <div className="mb-8">
         <h3 className="text-2xl lg:text-4xl font-semibold text-black mb-8">
           Account information

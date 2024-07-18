@@ -9,8 +9,11 @@ export function middleware(request: NextRequest) {
   const user: any = access_token && jwtDecode(access_token);
 
   const adminRoutes = [
-    "",
-    // "/admin/dashboard", "/admin/user", "/admin/order"
+    "/admin/dashboard",
+    "/admin/user",
+    "/admin/order",
+    "/admin/order-info",
+    "/admin/transaction-history",
   ];
 
   const publicRoutes = [
@@ -25,6 +28,7 @@ export function middleware(request: NextRequest) {
     "/save-list",
     "/my-booking",
     "/change-password",
+    "/reserve",
   ];
 
   const path = request?.nextUrl?.pathname;
@@ -34,7 +38,7 @@ export function middleware(request: NextRequest) {
   const isUserRoute = userRoutes.includes(path);
   const isAdmin = user && user?.role === "admin" ? true : false;
 
-  if (!user && isUserRoute) {
+  if (!user && (isUserRoute || isAdminRoute)) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

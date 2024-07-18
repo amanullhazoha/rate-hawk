@@ -1,27 +1,3 @@
-const items = [
-  {
-    id: 1,
-    title: "Back End Developer",
-    department: "Engineering",
-    type: "Full-time",
-    location: "Remote",
-  },
-  {
-    id: 2,
-    title: "Front End Developer",
-    department: "Engineering",
-    type: "Full-time",
-    location: "Remote",
-  },
-  {
-    id: 3,
-    title: "User Interface Designer",
-    department: "Design",
-    type: "Full-time",
-    location: "Remote",
-  },
-];
-
 export default function GlobalPagination({
   page,
   total_element,
@@ -56,7 +32,7 @@ export default function GlobalPagination({
         <button
           type="button"
           onClick={() => handlePagination(page + 1)}
-          disabled={page * 4 >= total_element ? true : false}
+          disabled={page * 8 >= total_element ? true : false}
           className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Next
@@ -88,7 +64,7 @@ export default function GlobalPagination({
             <button
               type="button"
               onClick={() => handlePagination(page + 1)}
-              disabled={page * 4 >= total_element ? true : false}
+              disabled={page * 8 >= total_element ? true : false}
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span>Next</span>

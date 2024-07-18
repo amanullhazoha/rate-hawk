@@ -3,26 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProfileNav from "../nav/ProfileNav";
-import EmailIcon from "@/assets/icons/EmailIcon";
-import MailIcon from "@/assets/icons/MailIcon";
 import { usePathname } from "next/navigation";
-import BlogImage from "@/assets/images/blog.jpg";
-import SearchIcon from "@/assets/icons/SearchIcon";
+import EmailIcon from "@/assets/icons/EmailIcon";
 import { useEffect, useRef, useState } from "react";
-import TwitterIcon from "@/assets/icons/social/TwitterIcon";
-import LinkedInIcon from "@/assets/icons/social/LinkedInIcon";
-import FacebookIcon from "@/assets/icons/social/FacebookIcon";
-import InstagramIcon from "@/assets/icons/social/InstagramIcon";
-import PinterestIcon from "@/assets/icons/social/PinterestIcon";
-import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
-import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
-import CurrencySelect from "../buttons/CurrencySelect";
-import LanguageSelect from "../buttons/LanguageSelect";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
+import LanguageSelect from "../buttons/LanguageSelect";
+import CurrencySelect from "../buttons/CurrencySelect";
 import logo from "@/assets/images/travelmeester-logo.png";
-import PhoneIcon from "@/assets/icons/PhoneIcon";
-import LocationIcon from "@/assets/icons/LocationIcon";
 import WhatsappIcon from "@/assets/icons/social/WhatsappIcon";
+import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
+import InstagramIcon from "@/assets/icons/social/InstagramIcon";
+import { useGetLoggedInProfileQuery } from "@/view/login/slice/login.slice";
 
 const UserLayout = ({
   children,
@@ -31,8 +22,7 @@ const UserLayout = ({
 }>) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const [access_token, setAccessToken] = useState<string | null>(null);
-  const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
+  const { data, isError } = useGetLoggedInProfileQuery("");
 
   const pathName = usePathname();
 
@@ -49,56 +39,35 @@ const UserLayout = ({
     };
   }, [openMenu]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setAccessToken(token);
-  }, []);
-
   return (
     <>
       <header>
-        {!data && isError && (
-          <div className="bg-black-800">
-            <div className="container max-md:px-2.5 mx-auto justify-end items-center py-2.5 flex">
-              {/* <div className="flex items-center gap-7">
+        <div
+          className={`bg-black-800 ${
+            data?.data && !isError ? "hidden" : "block"
+          }`}
+        >
+          <div className="container max-md:px-2.5 mx-auto justify-end items-center py-2.5 flex">
+            <div className="flex items-center gap-7">
               <Link
-                href="/"
+                href="/login"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
-                <EmailIcon />
-                tourer@info.com
+                <ProfileIcon />
+                Login
               </Link>
+
+              <div className="w-[1px] h-[16px] bg-primary-color"></div>
 
               <Link
-                href="/"
+                href="/signup"
                 className="flex items-center gap-2 text-primary-color text-sm"
               >
-                <EmailIcon />
-                0123 456 789
+                Register
               </Link>
-            </div> */}
-
-              <div className="flex items-center gap-7">
-                <Link
-                  href="/login"
-                  className="flex items-center gap-2 text-primary-color text-sm"
-                >
-                  <ProfileIcon />
-                  Login
-                </Link>
-
-                <div className="w-[1px] h-[16px] bg-primary-color"></div>
-
-                <Link
-                  href="/signup"
-                  className="flex items-center gap-2 text-primary-color text-sm"
-                >
-                  Register
-                </Link>
-              </div>
             </div>
           </div>
-        )}
+        </div>
 
         <div className="bg-white border-b border-yellow-50">
           <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
@@ -118,20 +87,6 @@ const UserLayout = ({
                     <p className="w-7 h-[3px] bg-primary-color"></p>
                   )}
                 </Link>
-
-                {/* <Link href="/about-us">
-                  About Us
-                  {pathName === "/about-us" && (
-                    <p className="w-7 h-[3px] bg-primary-color"></p>
-                  )}
-                </Link> */}
-
-                {/* <Link href="/blog">
-                  Blog & News
-                  {pathName === "/blog" && (
-                    <p className="w-7 h-[3px] bg-primary-color"></p>
-                  )}
-                </Link> */}
 
                 <Link href="/contact">
                   Contact
