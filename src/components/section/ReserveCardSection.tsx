@@ -90,7 +90,10 @@ const ReserveCardSection = ({
 
       setChildren(filterData);
 
-      return router.push(`/search-hotel${url ? `?${url}` : ""}`);
+      router.push(`${pathName}${url ? `?${url}` : ""}`);
+
+      setSelectRoom(null);
+      return setOriginalRoom(null);
     } else {
       const newData = [...children, item];
       setChildren(newData);
@@ -104,7 +107,10 @@ const ReserveCardSection = ({
             )
           : url;
 
-      router.push(`/search-hotel${url ? `?${url}` : ""}`);
+      router.push(`${pathName}${url ? `?${url}` : ""}`);
+
+      setSelectRoom(null);
+      setOriginalRoom(null);
     }
   };
 
@@ -116,7 +122,10 @@ const ReserveCardSection = ({
 
     setGuest(value);
 
-    router.push(`/search-hotel${url ? `?${url}` : ""}`);
+    router.push(`${pathName}${url ? `?${url}` : ""}`);
+
+    setSelectRoom(null);
+    setOriginalRoom(null);
   };
 
   const handleReserved = async () => {
@@ -131,12 +140,15 @@ const ReserveCardSection = ({
         residency: residency,
         user_ip: "82.29.0.86",
         choose_room: selectRoom,
+        kind: hotelInfo?.kind,
         hotel_id: hotelInfo?.id,
         partner_order_id: uuidv4(),
         address: hotelInfo?.address,
         hotel_name: hotelInfo?.name,
         book_hash: selectRoom?.book_hash,
+        region_id: hotelInfo?.region?.id,
         star_rating: hotelInfo?.star_rating,
+        region_name: hotelInfo?.region?.name,
         price_per_night: selectRoom?.daily_prices[0],
         total_night: selectRoom?.daily_prices.length,
         total_amount: Number(
@@ -150,8 +162,6 @@ const ReserveCardSection = ({
       };
 
       const data: any = await createOrder(payload);
-
-      console.log(data);
 
       if (data) {
         router.push(`/reserve/${data?.data?.data?.data?.order_id}`);
@@ -206,6 +216,8 @@ const ReserveCardSection = ({
       setChildren(filterData);
     }
   }, []);
+
+  console.log(hotelInfo);
 
   return (
     <div className="p-6 shadow-shadow-primary border border-border-primary rounded-[20px]">

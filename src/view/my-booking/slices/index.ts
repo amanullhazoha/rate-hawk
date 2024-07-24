@@ -10,7 +10,7 @@ export const userOrderListApi = createApi({
   endpoints: (builder) => ({
     getUserOrderList: builder.query({
       query: () => ({
-        url: "/secured/user/order",
+        url: "/secured/user-order",
       }),
     }),
   }),

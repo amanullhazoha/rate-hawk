@@ -4,7 +4,7 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import { useState, useEffect } from "react";
 import product from "@/assets/images/product.jpg";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
+import { RoomIcon } from "@/assets/ameniteIcon";
 
 const responsive = {
   mobile: {
@@ -84,7 +84,7 @@ const RoomCard = ({
             <div className="flex items-center flex-wrap gap-4 mt-2">
               {room?.rg_ext?.balcony > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.balcony} balcony
@@ -94,7 +94,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.bathroom > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.bathroom} bathroom
@@ -104,7 +104,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.bedding > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.bedding} bedding
@@ -114,7 +114,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.bedrooms > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.bedrooms} bedrooms
@@ -124,7 +124,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.capacity > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.capacity} capacity
@@ -134,7 +134,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.class > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.class} class
@@ -144,7 +144,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.club > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.club} club
@@ -154,7 +154,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.family > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.family} family
@@ -164,7 +164,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.floor > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.floor} floor
@@ -174,7 +174,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.quality > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.quality} quality
@@ -184,7 +184,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.capacity > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.capacity} capacity
@@ -194,7 +194,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.sex > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">{room?.rg_ext?.sex} sex</p>
                 </div>
@@ -202,7 +202,7 @@ const RoomCard = ({
 
               {room?.rg_ext?.view > 0 && (
                 <div className="flex items-center gap-3">
-                  <PeopleIcon />
+                  <RoomIcon />
 
                   <p className="text-sm font-medium">
                     {room?.rg_ext?.view} view

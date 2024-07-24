@@ -2,14 +2,15 @@
 
 import Image from "next/image";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
-import { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import product from "@/assets/images/product.jpg";
-import PeopleIcon from "@/assets/icons/PeopleIcon";
 import { useParams } from "next/navigation";
-import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
+import { loadStripe } from "@stripe/stripe-js";
+import { RoomIcon } from "@/assets/ameniteIcon";
+import product from "@/assets/images/product.jpg";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useGetUserOrderByIdQuery } from "@/view/search-hotel/slice/search-hotel.slice";
+import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
@@ -22,9 +23,48 @@ const responsive = {
   },
 };
 
+interface Guest {
+  first_name: string;
+  last_name: string;
+}
+
+const checkGuestNameError = (nameList: any, error: any, setError: any) => {
+  const newError = error?.length > 0 ? [...error] : [];
+
+  nameList.forEach((item: any, index: number) => {
+    if (!item?.first_name) {
+      newError[index] = {
+        ...newError[index],
+        first_name: "First name is required.",
+      };
+    } else if (!item?.last_name) {
+      newError[index] = {
+        ...newError[index],
+        last_name: "Last name is required.",
+      };
+    } else {
+      newError[index] = null;
+    }
+  });
+
+  setError(newError);
+};
+
 const ReservePage = () => {
   const params: any = useParams();
   const order_id: string = params.order_id;
+  const [guestName, setGuestName] = useState<Guest[]>([]);
+  const [guestNameError, setGuestNameError] = useState<Guest[]>([]);
+
+  const handleChange = (index: number, name: string, newValue: any) => {
+    const updatedArray: any = guestName?.length > 0 ? guestName : [];
+
+    updatedArray[index] = { ...updatedArray[index], [name]: newValue };
+
+    checkGuestNameError(updatedArray, guestNameError, setGuestNameError);
+
+    setGuestName(updatedArray);
+  };
 
   const {
     data: order,
@@ -38,73 +78,120 @@ const ReservePage = () => {
   ] = useCreateStripePaymentMutation();
 
   const handleReserved = async () => {
-    const payload = {
-      residency: "nl",
-      order_id: params?.order_id,
-      adults: order?.data?.guests,
-      checkIn: order?.data?.check_in,
-      checkOut: order?.data?.check_out,
-      hotel_name: order?.data?.hotel_name,
-      currency: order?.data?.currency_code,
-      star_rating: order?.data?.star_rating,
-      total_night: order?.data?.total_night,
-      children: order?.data?.children?.length,
-      total_amount: Number(order?.data?.total_amount),
-    };
+    if (guestNameError.length >= order?.data?.guests) {
+      if (
+        guestNameError.every((value) => value === undefined || value === null)
+      ) {
+        const payload = {
+          residency: "nl",
+          order_id: params?.order_id,
+          adults: order?.data?.guests,
+          checkIn: order?.data?.check_in,
+          checkOut: order?.data?.check_out,
+          hotel_name: order?.data?.hotel_name,
+          currency: order?.data?.currency_code,
+          star_rating: order?.data?.star_rating,
+          total_night: order?.data?.total_night,
+          children: order?.data?.children?.length,
+          total_amount: Number(order?.data?.total_amount),
+        };
 
-    const data: any = await createStripePayment(payload);
+        const data: any = await createStripePayment(payload);
 
-    if (data?.data?.id) {
-      const stripe = await stripePromise;
+        if (data?.data?.id) {
+          const stripe = await stripePromise;
 
-      if (stripe) {
-        await stripe.redirectToCheckout({ sessionId: data?.data?.id });
+          if (stripe) {
+            await stripe.redirectToCheckout({ sessionId: data?.data?.id });
+          }
+        }
+      } else {
+        return toast.error("Please input all guest name.");
       }
+    } else {
+      return toast.error("Please input all guest name.");
     }
   };
+
+  console.log(guestNameError, guestName);
 
   return (
     <main className="bg-white pt-10 pb-10">
       <div className="container mx-auto px-2.5">
         {order && !isLoading && !isError ? (
           <div className="w-full md:w-[90%] mx-auto">
-            <h1 className="text-xl font-medium text-black mb-4">
+            <h2 className="text-xl font-medium text-black mb-4">
               Hotel information
-            </h1>
+            </h2>
 
             <div className="grid grid-cols-12 gap-6">
               <div className="col-span-12 md:col-span-8">
-                <div className="mb-6">
-                  <h3 className="text-base font-medium text-black mb-2">
-                    Input Guest Name
-                  </h3>
+                {Array.from(
+                  { length: order?.data?.guests },
+                  (_, i) => i + 1,
+                ).map((item) => (
+                  <div className="mb-6">
+                    <h3 className="text-base font-medium text-black mb-2">
+                      Input {item} No Guest Name
+                    </h3>
 
-                  <div className="grid grid-cols-2 gap-6 border border-border-primary px-4 py-4">
-                    <div>
-                      <label className="text-text-blar font-medium">
-                        First Name
-                      </label>
+                    <div className="grid grid-cols-2 gap-6 border border-border-primary px-4 py-4">
                       <div>
-                        <input
-                          type="text"
-                          className="outline-none focus:outline-none placeholder:text-blar placeholder:text-sm bg-transparent border border-border-primary rounded-lg w-full px-2 py-1 mt-1"
-                        />
+                        <label className="text-text-blar font-medium">
+                          First Name
+                        </label>
+
+                        <div>
+                          <input
+                            type="text"
+                            value={
+                              guestName?.length >= item + 1
+                                ? guestName[item]?.first_name
+                                : ""
+                            }
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                              handleChange(item, "first_name", e.target.value)
+                            }
+                            className="outline-none focus:outline-none placeholder:text-blar placeholder:text-sm bg-transparent border border-border-primary rounded-lg w-full px-2 py-1 mt-1"
+                          />
+
+                          {guestNameError?.length >= item + 1 && (
+                            <div className="text-sm text-red-500">
+                              {guestNameError[item]?.first_name}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
 
-                    <div>
-                      <label className="text-text-blar font-medium">
-                        Last Name
-                      </label>
                       <div>
-                        <input
-                          type="text"
-                          className="outline-none focus:outline-none placeholder:text-blar placeholder:text-sm bg-transparent border border-border-primary rounded-lg w-full px-2 py-1 mt-1"
-                        />
+                        <label className="text-text-blar font-medium">
+                          Last Name
+                        </label>
+
+                        <div>
+                          <input
+                            type="text"
+                            value={
+                              guestName?.length >= item + 1
+                                ? guestName[item]?.last_name
+                                : ""
+                            }
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                              handleChange(item, "last_name", e.target.value)
+                            }
+                            className="outline-none focus:outline-none placeholder:text-blar placeholder:text-sm bg-transparent border border-border-primary rounded-lg w-full px-2 py-1 mt-1"
+                          />
+
+                          {guestNameError?.length >= item + 1 && (
+                            <div className="text-sm text-red-500">
+                              {guestNameError[item]?.last_name}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
 
                 <div
                   className={`p-3.5 rounded-md bg-bg-primary grid grid-cols-3 gap-4`}
@@ -146,79 +233,79 @@ const ReservePage = () => {
 
                         <div className="flex items-center flex-wrap gap-4 mt-2">
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 balcony</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 bathroom</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 bedding</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 bedrooms</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 capacity</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 class</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 club</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 family</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">2 floor</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">3 quality</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">2 capacity</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 sex</p>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <PeopleIcon />
+                            <RoomIcon />
 
                             <p className="text-sm font-medium">1 view</p>
                           </div>

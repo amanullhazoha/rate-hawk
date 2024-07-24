@@ -6,6 +6,8 @@ import FavoriteProductCard from "@/components/card/FavoriteProductCard";
 const MyBookingView = () => {
   const { data, isLoading, isError } = useGetUserOrderListQuery("");
 
+  console.log(data);
+
   return (
     <main className="bg-white">
       <div className="container mx-auto">
