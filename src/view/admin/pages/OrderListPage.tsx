@@ -72,8 +72,6 @@ const columns = [
 const OrderListPage = () => {
   const { data, isLoading, isError } = useGetUserOrderListForAdminQuery("");
 
-  console.log(data);
-
   return (
     <main>
       {isLoading && !isError && (

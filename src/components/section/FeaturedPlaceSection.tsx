@@ -8,6 +8,7 @@ import {
   useGetHotelDumpDataQuery,
   useGetSearchHotelByIdsMutation,
 } from "@/view/search-hotel/slice/search-hotel.slice";
+import Preloader from "../loading/Preloader";
 
 const FeaturedPlaceSection = () => {
   const [currency, setCurrency] = useState<string | null>(null);
@@ -126,8 +127,8 @@ const FeaturedPlaceSection = () => {
           </div>
 
           {isLoadingHotel || isGetHotelData ? (
-            <div className="w-full">
-              <p className="text-center w-full">Loading.....</p>
+            <div className="w-full flex justify-center items-center h-40">
+              <Preloader title="Data loading" />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

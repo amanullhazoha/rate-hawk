@@ -10,6 +10,7 @@ import {
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
 } from "../slice/hotel-detail.slice";
+import Preloader from "@/components/loading/Preloader";
 
 const ProductDetailPageView = () => {
   const searchParams = useSearchParams();
@@ -66,12 +67,12 @@ const ProductDetailPageView = () => {
     <main className="bg-white pt-4 pb-10 lg:pb-32">
       <div className="container mx-auto px-2.5">
         {isLoading && (
-          <div className="w-full">
-            <h3 className="text-center">Loading.....</h3>
+          <div className="w-full flex justify-center items-center h-40">
+            <Preloader title="Hotel Detail Page Loading" />
           </div>
         )}
 
-        {!isLoading && !isError && (
+        {!isLoading && !isError && data?.data && (
           <div className="w-full md:w-[90%] mx-auto">
             <ProductImageSection images={data?.data?.data?.images} />
             <DetailSection

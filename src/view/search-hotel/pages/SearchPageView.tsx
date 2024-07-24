@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
@@ -38,12 +39,8 @@ const SearchPageView = () => {
   }
 
   const { data: favoriteData } = useGetUserAllSaveListQuery("");
-  const {
-    data: hotelDumpData,
-    isLoading: isHotelDumpLoading,
-    refetch,
-    isFetching,
-  } = useGetHotelDumpDataQuery(filter, { skip: skipQuery });
+  const { data: hotelDumpData, isLoading: isHotelDumpLoading } =
+    useGetHotelDumpDataQuery(filter, { skip: skipQuery });
 
   const handlePagination = (value: number) => {
     let url: string | null = searchParams?.toString();
@@ -91,9 +88,9 @@ const SearchPageView = () => {
   }, [hotelDumpData, searchParams]);
 
   return (
-    <main className="pt-10 lg:pt-24 pb-10 lg:pb-28 bg-white">
+    <main className="pt-4 pb-10 bg-white">
       <div className="container mx-auto px-2.5 lg:px-[35px]">
-        <div>
+        {/* <div>
           <h3 className="text-2xl lg:text-4xl text-black font-semibold mb-2">
             Hotels in{" "}
             {searchParams.get("region_name")
@@ -135,13 +132,68 @@ const SearchPageView = () => {
 
             <span>{searchParams.get("adults")} Guests</span>
           </p>
+        </div> */}
+
+        <div className="shadow-md px-2 py-1 rounded-md w-fit mb-8 border border-blue-50">
+          <Link href="/" className="mr-2 text-blue-500 font-medium">
+            Home
+          </Link>
+          <span className="mr-2">{">"}</span>
+
+          <span className="font-medium">Search</span>
         </div>
 
-        {(isLoadingByIds || isHotelDumpLoading) && (
-          <div className="w-full text-center">
-            <h3>loading...</h3>
-          </div>
-        )}
+        <div className="w-full mb-5 shadow-md px-2 py-3 border border-blue-200">
+          <p className="text-black text-xl mb-2 text-start font-medium">
+            Searching for options in{" "}
+            {searchParams.get("region_name")
+              ? searchParams.get("region_name")
+              : "unknown"}
+          </p>
+
+          <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2">
+            <span>
+              {hotelDumpData?.pagination?.totalItems
+                ? hotelDumpData?.pagination?.totalItems
+                : 0}{" "}
+              stays
+            </span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2"
+              height="2"
+              viewBox="0 0 2 2"
+              fill="none"
+            >
+              <circle cx="1" cy="1" r="1" fill="#6B7280" />
+            </svg>
+
+            <span>
+              {searchParams.get("check-in")} - {searchParams.get("check-out")}
+            </span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2"
+              height="2"
+              viewBox="0 0 2 2"
+              fill="none"
+            >
+              <circle cx="1" cy="1" r="1" fill="#6B7280" />
+            </svg>
+
+            <span>{searchParams.get("adults")} Guests</span>
+          </p>
+
+          {(isLoadingByIds || isHotelDumpLoading) && (
+            <div className="w-full h-auto flex justify-center items-center mt-4">
+              <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
+                <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
+              </div>
+            </div>
+          )}
+        </div>
 
         {hotelDumpData?.pagination?.totalItems <= 0 && !isLoadingByIds && (
           <div className="w-full text-center">

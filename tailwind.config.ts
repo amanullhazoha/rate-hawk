@@ -37,6 +37,15 @@ const config: Config = {
         primary: ["Poppins", "sans-serif"],
         secondary: ["Manrope", "sans-serif"],
       },
+      keyframes: {
+        loading: {
+          "0%": { width: "0%" },
+          "100%": { width: "80%" },
+        },
+      },
+      animation: {
+        loading: "loading 2s forwards cubic-bezier(0.4, 0, 0.2, 1)",
+      },
     },
     screens: {
       sm: "450px",

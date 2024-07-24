@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import StarIcon from "@/assets/icons/StarIcon";
 import { useState, useRef, useEffect } from "react";
@@ -7,15 +8,7 @@ import RangeCalender from "../calender/RangeCalender";
 import { childrenData } from "@/assets/data/childrenData";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import {
-  useCreateOrderMutation,
-  useCreateStripePaymentMutation,
-} from "@/view/hotel-detail/slice/hotel-detail.slice";
-import { toast } from "react-toastify";
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_API_STRIPE_PUBLIC_KEY as string,
-);
+import { useCreateOrderMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 
 const ReserveCardSection = ({
   hotelInfo,
@@ -41,10 +34,6 @@ const ReserveCardSection = ({
   const [openChildren, setOpenChildren] = useState(false);
   const { setQueryParams, deleteParams } = useSearchQueryParam();
 
-  const [
-    createStripePayment,
-    { isLoading: isPaymentLoading, data: paymentData },
-  ] = useCreateStripePaymentMutation();
   const [createOrder, { isLoading: isCreateLoading, data: orderData }] =
     useCreateOrderMutation();
 
@@ -79,6 +68,8 @@ const ReserveCardSection = ({
   };
 
   const handleChildren = (item: any) => {
+    let url: string = searchParams.toString();
+
     const exists = children.some(
       (obj: any) => obj.value === item.value && obj.name === item.name,
     );
@@ -88,11 +79,44 @@ const ReserveCardSection = ({
         (data: any) => data.value !== item.value,
       );
 
-      return setChildren(filterData);
+      url =
+        filterData?.length > 0
+          ? setQueryParams(
+              url,
+              "children",
+              filterData?.map((item: any) => item.value).toString(),
+            )
+          : url;
+
+      setChildren(filterData);
+
+      return router.push(`/search-hotel${url ? `?${url}` : ""}`);
     } else {
       const newData = [...children, item];
       setChildren(newData);
+
+      url =
+        newData?.length > 0
+          ? setQueryParams(
+              url,
+              "children",
+              newData?.map((item: any) => item.value).toString(),
+            )
+          : url;
+
+      router.push(`/search-hotel${url ? `?${url}` : ""}`);
     }
+  };
+
+  const handleGuest = (value: number) => {
+    let url: string = searchParams.toString();
+
+    url =
+      Number(value) > 0 ? setQueryParams(url, "adults", value.toString()) : url;
+
+    setGuest(value);
+
+    router.push(`/search-hotel${url ? `?${url}` : ""}`);
   };
 
   const handleReserved = async () => {
@@ -137,40 +161,6 @@ const ReserveCardSection = ({
       toast.error("There was an error.");
     }
   };
-
-  // const handleReserved = async () => {
-  //   const payload = {
-  //     currency: searchParams.get("currency")
-  //       ? searchParams.get("currency")
-  //       : "USD",
-  //     residency: searchParams.get("residency")
-  //       ? searchParams.get("residency")
-  //       : "nl",
-  //     hotel_id: hotelInfo?.id,
-  //     hotel_name: hotelInfo?.name,
-  //     address: hotelInfo?.address,
-  //     hash: selectRoom?.book_hash,
-  //     star_rating: hotelInfo?.star_rating,
-  //     checkIn: searchParams.get("check-out"),
-  //     checkOut: searchParams.get("check-out"),
-  //     total_night: selectRoom?.daily_prices.length,
-  //     total_amount: Number(
-  //       selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
-  //     ),
-  //     adults: guest,
-  //     children: children?.length,
-  //   };
-
-  //   const data: any = await createStripePayment(payload);
-
-  //   if (data?.data?.id) {
-  //     const stripe = await stripePromise;
-
-  //     if (stripe) {
-  //       await stripe.redirectToCheckout({ sessionId: data?.data?.id });
-  //     }
-  //   }
-  // };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (divRef.current && !divRef?.current?.contains(event.target as Node)) {
@@ -257,15 +247,6 @@ const ReserveCardSection = ({
 
         <div className="border-b border-border-primary"></div>
 
-        {/* <div className="flex items-center gap-3 px-2.5 py-2.5">
-          <StarIcon />
-
-          <div>
-            <p className="text-black text-lg font-semibold">4 Guests</p>
-            <p className="text-text-blar text-base">Guests</p>
-          </div>
-        </div> */}
-
         <div className="grid grid-cols-1">
           <div>
             <div className="px-3 py-2">
@@ -280,15 +261,18 @@ const ReserveCardSection = ({
                 <button
                   type="button"
                   disabled={guest <= 0 ? true : false}
-                  onClick={() => setGuest((prev) => prev - 1)}
+                  // onClick={() => setGuest((prev) => prev - 1)}
+                  onClick={() => handleGuest(guest - 1)}
                   className="bg-yellow-500 text-white px-2 rounded-md"
                 >
                   -
                 </button>
+
                 <p>{guest ? guest : "0"} Guests</p>
                 <button
                   type="button"
-                  onClick={() => setGuest((prev) => prev + 1)}
+                  // onClick={() => setGuest((prev) => prev + 1)}
+                  onClick={() => handleGuest(guest + 1)}
                   className="bg-yellow-500 text-white px-2 rounded-md"
                 >
                   +
