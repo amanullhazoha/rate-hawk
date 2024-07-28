@@ -43,7 +43,7 @@ const UserLayout = ({
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-screen">
           <Preloader title="Profile Page Loading.." />
         </div>
       }
