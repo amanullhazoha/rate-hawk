@@ -1,7 +1,6 @@
 "use client";
 
 import { useGetUserOrderListQuery } from "../slices";
-import Preloader from "@/components/loading/Preloader";
 import FavoriteProductCard from "@/components/card/FavoriteProductCard";
 
 const MyBookingView = () => {
@@ -22,8 +21,8 @@ const MyBookingView = () => {
           </div>
 
           {isLoading && !isError && (
-            <div className="w-full flex justify-center items-center h-40">
-              <Preloader title="Hotel Detail Page Loading" />
+            <div className="flex justify-center items-center py-10">
+              <h1>loading...</h1>
             </div>
           )}
 

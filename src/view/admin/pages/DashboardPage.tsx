@@ -4,8 +4,175 @@ import { useState } from "react";
 import Table from "@/components/table/Table";
 import AdminCard from "@/components/card/AdminCard";
 import { useGetDashboardDataQuery } from "../slice";
-import Preloader from "@/components/loading/Preloader";
 import HotelManageModal from "@/components/modal/HotelManageModal";
+
+const transactionItems = [
+  {
+    id: 1,
+    productName: "Magic Hair Rap Bath Salon Towel",
+    pricePerItem: 103,
+    quantity: 2,
+    totalPrice: 206,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 2,
+    productName: "Unilever Pureit Classic Microfibre Mesh",
+    pricePerItem: 199,
+    quantity: 1,
+    totalPrice: 199,
+    media: "Bkash",
+    status: "Pending",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 3,
+    productName: "High-quality Silicone Shampoo Brush",
+    pricePerItem: 105,
+    quantity: 3,
+    totalPrice: 315,
+    media: "Cash",
+    status: "Failed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 4,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 5,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 6,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 7,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 8,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 9,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 10,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 11,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 12,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 13,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 14,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+  {
+    id: 15,
+    productName: "3PCS Double Sided Nail File",
+    pricePerItem: 111,
+    quantity: 1,
+    totalPrice: 111,
+    media: "Bank",
+    status: "Completed",
+    imageUrl:
+      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
+  },
+];
 
 const columns = [
   {
@@ -65,8 +232,8 @@ const DashboardPage = () => {
   return (
     <main>
       {isLoading && !isError && (
-        <div className="w-full flex justify-center items-center h-40">
-          <Preloader title="Hotel Detail Page Loading" />
+        <div className="flex justify-center items-center py-10">
+          <h3>loading...</h3>
         </div>
       )}
 
