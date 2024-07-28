@@ -1,6 +1,7 @@
 "use client";
 
 import { useGetUserAllSaveListQuery } from "../slice";
+import Preloader from "@/components/loading/Preloader";
 import FavoriteProductCard from "@/components/card/FavoriteProductCard";
 
 const SaveListPageView = () => {
@@ -26,8 +27,8 @@ const SaveListPageView = () => {
                 </>
               ))
             ) : (
-              <div className="w-full">
-                <h3 className="text-center">loading....</h3>
+              <div className="w-full flex justify-center items-center h-40">
+                <Preloader title="Hotel Detail Page Loading" />
               </div>
             )}
           </div>

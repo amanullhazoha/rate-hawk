@@ -1,6 +1,7 @@
 "use client";
 
 import { Formik, Form } from "formik";
+import { toast } from "react-toastify";
 import UserIcon from "@/assets/icons/UserIcon";
 import MailIcon from "@/assets/icons/MailIcon";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
@@ -8,12 +9,12 @@ import {
   useGetLoggedInProfileQuery,
   useUserProfileUpdateMutation,
 } from "../slice";
+import Preloader from "@/components/loading/Preloader";
 import LocationIcon from "@/assets/icons/LocationIcon";
 import InputGroup from "@/components/inputs/InputGroup";
 import SelectInput from "@/components/inputs/SelectInput";
 import InputTextArea from "@/components/inputs/InputTextarea";
 import { userProfileUpdateSchema } from "../schema/profile.schema";
-import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
@@ -40,8 +41,8 @@ const ProfilePage = () => {
       </div>
 
       {isLoading && (
-        <div className="w-full">
-          <h3 className="text-center">loading...</h3>
+        <div className="w-full flex justify-center items-center h-40">
+          <Preloader title="Hotel Detail Page Loading" />
         </div>
       )}
 
