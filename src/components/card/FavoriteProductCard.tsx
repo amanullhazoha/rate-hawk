@@ -92,7 +92,7 @@ const FavoriteProductCard = ({ favorite }: { favorite: any }) => {
           </div> */}
 
           <p className="text-base font-semibold text-black-800 mb-2">
-            {favorite?.hotel?.hotel_name}
+            {favorite?.hotel?.name}
           </p>
 
           {/* <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
@@ -105,7 +105,7 @@ const FavoriteProductCard = ({ favorite }: { favorite: any }) => {
           <div className="flex justify-between items-center">
             <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
               <MapIcon />
-              {favorite?.hotel?.region_name}
+              {favorite?.hotel?.region?.name}
             </p>
 
             <div className="flex items-center gap-1">

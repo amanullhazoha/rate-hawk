@@ -166,7 +166,7 @@ const ReserveCardSection = ({
       if (data?.data?.data?.data?.order_id) {
         router.push(`/reserve/${data?.data?.data?.data?.order_id}`);
       } else {
-        toast.error("There was an error.");
+        toast.error(data?.error?.data);
       }
     } catch (error) {
       console.log(error);

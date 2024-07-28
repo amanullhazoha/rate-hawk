@@ -109,7 +109,7 @@ const ProductCard = ({
               onClick={() =>
                 handleFavorite({
                   isFavorite,
-                  hotel: data,
+                  hotel: product,
                   hotel_id: product?.id,
                 })
               }
