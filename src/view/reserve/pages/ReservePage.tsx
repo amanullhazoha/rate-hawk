@@ -114,7 +114,7 @@ const ReservePage = () => {
     }
   };
 
-  console.log(guestNameError, guestName);
+  console.log(guestNameError, guestName, order);
 
   return (
     <main className="bg-white pt-10 pb-10">
@@ -130,8 +130,8 @@ const ReservePage = () => {
                 {Array.from(
                   { length: order?.data?.guests },
                   (_, i) => i + 1,
-                ).map((item) => (
-                  <div className="mb-6">
+                ).map((item, index) => (
+                  <div className="mb-6" key={index}>
                     <h3 className="text-base font-medium text-black mb-2">
                       Input {item} No Guest Name
                     </h3>
@@ -354,7 +354,7 @@ const ReservePage = () => {
                     <p className="text-text-blar text-base">Children</p>
 
                     <p className="text-black text-lg font-semibold">
-                      {order?.data?.children?.length} Children's
+                      {order?.data?.children?.length} Children&apos;s
                     </p>
                   </div>
 

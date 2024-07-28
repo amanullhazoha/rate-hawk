@@ -3,13 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProfileNav from "../nav/ProfileNav";
+import Preloader from "../loading/Preloader";
 import { usePathname } from "next/navigation";
 import EmailIcon from "@/assets/icons/EmailIcon";
-import { useEffect, useRef, useState } from "react";
 import ProfileIcon from "@/assets/icons/ProfileIcon";
 import LanguageSelect from "../buttons/LanguageSelect";
 import CurrencySelect from "../buttons/CurrencySelect";
 import logo from "@/assets/images/travelmeester-logo.png";
+import { useEffect, useRef, useState, Suspense } from "react";
 import WhatsappIcon from "@/assets/icons/social/WhatsappIcon";
 import LoggedInUserIcon from "@/assets/icons/LoggedInUserIcon";
 import InstagramIcon from "@/assets/icons/social/InstagramIcon";
@@ -40,7 +41,13 @@ const UserLayout = ({
   }, [openMenu]);
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-20">
+          <Preloader title="Profile Page Loading.." />
+        </div>
+      }
+    >
       <header>
         <div
           className={`bg-black-800 ${
@@ -331,7 +338,7 @@ const UserLayout = ({
           </div>
         </div>
       </footer>
-    </>
+    </Suspense>
   );
 };
 
