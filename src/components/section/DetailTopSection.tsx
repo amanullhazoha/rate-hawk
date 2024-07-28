@@ -55,8 +55,8 @@ const DetailTopSection = ({
         hotel: {
           kind,
           hotel_id,
+          name: hotel?.name,
           images: hotel?.images,
-          hotel_name: hotel?.name,
           latitude: hotel?.latitude,
           longitude: hotel?.longitude,
           region_id: hotel?.region?.id,

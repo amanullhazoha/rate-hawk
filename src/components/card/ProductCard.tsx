@@ -58,7 +58,17 @@ const ProductCard = ({
       toast.success("Remove Favorite successfully.");
     } else {
       const payload = {
-        hotel,
+        hotel: {
+          hotel_id,
+          kind: hotel?.kind,
+          name: hotel?.name,
+          images: hotel?.images,
+          latitude: hotel?.latitude,
+          longitude: hotel?.longitude,
+          region_id: hotel?.region?.id,
+          star_rating: hotel?.star_rating,
+          region_name: hotel?.region?.name,
+        },
         hotel_id,
       };
 
@@ -69,8 +79,6 @@ const ProductCard = ({
       toast.success("Add Favorite successfully.");
     }
   };
-
-  console.log(data);
 
   return (
     <div>

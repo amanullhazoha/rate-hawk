@@ -8,6 +8,7 @@ import { useState, ChangeEvent } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { RoomIcon } from "@/assets/ameniteIcon";
 import product from "@/assets/images/product.jpg";
+import Preloader from "@/components/loading/Preloader";
 import { useGetUserOrderByIdQuery } from "@/view/search-hotel/slice/search-hotel.slice";
 import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 
@@ -82,11 +83,11 @@ const ReservePage = () => {
         guestNameError.every((value) => value === undefined || value === null)
       ) {
         const payload = {
-          residency: "nl",
           order_id: params?.order_id,
           adults: order?.data?.guests,
           checkIn: order?.data?.check_in,
           checkOut: order?.data?.check_out,
+          residency: order?.data?.residency,
           hotel_name: order?.data?.hotel_name,
           currency: order?.data?.currency_code,
           star_rating: order?.data?.star_rating,
@@ -112,8 +113,6 @@ const ReservePage = () => {
       return toast.error("Please input all guest name.");
     }
   };
-
-  console.log(guestNameError, guestName, order);
 
   return (
     <main className="bg-white pt-10 pb-10">
@@ -194,7 +193,7 @@ const ReservePage = () => {
                 ))}
 
                 <div
-                  className={`p-3.5 rounded-md bg-bg-primary grid grid-cols-3 gap-4`}
+                  className={`p-3.5 rounded-md bg-bg-primary grid grid-cols-3 gap-4 shadow-md border border-border-primary`}
                 >
                   <div className="w-full md:w-[200px] col-span-3 md:col-span-1">
                     <Carousel responsive={responsive}>
@@ -232,83 +231,143 @@ const ReservePage = () => {
                         </h4>
 
                         <div className="flex items-center flex-wrap gap-4 mt-2">
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.balcony > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 balcony</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.balcony}{" "}
+                                balcony
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.bathroom > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 bathroom</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.bathroom}{" "}
+                                bathroom
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.bedding > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 bedding</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.bedding}{" "}
+                                bedding
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.bedrooms > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 bedrooms</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.bedrooms}{" "}
+                                bedrooms
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.capacity > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 capacity</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.capacity}{" "}
+                                capacity
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.class > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 class</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.class} class
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.club > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 club</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.club} club
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.family > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 family</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.family}{" "}
+                                family
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.floor > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">2 floor</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.floor} floor
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.quality > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">3 quality</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.quality}{" "}
+                                quality
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.capacity > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">2 capacity</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.capacity}{" "}
+                                capacity
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.sex > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 sex</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.sex} sex
+                              </p>
+                            </div>
+                          )}
 
-                          <div className="flex items-center gap-3">
-                            <RoomIcon />
+                          {order?.data?.choose_room?.rg_ext?.view > 0 && (
+                            <div className="flex items-center gap-3">
+                              <RoomIcon />
 
-                            <p className="text-sm font-medium">1 view</p>
-                          </div>
+                              <p className="text-sm font-medium">
+                                {order?.data?.choose_room?.rg_ext?.view} view
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -389,8 +448,8 @@ const ReservePage = () => {
             </div>
           </div>
         ) : (
-          <div className="flex justify-center items-center py-10">
-            <p>loading....</p>
+          <div className="flex justify-center items-center h-20">
+            <Preloader title="Home Page Loading.." />
           </div>
         )}
       </div>

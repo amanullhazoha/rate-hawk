@@ -1,6 +1,8 @@
 "use client";
 
 import { useGetUserOrderListQuery } from "../slices";
+import Preloader from "@/components/loading/Preloader";
+import UserOrderCard from "@/components/card/UserOrderCard";
 import FavoriteProductCard from "@/components/card/FavoriteProductCard";
 
 const MyBookingView = () => {
@@ -21,8 +23,8 @@ const MyBookingView = () => {
           </div>
 
           {isLoading && !isError && (
-            <div className="flex justify-center items-center py-10">
-              <h1>loading...</h1>
+            <div className="flex justify-center items-center h-20">
+              <Preloader title="Page Loading.." />
             </div>
           )}
 
@@ -30,12 +32,16 @@ const MyBookingView = () => {
             {data &&
               !isLoading &&
               !isError &&
-              data?.data?.map((favorite: any) => (
-                <>
-                  <FavoriteProductCard favorite={favorite} />
-                </>
+              data?.data?.map((order: any) => (
+                <UserOrderCard order={order} key={order?.order_id} />
               ))}
           </div>
+
+          {data?.data?.length <= 0 && !isLoading && !isError && (
+            <div className="flex justify-center items-center h-20">
+              <h3>Data Not Found</h3>
+            </div>
+          )}
         </div>
       </div>
     </main>

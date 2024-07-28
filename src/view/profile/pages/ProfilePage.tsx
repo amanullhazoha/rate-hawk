@@ -14,6 +14,7 @@ import SelectInput from "@/components/inputs/SelectInput";
 import InputTextArea from "@/components/inputs/InputTextarea";
 import { userProfileUpdateSchema } from "../schema/profile.schema";
 import { toast } from "react-toastify";
+import Preloader from "@/components/loading/Preloader";
 
 const ProfilePage = () => {
   const { data, isLoading, isError } = useGetLoggedInProfileQuery("");
@@ -40,8 +41,8 @@ const ProfilePage = () => {
       </div>
 
       {isLoading && (
-        <div className="w-full">
-          <h3 className="text-center">loading...</h3>
+        <div className="flex justify-center items-center h-20">
+          <Preloader title="Page Loading.." />
         </div>
       )}
 
