@@ -1,14 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { format } from "date-fns";
 import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
 import { useParams } from "next/navigation";
+import { useState, ChangeEvent } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { RoomIcon } from "@/assets/ameniteIcon";
 import product from "@/assets/images/product.jpg";
-import { useState, useEffect, ChangeEvent } from "react";
 import { useGetUserOrderByIdQuery } from "@/view/search-hotel/slice/search-hotel.slice";
 import { useCreateStripePaymentMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 

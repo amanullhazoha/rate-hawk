@@ -163,8 +163,10 @@ const ReserveCardSection = ({
 
       const data: any = await createOrder(payload);
 
-      if (data) {
+      if (data?.data?.data?.data?.order_id) {
         router.push(`/reserve/${data?.data?.data?.data?.order_id}`);
+      } else {
+        toast.error("There was an error.");
       }
     } catch (error) {
       console.log(error);
