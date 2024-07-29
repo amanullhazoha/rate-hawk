@@ -87,17 +87,13 @@ const OrderInfoByRateHawkPage = () => {
       <h2 className="text-2xl font-bold">Order Info By Rate Hawk</h2>
       <div className="mt-4">
         {isLoading && !isError && (
-          <div className="flex justify-center items-center h-20">
+          <div className="flex justify-center items-center h-40">
             <Preloader title="Page Loading.." />
           </div>
         )}
 
         {!isLoading && !isError && orderInfo && (
-          <Table
-            columns={columns}
-            className="min-w-[1000px]"
-            items={orderInfo?.data?.data?.orders}
-          />
+          <Table columns={columns} items={orderInfo?.data?.data?.orders} />
         )}
       </div>
     </main>

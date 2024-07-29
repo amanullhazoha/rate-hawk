@@ -166,7 +166,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
         <div className="w-[1200px]">
           <div className="bg-white shadow-md py-3 px-4 flex justify-between items-center sticky top-0">
-            <h3 className="text-black font-medium text-xl">Dashboard</h3>
+            <h3 className="text-black font-medium text-xl">Admin Panel</h3>
 
             <UserListIcon className="w-10 h-10" />
           </div>

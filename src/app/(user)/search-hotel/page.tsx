@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 import { SearchPageView } from "@/view/search-hotel";
 
 export const metadata: Metadata = {
@@ -7,15 +6,7 @@ export const metadata: Metadata = {
 };
 
 const SearchHotel = () => {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center items-center h-20">loading....</div>
-      }
-    >
-      <SearchPageView />
-    </Suspense>
-  );
+  return <SearchPageView />;
 };
 
 export default SearchHotel;

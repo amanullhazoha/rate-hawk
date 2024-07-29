@@ -1,113 +1,74 @@
-import Table from "@/components/table/Table";
+"use client";
 
-const transactionItems = [
-  {
-    id: 1,
-    productName: "Magic Hair Rap Bath Salon Towel",
-    pricePerItem: 103,
-    quantity: 2,
-    totalPrice: 206,
-    media: "Bank",
-    status: "Completed",
-    imageUrl:
-      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
-  },
-  {
-    id: 2,
-    productName: "Unilever Pureit Classic Microfibre Mesh",
-    pricePerItem: 199,
-    quantity: 1,
-    totalPrice: 199,
-    media: "Bkash",
-    status: "Pending",
-    imageUrl:
-      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
-  },
-  {
-    id: 3,
-    productName: "High-quality Silicone Shampoo Brush",
-    pricePerItem: 105,
-    quantity: 3,
-    totalPrice: 315,
-    media: "Cash",
-    status: "Failed",
-    imageUrl:
-      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
-  },
-  {
-    id: 4,
-    productName: "3PCS Double Sided Nail File",
-    pricePerItem: 111,
-    quantity: 1,
-    totalPrice: 111,
-    media: "Bank",
-    status: "Completed",
-    imageUrl:
-      "https://i.postimg.cc/vTGcmWqp/02-A4-F9-A4-15-EB-440-D-B625-1-BD13040-EEE3.png",
-  },
-];
+import Table from "@/components/table/Table";
+import { useGetAllTransactionQuery } from "../slice";
+import Preloader from "@/components/loading/Preloader";
 
 const columns = [
   {
-    label: "Image",
-    path: "imageUrl",
+    label: "ID",
+    path: "_id",
+    content: (row: any) => <td className="p-2">{row._id}</td>,
+  },
+  {
+    label: "Order ID",
+    path: "order_id",
+    content: (row: any) => <td className="p-2">{row.order_id}</td>,
+  },
+  {
+    label: "Amount",
+    path: "amount",
     content: (row: any) => (
-      <td className="p-2">
-        <img
-          src={row.imageUrl}
-          alt={row.productName}
-          className="w-10 h-10 rounded-lg"
-        />
+      <td className="p-2 uppercase">
+        {row.amount} {row.currency}
       </td>
     ),
   },
   {
-    label: "Hotel Name",
-    path: "productName",
-    content: (row: any) => <td className="p-2">{row.productName}</td>,
+    label: "Customer Name",
+    path: "customer_name",
+    content: (row: any) => <td className="p-2">{row.customer_name}</td>,
   },
   {
-    label: "Price",
-    path: "pricePerItem",
-    content: (row: any) => <td className="p-2">{row.pricePerItem} ৳</td>,
+    label: "Customer Email",
+    path: "customer_email",
+    content: (row: any) => <td className="p-2">{row.customer_email}</td>,
   },
   {
-    label: "Start Date",
-    path: "quantity",
-    content: (row: any) => <td className="p-2">{row.quantity}</td>,
+    label: "Payment Status",
+    path: "payment_status",
+    content: (row: any) => <td className="p-2">{row.payment_status}</td>,
   },
   {
-    label: "End Date",
-    path: "quantity",
-    content: (row: any) => <td className="p-2">{row.quantity}</td>,
-  },
-  {
-    label: "Created Date",
-    path: "totalPrice",
-    content: (row: any) => <td className="p-2">{row.totalPrice} ৳</td>,
-  },
-  {
-    label: "User Name",
-    path: "media",
-    content: (row: any) => <td className="p-2">{row.media}</td>,
-  },
-  {
-    label: "Status",
-    path: "status",
-    content: (row: any) => <td className="p-2">{row.status}</td>,
+    label: "Payment Method",
+    path: "payment_method",
+    content: (row: any) => <td className="p-2">{row.payment_method}</td>,
   },
 ];
 
 const TransactionHistoryPage = () => {
+  const {
+    data: transactions,
+    isLoading,
+    isError,
+  } = useGetAllTransactionQuery("");
+
+  console.log(transactions);
+
   return (
-    <main>
+    <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">Transaction History</h2>
+
       <div className="mt-4">
-        <Table
-          columns={columns}
-          items={transactionItems}
-          className="min-w-[1000px]"
-        />
+        {isLoading && !isError && (
+          <div className="flex justify-center items-center h-40">
+            <Preloader title="Page Loading.." />
+          </div>
+        )}
+
+        {transactions && !isLoading && !isError && (
+          <Table columns={columns} items={transactions?.data} />
+        )}
       </div>
     </main>
   );

@@ -74,25 +74,19 @@ const OrderListPage = () => {
   const { data, isLoading, isError } = useGetUserOrderListForAdminQuery("");
 
   return (
-    <main>
-      {isLoading && !isError && (
-        <div className="flex justify-center items-center h-20">
-          <Preloader title="Page Loading.." />
-        </div>
-      )}
-
-      {data?.data && !isLoading && !isError && (
-        <>
-          <h2 className="text-2xl font-bold">Order List</h2>
-          <div className="mt-4">
-            <Table
-              columns={columns}
-              items={data?.data}
-              className="min-w-[1000px]"
-            />
+    <main className="max-md:px-2.5 max-md:py-6">
+      <h2 className="text-2xl font-bold">Order List</h2>
+      <div className="mt-4">
+        {isLoading && !isError && (
+          <div className="flex justify-center items-center h-40">
+            <Preloader title="Page Loading.." />
           </div>
-        </>
-      )}
+        )}
+
+        {data?.data && !isLoading && !isError && (
+          <Table columns={columns} items={data?.data} />
+        )}
+      </div>
     </main>
   );
 };

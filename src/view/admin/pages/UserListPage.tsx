@@ -3,6 +3,7 @@
 import React from "react";
 import { useGetUserQuery } from "../slice";
 import Table from "@/components/table/Table";
+import Preloader from "@/components/loading/Preloader";
 
 const columns = [
   {
@@ -53,9 +54,15 @@ const UserListPage = () => {
   const { data: user, isLoading, isError } = useGetUserQuery("");
 
   return (
-    <main>
+    <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">User List</h2>
       <div className="mt-4">
+        {isLoading && !isError && (
+          <div className="flex justify-center items-center h-40">
+            <Preloader title="Page Loading.." />
+          </div>
+        )}
+
         {user && !isLoading && !isError && (
           <Table
             columns={columns}

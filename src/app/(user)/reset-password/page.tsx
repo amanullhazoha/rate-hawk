@@ -7,11 +7,7 @@ export const metadata: Metadata = {
 };
 
 const ResetPassword = () => {
-  return (
-    <Suspense fallback={<div>loading....</div>}>
-      <ResetPasswordPage />
-    </Suspense>
-  );
+  return <ResetPasswordPage />;
 };
 
 export default ResetPassword;

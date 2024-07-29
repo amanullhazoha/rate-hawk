@@ -63,16 +63,16 @@ const DashboardPage = () => {
   const { data, isLoading, isError } = useGetDashboardDataQuery("");
 
   return (
-    <main>
+    <main className="max-md:px-2.5 max-md:py-5">
       {isLoading && !isError && (
-        <div className="flex justify-center items-center h-20">
+        <div className="flex justify-center items-center h-40">
           <Preloader title="Page Loading.." />
         </div>
       )}
 
       {data?.data && !isLoading && !isError && (
         <>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <AdminCard title="Total Order" value={data?.data?.total_order} />
             <AdminCard title="Total Hotel" value={data?.data?.total_hotel} />
             <AdminCard title="Total User" value={data?.data?.total_user} />

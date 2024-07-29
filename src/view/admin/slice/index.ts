@@ -12,6 +12,11 @@ export const adminApi = createApi({
         url: "/secured/user",
       }),
     }),
+    getAllTransaction: builder.query({
+      query: () => ({
+        url: "/secured/transaction-history",
+      }),
+    }),
     getDashboardData: builder.query({
       query: () => ({
         url: "/secured/admin-dashboard",
@@ -58,6 +63,7 @@ export const {
   useGetUserQuery,
   useGetOrderInfoMutation,
   useGetDashboardDataQuery,
+  useGetAllTransactionQuery,
   useUploadHotelJsonDataMutation,
   useDownloadHotelDumpDataMutation,
   useGetUserOrderListForAdminQuery,
