@@ -8,7 +8,9 @@ import {
 
 const HotelManageModal = ({
   handleClose,
+  total_hotel,
 }: {
+  total_hotel: string;
   handleClose: () => void;
   handleOpenForm?: () => void;
   handleCSVfileUpload?: (data: any) => void;
@@ -106,7 +108,9 @@ const HotelManageModal = ({
               <button
                 type="button"
                 onClick={handleClick}
-                disabled={uploadLoading}
+                disabled={
+                  Number(total_hotel) <= 0 ? true : false || uploadLoading
+                }
                 className="py-2.5 w-full rounded-lg bg-green-700 text-white text-base font-medium"
               >
                 Upload Hotel JSON Data
@@ -124,6 +128,7 @@ const HotelManageModal = ({
 
             <button
               type="button"
+              disabled={Number(total_hotel) > 0 ? true : false}
               className="py-2.5 w-full rounded-lg bg-red-500 text-white text-base font-medium"
             >
               Delete All Hotel Data
