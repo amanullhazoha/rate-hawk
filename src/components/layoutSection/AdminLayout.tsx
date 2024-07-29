@@ -1,14 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import logo from "@/assets/images/travelmeester-logo.png";
-import { useCallback, useEffect, useRef, useState } from "react";
-import DashboardIcon from "@/assets/icons/DashboardIcon";
+import Image from "next/image";
+import { toast } from "react-toastify";
+import AdminNavList from "../nav/AdminNavList";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
 import UserListIcon from "@/assets/icons/UserListIcon";
 import OrderListIcon from "@/assets/icons/OrderListIcon";
+import { usePathname, useRouter } from "next/navigation";
+import DashboardIcon from "@/assets/icons/DashboardIcon";
+import logo from "@/assets/images/travelmeester-logo.png";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
 
 const AdminLink = ({
   href,
@@ -36,9 +39,25 @@ const AdminLink = ({
 };
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
   const activePath = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   const [openNav, setOpenNav] = useState(false);
+  const [userLogout, { isLoading, isError }] = useUserLogoutMutation();
+
+  const handleLogout = async () => {
+    const data: any = await userLogout("");
+
+    if (!data?.error) {
+      localStorage.removeItem("access_token");
+
+      router.push("/login");
+      setOpenNav(false);
+      return toast.success("User logout successfully.");
+    }
+
+    toast.error(data?.error?.data);
+  };
 
   const handleClickOutside = useCallback((event: any) => {
     if (navRef.current && navRef?.current?.contains(event.target)) {
@@ -58,7 +77,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="max-w-[1600px] mx-auto md:hidden">
-        <header className="bg-primary-color py-4 px-[6px] relative">
+        <header className="bg-primary-color py-4 px-[6px] sticky top-0 z-[99999999]">
           <div className="w-full flex justify-between items-center mx-auto">
             <div className="md:w-44 relative w-[88px]">
               <Link href="/" className="text-[40px] text-black-600 font-bold">
@@ -95,8 +114,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           {openNav && (
-            <div ref={navRef}>
-              {/* <AdminNavList handleLogout={handleLogout} /> */}
+            <div
+              ref={navRef}
+              className="absolute top-[55px] right-2.5 min-w-40 z-50"
+            >
+              <AdminNavList handleLogout={handleLogout} />
             </div>
           )}
         </header>
@@ -156,7 +178,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <button
               type="button"
               className="text-text-secondary-hover font-semibold flex gap-3 items-center hover:bg-border-secondary p-1 rounded-md"
-              onClick={() => console.log("logout")}
+              onClick={handleLogout}
             >
               <LogoutIcon />
               Logout

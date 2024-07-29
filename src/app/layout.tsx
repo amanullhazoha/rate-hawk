@@ -22,7 +22,7 @@ export default function RootLayout({
       <Provider store={store}>
         <body className={inter.className}>
           {children}
-          <ToastContainer />
+          <ToastContainer style={{ zIndex: "10000000000" }} />
         </body>
       </Provider>
     </html>

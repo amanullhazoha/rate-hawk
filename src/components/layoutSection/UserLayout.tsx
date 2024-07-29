@@ -48,7 +48,7 @@ const UserLayout = ({
         </div>
       }
     >
-      <header>
+      <header className="sticky top-0 z-[99999999]">
         <div
           className={`bg-black-800 ${
             data?.data && !isError ? "hidden" : "block"
@@ -147,7 +147,10 @@ const UserLayout = ({
                       ref={menuRef}
                       className="absolute top-[50px] right-0 min-w-40 z-50"
                     >
-                      <ProfileNav user={data?.data ? true : false} />
+                      <ProfileNav
+                        user={data?.data && !isError ? true : false}
+                        setOpenMenu={setOpenMenu}
+                      />
                     </div>
                   )}
                 </div>
@@ -171,7 +174,10 @@ const UserLayout = ({
                       ref={menuRef}
                       className="absolute top-[50px] right-0 min-w-40 z-[99999]"
                     >
-                      <ProfileNav user={data?.data ? true : false} />
+                      <ProfileNav
+                        user={data?.data && !isError ? true : false}
+                        setOpenMenu={setOpenMenu}
+                      />
                     </div>
                   )}
                 </div>

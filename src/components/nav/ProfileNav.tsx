@@ -3,7 +3,13 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
 
-const ProfileNav = ({ user }: { user: boolean }) => {
+const ProfileNav = ({
+  user,
+  setOpenMenu,
+}: {
+  user: boolean;
+  setOpenMenu: (value: any) => void;
+}) => {
   const router = useRouter();
   const [userLogout, { isLoading, isError }] = useUserLogoutMutation();
 
@@ -14,6 +20,7 @@ const ProfileNav = ({ user }: { user: boolean }) => {
       localStorage.removeItem("access_token");
 
       router.push("/login");
+      setOpenMenu(false);
       return toast.success("User logout successfully.");
     }
 
