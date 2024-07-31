@@ -28,7 +28,7 @@ const SaveListPageView = () => {
 
     setPage(value);
 
-    router.push(`/my-booking${url ? `?${url}` : ""}`);
+    router.push(`/save-list${url ? `?${url}` : ""}`);
   };
 
   useEffect(() => {
