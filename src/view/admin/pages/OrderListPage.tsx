@@ -94,7 +94,7 @@ const OrderListPage = () => {
 
     setPage(value);
 
-    router.push(`/admin/order-list${url ? `?${url}` : ""}`);
+    router.push(`/admin/order${url ? `?${url}` : ""}`);
   };
 
   useEffect(() => {
