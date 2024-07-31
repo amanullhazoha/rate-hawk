@@ -24,18 +24,19 @@ export function middleware(request: NextRequest) {
   ];
 
   const userRoutes = [
+    "/reserve/",
     "/profile",
     "/save-list",
     "/my-booking",
     "/change-password",
-    "/reserve",
   ];
 
   const path = request?.nextUrl?.pathname;
 
-  const isAdminRoute = adminRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
-  const isUserRoute = userRoutes.includes(path);
+  const isUserRoute = userRoutes.some((route) => path.startsWith(route));
+  const isAdminRoute = adminRoutes.some((route) => path.startsWith(route));
+  const isPublicRoute = publicRoutes.some((route) => path.startsWith(route));
+
   const isAdmin = user && user?.role === "admin" ? true : false;
 
   if (!user && (isUserRoute || isAdminRoute)) {
@@ -52,5 +53,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/(api|trpc)(.*)"],
+  //matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
