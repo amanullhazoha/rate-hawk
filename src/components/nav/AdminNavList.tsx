@@ -6,24 +6,33 @@ const AdminNavList = ({ handleLogout }: { handleLogout: () => void }) => {
       className="flex flex-col gap-2 border
      border-border-primary rounded-md shadow-md bg-white py-3"
     >
-      <Link href="/" className="px-6 py-1 hover:bg-border-primary">
-        Home
+      <Link
+        href="/admin/dashboard"
+        className="px-6 py-1 hover:bg-border-primary"
+      >
+        Dashboard
       </Link>
 
-      <Link href="/profile" className="px-6 py-1 hover:bg-border-primary">
-        Profile
+      <Link href="/admin/order" className="px-6 py-1 hover:bg-border-primary">
+        Order List
       </Link>
 
-      <Link href="/my-booking" className="px-6 py-1 hover:bg-border-primary">
-        My Booking
+      <Link href="/admin/user" className="px-6 py-1 hover:bg-border-primary">
+        User List
       </Link>
 
-      <Link href="/save-list" className="px-6 py-1 hover:bg-border-primary">
-        Save List
+      <Link
+        href="/admin/order-info"
+        className="px-6 py-1 hover:bg-border-primary"
+      >
+        Order Info
       </Link>
 
-      <Link href="/contact" className="px-6 py-1 hover:bg-border-primary">
-        Contact
+      <Link
+        href="/admin/transaction-history"
+        className="px-6 py-1 hover:bg-border-primary"
+      >
+        Transaction
       </Link>
 
       <div className="w-full">
