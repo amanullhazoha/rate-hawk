@@ -14,8 +14,9 @@ export const adminApi = createApi({
       }),
     }),
     getAllTransaction: builder.query({
-      query: () => ({
+      query: ({ page }) => ({
         url: "/secured/transaction-history",
+        params: { page, limit: 10 },
       }),
     }),
     getDashboardData: builder.query({

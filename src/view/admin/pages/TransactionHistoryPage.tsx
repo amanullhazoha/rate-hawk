@@ -1,8 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Table from "@/components/table/Table";
 import { useGetAllTransactionQuery } from "../slice";
 import Preloader from "@/components/loading/Preloader";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { useSearchParams, useRouter } from "next/navigation";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const columns = [
   {
@@ -47,11 +51,34 @@ const columns = [
 ];
 
 const TransactionHistoryPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
+  const activePage: string | null = searchParams.get("page");
+  const skipQuery = !page;
+
   const {
     data: transactions,
     isLoading,
     isError,
-  } = useGetAllTransactionQuery("");
+  } = useGetAllTransactionQuery({ page }, { skip: skipQuery });
+
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/admin/transaction-history${url ? `?${url}` : ""}`);
+  };
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
 
   return (
     <main className="max-md:px-2.5 max-md:py-6">
@@ -67,6 +94,16 @@ const TransactionHistoryPage = () => {
         {transactions && !isLoading && !isError && (
           <Table columns={columns} items={transactions?.data} />
         )}
+
+        {!isLoading &&
+          !isError &&
+          transactions?.data?.pagination?.totalItems > 10 && (
+            <GlobalPagination
+              page={page}
+              total_element={transactions?.data?.pagination?.totalItems}
+              handlePagination={(value: number) => handlePagination(value)}
+            />
+          )}
       </div>
     </main>
   );
