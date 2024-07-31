@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
 import { useGetUserQuery } from "../slice";
+import { useState, useEffect } from "react";
 import Table from "@/components/table/Table";
 import Preloader from "@/components/loading/Preloader";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { useSearchParams, useRouter } from "next/navigation";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const columns = [
   {
@@ -51,7 +54,34 @@ const columns = [
 ];
 
 const UserListPage = () => {
-  const { data: user, isLoading, isError } = useGetUserQuery("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
+  const activePage: string | null = searchParams.get("page");
+  const skipQuery = !page;
+
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useGetUserQuery({ page }, { skip: skipQuery });
+
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/admin/user${url ? `?${url}` : ""}`);
+  };
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
 
   return (
     <main className="max-md:px-2.5 max-md:py-6">
@@ -68,6 +98,14 @@ const UserListPage = () => {
             columns={columns}
             items={user?.data}
             className="min-w-[1050px]"
+          />
+        )}
+
+        {!isLoading && !isError && user?.data?.pagination?.totalItems > 10 && (
+          <GlobalPagination
+            page={page}
+            total_element={user?.data?.pagination?.totalItems}
+            handlePagination={(value: number) => handlePagination(value)}
           />
         )}
       </div>

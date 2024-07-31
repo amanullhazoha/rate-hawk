@@ -8,8 +8,9 @@ export const adminApi = createApi({
   }),
   endpoints: (builder) => ({
     getUser: builder.query({
-      query: () => ({
+      query: ({ page }) => ({
         url: "/secured/user",
+        params: { page, limit: 10 },
       }),
     }),
     getAllTransaction: builder.query({
@@ -48,14 +49,6 @@ export const adminApi = createApi({
         body: data,
       }),
     }),
-
-    // createNewsletter: builder.mutation({
-    //   query: (data: any) => ({
-    //     url: "/public/newsletter",
-    //     method: "post",
-    //     body: data,
-    //   }),
-    // }),
   }),
 });
 
