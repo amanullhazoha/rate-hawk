@@ -80,6 +80,8 @@ const TransactionHistoryPage = () => {
     }
   }, []);
 
+  console.log(transactions);
+
   return (
     <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">Transaction History</h2>
