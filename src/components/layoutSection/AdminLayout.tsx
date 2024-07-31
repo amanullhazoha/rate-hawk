@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import Preloader from "../loading/Preloader";
 import AdminNavList from "../nav/AdminNavList";
 import LogoutIcon from "@/assets/icons/LogoutIcon";
 import UserListIcon from "@/assets/icons/UserListIcon";
@@ -10,8 +11,8 @@ import OrderListIcon from "@/assets/icons/OrderListIcon";
 import { usePathname, useRouter } from "next/navigation";
 import DashboardIcon from "@/assets/icons/DashboardIcon";
 import logo from "@/assets/images/travelmeester-logo.png";
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useUserLogoutMutation } from "@/view/login/slice/login.slice";
+import { useCallback, useEffect, useRef, useState, Suspense } from "react";
 
 const AdminLink = ({
   href,
@@ -75,7 +76,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }, [handleClickOutside]);
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <Preloader title="Page Loading.." />
+        </div>
+      }
+    >
       <div className="max-w-[1600px] mx-auto md:hidden">
         <header className="bg-primary-color py-4 px-[6px] sticky top-0 z-[99999999]">
           <div className="w-full flex justify-between items-center mx-auto">
@@ -198,7 +205,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 };
 
