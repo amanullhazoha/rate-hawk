@@ -1,8 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Table from "@/components/table/Table";
 import Preloader from "@/components/loading/Preloader";
 import { useGetUserOrderListForAdminQuery } from "../slice";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { useSearchParams, useRouter } from "next/navigation";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const columns = [
   {
@@ -71,7 +75,35 @@ const columns = [
 ];
 
 const OrderListPage = () => {
-  const { data, isLoading, isError } = useGetUserOrderListForAdminQuery("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
+  const activePage: string | null = searchParams.get("page");
+  const skipQuery = !page;
+
+  const { data, isLoading, isError } = useGetUserOrderListForAdminQuery(
+    { page },
+    { skip: skipQuery },
+  );
+
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/admin/order-list${url ? `?${url}` : ""}`);
+  };
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
+
+  console.log(data);
 
   return (
     <main className="max-md:px-2.5 max-md:py-6">
@@ -85,6 +117,15 @@ const OrderListPage = () => {
 
         {data?.data && !isLoading && !isError && (
           <Table columns={columns} items={data?.data} />
+        )}
+
+        {!isLoading && !isError && data?.pagination?.totalItems > 10 && (
+          <GlobalPagination
+            limit={10}
+            page={page}
+            total_element={data?.pagination?.totalItems}
+            handlePagination={(value: number) => handlePagination(value)}
+          />
         )}
       </div>
     </main>

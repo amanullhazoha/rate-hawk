@@ -25,8 +25,9 @@ export const adminApi = createApi({
       }),
     }),
     getUserOrderListForAdmin: builder.query({
-      query: () => ({
+      query: ({ page }) => ({
         url: "/secured/all/order",
+        params: { page, limit: 10 },
       }),
     }),
     getOrderInfo: builder.mutation({

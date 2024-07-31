@@ -83,6 +83,8 @@ const UserListPage = () => {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">User List</h2>
@@ -101,10 +103,11 @@ const UserListPage = () => {
           />
         )}
 
-        {!isLoading && !isError && user?.data?.pagination?.totalItems > 10 && (
+        {!isLoading && !isError && user?.pagination?.totalItems > 10 && (
           <GlobalPagination
             page={page}
-            total_element={user?.data?.pagination?.totalItems}
+            limit={10}
+            total_element={user?.pagination?.totalItems}
             handlePagination={(value: number) => handlePagination(value)}
           />
         )}
