@@ -2,14 +2,17 @@
 
 import { useCallback, useRef, useState } from "react";
 import {
+  useDeleteHotelDumpDataMutation,
   useUploadHotelJsonDataMutation,
   useDownloadHotelDumpDataMutation,
 } from "@/view/admin/slice";
 
 const HotelManageModal = ({
+  isOpen,
   handleClose,
   total_hotel,
 }: {
+  isOpen: boolean;
   total_hotel: string;
   handleClose: () => void;
   handleOpenForm?: () => void;
@@ -22,6 +25,8 @@ const HotelManageModal = ({
     useDownloadHotelDumpDataMutation();
   const [uploadHotelJsonData, { isLoading: uploadLoading }] =
     useUploadHotelJsonDataMutation();
+  const [deleteHotelDumpData, { isLoading: deleteDataLoading }] =
+    useDeleteHotelDumpDataMutation();
 
   const handleDownloadDumpData = async () => {
     const download = await downloadHotelDumpData("");
@@ -34,15 +39,19 @@ const HotelManageModal = ({
 
   const handleFileUpload = async (event: any) => {
     const file = event.target.files[0];
-    // Do something with the selected file
-    console.log("Selected file:", file);
+
     const formData = new FormData();
     formData.append("file", file);
-    console.log(formData);
 
     const upload = await uploadHotelJsonData(formData);
 
     console.log(upload);
+  };
+
+  const handleDataDelete = async () => {
+    const data = await deleteHotelDumpData("");
+
+    console.log("handle delete", data);
   };
 
   const handleClick = useCallback((): void => {
@@ -109,7 +118,7 @@ const HotelManageModal = ({
                 type="button"
                 onClick={handleClick}
                 disabled={
-                  Number(total_hotel) <= 0 ? true : false || uploadLoading
+                  Number(total_hotel) <= 0 ? false : true || uploadLoading
                 }
                 className="py-2.5 w-full rounded-lg bg-green-700 text-white text-base font-medium"
               >
@@ -128,7 +137,10 @@ const HotelManageModal = ({
 
             <button
               type="button"
-              disabled={Number(total_hotel) > 0 ? true : false}
+              onClick={handleDataDelete}
+              disabled={
+                Number(total_hotel) > 0 ? false : true || deleteDataLoading
+              }
               className="py-2.5 w-full rounded-lg bg-red-500 text-white text-base font-medium"
             >
               Delete All Hotel Data

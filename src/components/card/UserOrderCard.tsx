@@ -2,14 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
 import MapIcon from "@/assets/icons/MapIcon";
-import StarIcon from "@/assets/icons/StarIcon";
-import HeartIcon from "@/assets/icons/HeartIcon";
 import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
-import { useUserRemoveFavoriteMutation } from "@/view/save-list/slice";
 
 const responsive = {
   mobile: {
@@ -55,7 +51,7 @@ const UserOrderCard = ({ order }: { order: any }) => {
             <span
               className={`w-fit px-2 py-1 rounded-full flex bg-black-800 justify-center items-center mr-2 cursor-pointer text-white`}
             >
-              Pending
+              {order?.status}
             </span>
           </div>
         </div>

@@ -37,8 +37,6 @@ const MyBookingView = () => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <main className="bg-white">
       <div className="container mx-auto">
@@ -75,7 +73,7 @@ const MyBookingView = () => {
             />
           )}
 
-          {data?.data?.length <= 0 && !isLoading && !isError && (
+          {data?.pagination?.totalItems <= 0 && !isLoading && !isError && (
             <div className="flex justify-center items-center h-20">
               <h3>Data Not Found</h3>
             </div>

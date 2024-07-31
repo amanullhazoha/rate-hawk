@@ -83,8 +83,6 @@ const UserListPage = () => {
     }
   }, []);
 
-  console.log(user);
-
   return (
     <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">User List</h2>
@@ -110,6 +108,12 @@ const UserListPage = () => {
             total_element={user?.pagination?.totalItems}
             handlePagination={(value: number) => handlePagination(value)}
           />
+        )}
+
+        {user?.pagination?.totalItems <= 0 && !isLoading && !isError && (
+          <div className="flex justify-center items-center h-20">
+            <h3>Data Not Found</h3>
+          </div>
         )}
       </div>
     </main>

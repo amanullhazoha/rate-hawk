@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Table from "@/components/table/Table";
 import { useGetOrderInfoMutation } from "../slice";
 import Preloader from "@/components/loading/Preloader";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { useSearchParams, useRouter } from "next/navigation";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const columns = [
   {
@@ -58,8 +61,30 @@ const columns = [
 ];
 
 const OrderInfoByRateHawkPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
+  const activePage: string | null = searchParams.get("page");
+
   const [getOrderInfo, { isLoading, isError, data: orderInfo }] =
     useGetOrderInfoMutation();
+
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/admin/order-info${url ? `?${url}` : ""}`);
+  };
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
 
   useEffect(() => {
     const payload = {
@@ -69,7 +94,7 @@ const OrderInfoByRateHawkPage = () => {
       },
       pagination: {
         page_size: "10",
-        page_number: "1",
+        page_number: page.toString(),
       },
       search: {
         created_at: {
@@ -80,9 +105,7 @@ const OrderInfoByRateHawkPage = () => {
     };
 
     getOrderInfo(payload);
-  }, []);
-
-  console.log(orderInfo);
+  }, [page]);
 
   return (
     <main className="max-md:px-2.5 max-md:py-6">
@@ -96,6 +119,21 @@ const OrderInfoByRateHawkPage = () => {
 
         {!isLoading && !isError && orderInfo && (
           <Table columns={columns} items={orderInfo?.data?.data?.orders} />
+        )}
+
+        {!isLoading && !isError && orderInfo?.data?.data?.total_orders > 10 && (
+          <GlobalPagination
+            limit={8}
+            page={page}
+            total_element={orderInfo?.data?.data?.total_orders}
+            handlePagination={(value: number) => handlePagination(value)}
+          />
+        )}
+
+        {orderInfo?.data?.data?.total_orders <= 0 && !isLoading && !isError && (
+          <div className="flex justify-center items-center h-20">
+            <h3>Data Not Found</h3>
+          </div>
         )}
       </div>
     </main>

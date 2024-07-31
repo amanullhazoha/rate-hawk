@@ -105,6 +105,14 @@ const TransactionHistoryPage = () => {
               handlePagination={(value: number) => handlePagination(value)}
             />
           )}
+
+        {transactions?.pagination?.totalItems <= 0 &&
+          !isLoading &&
+          !isError && (
+            <div className="flex justify-center items-center h-20">
+              <h3>Data Not Found</h3>
+            </div>
+          )}
       </div>
     </main>
   );

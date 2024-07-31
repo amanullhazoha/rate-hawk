@@ -51,6 +51,12 @@ export const adminApi = createApi({
         body: data,
       }),
     }),
+    deleteHotelDumpData: builder.mutation({
+      query: () => ({
+        url: "/secured/dump-data/delete",
+        method: "delete",
+      }),
+    }),
   }),
 });
 
@@ -59,6 +65,7 @@ export const {
   useGetOrderInfoMutation,
   useGetDashboardDataQuery,
   useGetAllTransactionQuery,
+  useDeleteHotelDumpDataMutation,
   useUploadHotelJsonDataMutation,
   useDownloadHotelDumpDataMutation,
   useGetUserOrderListForAdminQuery,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Table from "@/components/table/Table";
 import AdminCard from "@/components/card/AdminCard";
 import { useGetDashboardDataQuery } from "../slice";
@@ -59,8 +59,29 @@ const columns = [
 ];
 
 const DashboardPage = () => {
+  const scrollPositionRef = useRef(0);
   const [openModal, setOpenModal] = useState(false);
   const { data, isLoading, isError } = useGetDashboardDataQuery("");
+
+  useEffect(() => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+
+      scrollPositionRef.current = window.scrollY;
+
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+    } else {
+      document.body.style.overflow = "auto";
+
+      window.scrollTo(0, scrollPositionRef.current);
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+
+      window.scrollTo(0, scrollPositionRef.current);
+    };
+  }, [openModal]);
 
   return (
     <main className="max-md:px-2.5 max-md:py-5">
@@ -108,6 +129,7 @@ const DashboardPage = () => {
 
       {openModal && (
         <HotelManageModal
+          isOpen={openModal}
           handleClose={() => setOpenModal(false)}
           total_hotel={data?.data?.total_hotel}
         />

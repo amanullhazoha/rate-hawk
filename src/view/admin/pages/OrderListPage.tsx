@@ -103,8 +103,6 @@ const OrderListPage = () => {
     }
   }, []);
 
-  console.log(data);
-
   return (
     <main className="max-md:px-2.5 max-md:py-6">
       <h2 className="text-2xl font-bold">Order List</h2>
@@ -126,6 +124,12 @@ const OrderListPage = () => {
             total_element={data?.pagination?.totalItems}
             handlePagination={(value: number) => handlePagination(value)}
           />
+        )}
+
+        {data?.pagination?.totalItems <= 0 && !isLoading && !isError && (
+          <div className="flex justify-center items-center h-20">
+            <h3>Data Not Found</h3>
+          </div>
         )}
       </div>
     </main>
