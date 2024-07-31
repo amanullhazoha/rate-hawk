@@ -99,10 +99,10 @@ const TransactionHistoryPage = () => {
 
         {!isLoading &&
           !isError &&
-          transactions?.data?.pagination?.totalItems > 10 && (
+          transactions?.pagination?.totalItems > 10 && (
             <GlobalPagination
               page={page}
-              total_element={transactions?.data?.pagination?.totalItems}
+              total_element={transactions?.pagination?.totalItems}
               handlePagination={(value: number) => handlePagination(value)}
             />
           )}
