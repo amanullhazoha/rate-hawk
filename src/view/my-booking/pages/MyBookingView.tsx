@@ -1,12 +1,41 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useGetUserOrderListQuery } from "../slices";
 import Preloader from "@/components/loading/Preloader";
 import UserOrderCard from "@/components/card/UserOrderCard";
-import FavoriteProductCard from "@/components/card/FavoriteProductCard";
+import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { useSearchParams, useRouter } from "next/navigation";
+import GlobalPagination from "@/components/pagination/GlobalPagination";
 
 const MyBookingView = () => {
-  const { data, isLoading, isError } = useGetUserOrderListQuery("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [page, setPage] = useState<number>(1);
+  const { setQueryParams } = useSearchQueryParam();
+  const activePage: string | null = searchParams.get("page");
+  const skipQuery = !page;
+
+  const { data, isLoading, isError } = useGetUserOrderListQuery(
+    { page },
+    { skip: skipQuery },
+  );
+
+  const handlePagination = (value: number) => {
+    let url: string | null = searchParams?.toString();
+
+    url = setQueryParams(url, "page", value.toString());
+
+    setPage(value);
+
+    router.push(`/my-booking${url ? `?${url}` : ""}`);
+  };
+
+  useEffect(() => {
+    if (activePage) {
+      setPage(Number(activePage));
+    }
+  }, []);
 
   console.log(data);
 
@@ -36,6 +65,15 @@ const MyBookingView = () => {
                 <UserOrderCard order={order} key={order?.order_id} />
               ))}
           </div>
+
+          {!isLoading && !isError && data?.pagination?.totalItems > 8 && (
+            <GlobalPagination
+              limit={8}
+              page={page}
+              total_element={data?.pagination?.totalItems}
+              handlePagination={(value: number) => handlePagination(value)}
+            />
+          )}
 
           {data?.data?.length <= 0 && !isLoading && !isError && (
             <div className="flex justify-center items-center h-20">

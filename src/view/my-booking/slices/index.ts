@@ -9,8 +9,9 @@ export const userOrderListApi = createApi({
   tagTypes: [""],
   endpoints: (builder) => ({
     getUserOrderList: builder.query({
-      query: () => ({
+      query: ({ page }) => ({
         url: "/secured/user-order",
+        params: { page, limit: 8 },
       }),
     }),
   }),

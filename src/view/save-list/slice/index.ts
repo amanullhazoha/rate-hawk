@@ -9,8 +9,9 @@ export const userHotelSaveListApi = createApi({
   tagTypes: ["add_favorite", "remove_favorite"],
   endpoints: (builder) => ({
     getUserAllSaveList: builder.query({
-      query: () => ({
+      query: ({ page }) => ({
         url: "/secured/favorite",
+        params: { page, limit: 8 },
       }),
       providesTags: ["add_favorite", "remove_favorite"],
     }),
