@@ -52,7 +52,9 @@ const checkGuestNameError = (nameList: any, error: any, setError: any) => {
 
 const ReservePage = () => {
   const params: any = useParams();
+  const [phone, setPhone] = useState("");
   const order_id: string = params.order_id;
+  const [phoneError, setPhoneError] = useState("");
   const [guestName, setGuestName] = useState<Guest[]>([]);
   const [guestNameError, setGuestNameError] = useState<Guest[]>([]);
 
@@ -78,11 +80,18 @@ const ReservePage = () => {
   ] = useCreateStripePaymentMutation();
 
   const handleReserved = async () => {
+    if (!phone) {
+      setPhoneError("Please input your contact number.");
+    } else {
+      setPhoneError("");
+    }
+
     if (guestNameError.length >= order?.data?.guests) {
       if (
         guestNameError.every((value) => value === undefined || value === null)
       ) {
         const payload = {
+          phone,
           order_id: params?.order_id,
           adults: order?.data?.guests,
           checkIn: order?.data?.check_in,
@@ -125,6 +134,29 @@ const ReservePage = () => {
 
             <div className="grid grid-cols-12 gap-6">
               <div className="col-span-12 md:col-span-8">
+                <div className="mb-2">
+                  <label className="text-text-blar font-medium">
+                    Phone Number
+                  </label>
+
+                  <div>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setPhone(e.target.value)
+                      }
+                      className="outline-none focus:outline-none placeholder:text-blar placeholder:text-sm bg-transparent border border-border-primary rounded-lg w-full px-2 py-1 mt-1"
+                    />
+
+                    {phoneError && (
+                      <div className="text-sm text-red-500">
+                        Please input your contact number.
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 {Array.from(
                   { length: order?.data?.guests },
                   (_, i) => i + 1,
@@ -439,6 +471,7 @@ const ReservePage = () => {
                   <button
                     type="button"
                     onClick={handleReserved}
+                    disabled={isPaymentLoading}
                     className="bg-yellow-400 px-1 py-1 text-base w-full text-center rounded-md"
                   >
                     Booked

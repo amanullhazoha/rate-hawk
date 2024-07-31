@@ -129,7 +129,6 @@ const DashboardPage = () => {
 
       {openModal && (
         <HotelManageModal
-          isOpen={openModal}
           handleClose={() => setOpenModal(false)}
           total_hotel={data?.data?.total_hotel}
         />

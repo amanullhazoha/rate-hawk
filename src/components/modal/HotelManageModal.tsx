@@ -8,11 +8,9 @@ import {
 } from "@/view/admin/slice";
 
 const HotelManageModal = ({
-  isOpen,
   handleClose,
   total_hotel,
 }: {
-  isOpen: boolean;
   total_hotel: string;
   handleClose: () => void;
   handleOpenForm?: () => void;
