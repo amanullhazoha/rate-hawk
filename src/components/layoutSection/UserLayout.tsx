@@ -136,7 +136,25 @@ const UserLayout = ({
                 {/* <LanguageSelect /> */}
               </div>
 
-              {data?.data && !isError ? (
+              <div className="relative">
+                <button type="button" onClick={() => setOpenMenu(true)}>
+                  <LoggedInUserIcon className="w-[50px] h-[50px]" />
+                </button>
+
+                {openMenu && (
+                  <div
+                    ref={menuRef}
+                    className="absolute top-[50px] right-0 min-w-40 z-50"
+                  >
+                    <ProfileNav
+                      user={data?.data && !isError ? true : false}
+                      setOpenMenu={setOpenMenu}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* {data?.data && !isError ? (
                 <div className="relative">
                   <button type="button" onClick={() => setOpenMenu(true)}>
                     <LoggedInUserIcon className="w-[50px] h-[50px]" />
@@ -181,7 +199,7 @@ const UserLayout = ({
                     </div>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
