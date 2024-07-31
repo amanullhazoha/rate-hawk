@@ -58,6 +58,14 @@ const ProfileNav = ({
         Contact
       </Link>
 
+      <Link href="/signup" className="px-6 py-1 hover:bg-border-primary">
+        Register
+      </Link>
+
+      <Link href="/login" className="px-6 py-1 hover:bg-border-primary">
+        Login
+      </Link>
+
       {user && (
         <div className="w-full">
           <button

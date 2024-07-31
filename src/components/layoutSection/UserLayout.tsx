@@ -49,7 +49,7 @@ const UserLayout = ({
       }
     >
       <header className="sticky top-0 z-[99999999]">
-        <div
+        {/* <div
           className={`bg-black-800 ${
             data?.data && !isError ? "hidden" : "block"
           }`}
@@ -74,7 +74,7 @@ const UserLayout = ({
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="bg-white border-b border-yellow-50">
           <div className="container max-md:px-2.5 mx-auto flex justify-between items-center py-3 md:py-6">
