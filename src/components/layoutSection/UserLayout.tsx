@@ -153,53 +153,6 @@ const UserLayout = ({
                   </div>
                 )}
               </div>
-
-              {/* {data?.data && !isError ? (
-                <div className="relative">
-                  <button type="button" onClick={() => setOpenMenu(true)}>
-                    <LoggedInUserIcon className="w-[50px] h-[50px]" />
-                  </button>
-
-                  {openMenu && (
-                    <div
-                      ref={menuRef}
-                      className="absolute top-[50px] right-0 min-w-40 z-50"
-                    >
-                      <ProfileNav
-                        user={data?.data && !isError ? true : false}
-                        setOpenMenu={setOpenMenu}
-                      />
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="relative block md:hidden">
-                  <button type="button" onClick={() => setOpenMenu(true)}>
-                    <svg
-                      width="29"
-                      height="11"
-                      viewBox="0 0 29 11"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M0 1H29" stroke="black" stroke-width="2" />
-                      <path d="M0 10H29" stroke="black" stroke-width="2" />
-                    </svg>
-                  </button>
-
-                  {openMenu && (
-                    <div
-                      ref={menuRef}
-                      className="absolute top-[50px] right-0 min-w-40 z-[99999]"
-                    >
-                      <ProfileNav
-                        user={data?.data && !isError ? true : false}
-                        setOpenMenu={setOpenMenu}
-                      />
-                    </div>
-                  )}
-                </div>
-              )} */}
             </div>
           </div>
         </div>
