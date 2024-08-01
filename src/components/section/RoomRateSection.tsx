@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import RoomCard from "../card/RoomCard";
+import { useGetHotelPrebookHashMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 
 const RoomRateSection = ({
   bookHash,
@@ -17,6 +18,12 @@ const RoomRateSection = ({
   handleSelectRoom: (rate: any) => void;
 }) => {
   const [increase, setIncrease] = useState(0);
+  const [
+    getHotelPrebookHash,
+    { isLoading: isPrebookHashLoading, data: prebookHash },
+  ] = useGetHotelPrebookHashMutation();
+
+  const handlePrebookHashSearch = async () => {};
 
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">

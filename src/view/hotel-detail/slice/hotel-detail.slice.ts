@@ -26,6 +26,13 @@ export const hotelDetailApi = createApi({
       }),
       invalidatesTags: ["hotel-detail"],
     }),
+    getHotelPrebookHash: builder.mutation({
+      query: (data: any) => ({
+        url: "/public/prebook-hash",
+        method: "POST",
+        body: data,
+      }),
+    }),
     createOrder: builder.mutation({
       query: (data: any) => ({
         url: "/secured/order/create",
@@ -55,4 +62,5 @@ export const {
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
   useCreateStripePaymentMutation,
+  useGetHotelPrebookHashMutation,
 } = hotelDetailApi;
