@@ -47,15 +47,17 @@ const RoomRateSection = ({
           ))}
       </div>
 
-      <h4 className="text-xl font-semibold text-black mt-2">Prebook Rates</h4>
+      <h4 className="text-xl font-semibold text-black mt-4 border-t-border-primary pt-3">
+        Prebook Rates
+      </h4>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 mt-2">
         <div className="flex items-center gap-3">
           <button
             type="button"
             disabled={increase <= 0 ? true : false}
             onClick={() => setIncrease((prev) => prev - 1)}
-            className="bg-yellow-500 text-white px-2 rounded-md"
+            className="bg-yellow-500 text-white px-2 py-2 rounded-md"
           >
             -
           </button>
@@ -64,7 +66,7 @@ const RoomRateSection = ({
             type="button"
             disabled={increase <= 90 ? false : true}
             onClick={() => setIncrease((prev) => prev + 1)}
-            className="bg-yellow-500 text-white px-2 rounded-md"
+            className="bg-yellow-500 text-white px-2 py-2 rounded-md"
           >
             +
           </button>
@@ -72,7 +74,7 @@ const RoomRateSection = ({
 
         <button
           type="button"
-          className="bg-yellow-500 text-white px-2 rounded-md"
+          className="bg-yellow-500 text-white px-4 py-2 rounded-md"
         >
           Search
         </button>
