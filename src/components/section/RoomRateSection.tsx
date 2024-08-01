@@ -61,10 +61,12 @@ const RoomRateSection = ({
           >
             -
           </button>
+
           <p>{increase ? increase : "0"} %</p>
+
           <button
             type="button"
-            disabled={increase <= 90 ? false : true}
+            disabled={increase <= 89 ? false : true}
             onClick={() => setIncrease((prev) => prev + 1)}
             className="bg-yellow-500 text-white px-2 py-2 rounded-md"
           >
@@ -78,6 +80,23 @@ const RoomRateSection = ({
         >
           Search
         </button>
+      </div>
+
+      <div className="flex gap-4 flex-col mt-8">
+        {bookHash?.length > 0 &&
+          room_groups?.map((room: any, index: any) => (
+            <RoomCard
+              room={room}
+              key={index}
+              images={room?.images}
+              selectRoom={selectRoom}
+              rates={bookHash[0]?.rates}
+              handleSelectRoom={(value) => {
+                setOriginalRoom(room);
+                handleSelectRoom(value);
+              }}
+            />
+          ))}
       </div>
     </div>
   );
