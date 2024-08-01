@@ -244,7 +244,7 @@ const RoomCard = ({
 
                   handlePrebook?.(find?.book_hash);
                 }}
-                className="px-10 py-2 rounded-md bg-primary-color"
+                className="px-10 py-2 rounded-md bg-yellow-50"
               >
                 Prebook
               </button>
