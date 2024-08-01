@@ -34,7 +34,7 @@ const RoomRateSection = ({
 
     if (data?.data?.code === 200) {
       console.log(data.data, "hi");
-      setPrebookHash(data?.data?.data?.hotels);
+      setPrebookHash(data?.data?.data?.data?.hotels);
     }
 
     console.log(data);
