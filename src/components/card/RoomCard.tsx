@@ -216,7 +216,7 @@ const RoomCard = ({
             </div>
           </div>
 
-          <div className="w-full flex items-center justify-between">
+          <div className="w-full flex items-center justify-end">
             <div>
               <p className="text-xl font-medium text-black">
                 {localStorage.getItem("currency")}{" "}
@@ -231,41 +231,41 @@ const RoomCard = ({
                 </sub>
               </p>
             </div>
+          </div>
 
-            <div className="flex items-center gap-2">
-              {prebook && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const find = rates?.find((item: any) =>
-                      room?.name?.includes(item?.room_data_trans?.main_name),
-                    );
-
-                    handlePrebook?.(find?.book_hash);
-                  }}
-                  className="px-10 py-2 rounded-md bg-primary-color"
-                >
-                  Prebook
-                </button>
-              )}
-
+          <div className="flex items-center gap-2 mt-t justify-end">
+            {prebook && (
               <button
                 type="button"
-                onClick={() =>
-                  handleSelectRoom({
-                    ...rates?.find((item: any) =>
-                      room?.name?.includes(item?.room_data_trans?.main_name),
-                    ),
-                    room_group_id: room?.room_group_id,
-                  })
-                }
+                onClick={() => {
+                  const find = rates?.find((item: any) =>
+                    room?.name?.includes(item?.room_data_trans?.main_name),
+                  );
+
+                  handlePrebook?.(find?.book_hash);
+                }}
                 className="px-10 py-2 rounded-md bg-primary-color"
               >
-                {room?.room_group_id === selectRoom?.room_group_id
-                  ? "Selected"
-                  : "Select"}
+                Prebook
               </button>
-            </div>
+            )}
+
+            <button
+              type="button"
+              onClick={() =>
+                handleSelectRoom({
+                  ...rates?.find((item: any) =>
+                    room?.name?.includes(item?.room_data_trans?.main_name),
+                  ),
+                  room_group_id: room?.room_group_id,
+                })
+              }
+              className="px-10 py-2 rounded-md bg-primary-color"
+            >
+              {room?.room_group_id === selectRoom?.room_group_id
+                ? "Selected"
+                : "Select"}
+            </button>
           </div>
         </div>
       </div>
