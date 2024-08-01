@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import RoomCard from "../card/RoomCard";
+import Preloader from "../loading/Preloader";
 import { useGetHotelPrebookHashMutation } from "@/view/hotel-detail/slice/hotel-detail.slice";
 
 const RoomRateSection = ({
@@ -18,11 +19,10 @@ const RoomRateSection = ({
   handleSelectRoom: (rate: any) => void;
 }) => {
   const [increase, setIncrease] = useState(0);
+  const [prebookHash, setPrebookHash] = useState<any>(null);
 
-  const [
-    getHotelPrebookHash,
-    { isLoading: isPrebookHashLoading, data: prebookHash },
-  ] = useGetHotelPrebookHashMutation();
+  const [getHotelPrebookHash, { isLoading: isPrebookHashLoading }] =
+    useGetHotelPrebookHashMutation();
 
   const handlePrebookHashSearch = async (selectBookHash: string) => {
     const payload = {
@@ -32,8 +32,14 @@ const RoomRateSection = ({
 
     const data = await getHotelPrebookHash(payload);
 
+    if (data?.data?.code === 200) {
+      setPrebookHash(data?.data?.data);
+    }
+
     console.log(data);
   };
+
+  console.log(prebookHash);
 
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
@@ -102,20 +108,27 @@ const RoomRateSection = ({
       </div>
 
       <div className="flex gap-4 flex-col mt-8">
-        {bookHash?.length > 0 &&
+        {!isPrebookHashLoading &&
+          prebookHash?.length > 0 &&
           room_groups?.map((room: any, index: any) => (
             <RoomCard
               room={room}
               key={index}
               images={room?.images}
               selectRoom={selectRoom}
-              rates={bookHash[0]?.rates}
+              rates={prebookHash[0]?.rates}
               handleSelectRoom={(value) => {
                 setOriginalRoom(room);
                 handleSelectRoom(value);
               }}
             />
           ))}
+
+        {isPrebookHashLoading && (
+          <div className="flex justify-center items-center h-40">
+            <Preloader title="Page Loading.." />
+          </div>
+        )}
       </div>
     </div>
   );
