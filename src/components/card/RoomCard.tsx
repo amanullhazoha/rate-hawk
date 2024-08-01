@@ -18,13 +18,17 @@ const RoomCard = ({
   rates,
   images,
   selectRoom,
+  handlePrebook,
+  prebook = false,
   handleSelectRoom,
 }: {
   room: any;
   rates: any;
   images: any;
   selectRoom: any;
+  prebook?: boolean;
   handleSelectRoom: (rate: any) => void;
+  handlePrebook?: (book_hash: any) => void;
 }) => {
   const [productImage, setProductImage] = useState([]);
 
@@ -228,22 +232,40 @@ const RoomCard = ({
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() =>
-                handleSelectRoom({
-                  ...rates?.find((item: any) =>
-                    room?.name?.includes(item?.room_data_trans?.main_name),
-                  ),
-                  room_group_id: room?.room_group_id,
-                })
-              }
-              className="px-10 py-2 rounded-md bg-primary-color"
-            >
-              {room?.room_group_id === selectRoom?.room_group_id
-                ? "Selected"
-                : "Select"}
-            </button>
+            <div className="flex items-center gap-2">
+              {prebook && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const find = rates?.find((item: any) =>
+                      room?.name?.includes(item?.room_data_trans?.main_name),
+                    );
+
+                    handlePrebook?.(find?.book_hash);
+                  }}
+                  className="px-10 py-2 rounded-md bg-primary-color"
+                >
+                  Prebook
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() =>
+                  handleSelectRoom({
+                    ...rates?.find((item: any) =>
+                      room?.name?.includes(item?.room_data_trans?.main_name),
+                    ),
+                    room_group_id: room?.room_group_id,
+                  })
+                }
+                className="px-10 py-2 rounded-md bg-primary-color"
+              >
+                {room?.room_group_id === selectRoom?.room_group_id
+                  ? "Selected"
+                  : "Select"}
+              </button>
+            </div>
           </div>
         </div>
       </div>

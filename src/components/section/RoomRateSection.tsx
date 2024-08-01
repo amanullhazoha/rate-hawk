@@ -18,12 +18,22 @@ const RoomRateSection = ({
   handleSelectRoom: (rate: any) => void;
 }) => {
   const [increase, setIncrease] = useState(0);
+
   const [
     getHotelPrebookHash,
     { isLoading: isPrebookHashLoading, data: prebookHash },
   ] = useGetHotelPrebookHashMutation();
 
-  const handlePrebookHashSearch = async () => {};
+  const handlePrebookHashSearch = async (selectBookHash: string) => {
+    const payload = {
+      hash: selectBookHash,
+      price_increase_percent: increase,
+    };
+
+    const data = await getHotelPrebookHash(payload);
+
+    console.log(data);
+  };
 
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
@@ -43,9 +53,11 @@ const RoomRateSection = ({
             <RoomCard
               room={room}
               key={index}
+              prebook={true}
               images={room?.images}
               selectRoom={selectRoom}
               rates={bookHash[0]?.rates}
+              handlePrebook={handlePrebookHashSearch}
               handleSelectRoom={(value) => {
                 setOriginalRoom(room);
                 handleSelectRoom(value);
