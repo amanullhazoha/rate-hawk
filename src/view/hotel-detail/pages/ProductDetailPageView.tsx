@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { format, addDays } from "date-fns";
+import Preloader from "@/components/loading/Preloader";
 import { useSearchParams, useParams } from "next/navigation";
 import DetailSection from "@/components/section/DetailSection";
 import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
@@ -10,7 +11,6 @@ import {
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
 } from "../slice/hotel-detail.slice";
-import Preloader from "@/components/loading/Preloader";
 
 const ProductDetailPageView = () => {
   const searchParams = useSearchParams();

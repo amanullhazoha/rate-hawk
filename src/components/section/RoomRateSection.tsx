@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import RoomCard from "../card/RoomCard";
 
 const RoomRateSection = ({
@@ -13,6 +16,8 @@ const RoomRateSection = ({
   setOriginalRoom: (room: any) => void;
   handleSelectRoom: (rate: any) => void;
 }) => {
+  const [increase, setIncrease] = useState(0);
+
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
       <div>
@@ -42,31 +47,36 @@ const RoomRateSection = ({
           ))}
       </div>
 
-      {/* <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary">
-        <p>Monday - Thursday</p>
-        <p>$199</p>
-      </div>
+      <h4 className="text-xl font-semibold text-black mt-2">Prebook Rates</h4>
 
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-white">
-        <p>Monday - Thursday</p>
-        <p>$199</p>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            disabled={increase <= 0 ? true : false}
+            onClick={() => setIncrease((prev) => prev - 1)}
+            className="bg-yellow-500 text-white px-2 rounded-md"
+          >
+            -
+          </button>
+          <p>{increase ? increase : "0"} %</p>
+          <button
+            type="button"
+            disabled={increase <= 90 ? false : true}
+            onClick={() => setIncrease((prev) => prev + 1)}
+            className="bg-yellow-500 text-white px-2 rounded-md"
+          >
+            +
+          </button>
+        </div>
+
+        <button
+          type="button"
+          className="bg-yellow-500 text-white px-2 rounded-md"
+        >
+          Search
+        </button>
       </div>
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary">
-        <p>Friday - Sunday</p>
-        <p>$229</p>
-      </div>
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-white">
-        <p>Rent by month</p>
-        <p>-8.73%</p>
-      </div>
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-bg-primary">
-        <p>Minimum number of nights</p>
-        <p>1 night</p>
-      </div>
-      <div className="p-3.5 rounded-md flex items-center justify-between bg-white">
-        <p>Max number of nights</p>
-        <p>90 nights</p>
-      </div> */}
     </div>
   );
 };
