@@ -2,10 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
+import { useRouter } from "next/navigation";
+import { parse, formatISO, getTime } from "date-fns";
 import MapIcon from "@/assets/icons/MapIcon";
 import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
+import { localTimeConverter } from "@/lib/localTimeConverter";
+import { useOrderCancelMutation } from "@/view/my-booking/slices";
 
 const responsive = {
   mobile: {
@@ -14,11 +19,52 @@ const responsive = {
   },
 };
 
+const status: any = {
+  pending: "bg-black-800 text-white",
+  paid: "bg-green-600 text-white",
+  failed: "bg-text-red text-white",
+  cancelled: "bg-text-red text-white",
+  completed: "bg-green-800 text-white",
+};
+
 const UserOrderCard = ({ order }: { order: any }) => {
   const searchParams = useSearchParams();
+  const [userOrderCancel, { isLoading }] = useOrderCancelMutation();
+
+  const currentISOTime = getTime(new Date());
+  const cancelTime = order?.choose_room?.payment_options?.payment_types[0]
+    ?.cancellation_penalties?.free_cancellation_before
+    ? localTimeConverter(
+        order?.choose_room?.payment_options?.payment_types[0]
+          ?.cancellation_penalties?.free_cancellation_before,
+      )
+    : "";
+
+  const isCancel = cancelTime
+    ? currentISOTime <
+      getTime(parse(cancelTime, "dd/MM/yyyy hh:mm a", new Date()))
+    : false;
+
+  const handleCancel = async (partner_order_id: string) => {
+    const payload = {
+      partner_order_id,
+    };
+
+    const data: any = await userOrderCancel(payload);
+
+    if (!data?.error) {
+      return toast.success("Order cancel successfully.");
+    }
+
+    toast.error(
+      data?.error?.data?.message
+        ? data?.error?.data?.message
+        : "Order not cancel.",
+    );
+  };
 
   return (
-    <div>
+    <div className="shadow-md p-2 rounded-md">
       <div className="rounded-[10px] relative">
         <div className="w-full">
           <Carousel responsive={responsive}>
@@ -49,7 +95,16 @@ const UserOrderCard = ({ order }: { order: any }) => {
 
           <div className="absolute top-3 flex justify-end items-center left-0 right-0">
             <span
-              className={`w-fit px-2 py-1 rounded-full flex bg-black-800 justify-center items-center mr-2 cursor-pointer text-white`}
+              onClick={() => {
+                if (order?.status === "completed" && isCancel) {
+                  handleCancel(order?.partner_order_id);
+                }
+              }}
+              className={`w-fit px-2 py-1 rounded-full flex  justify-center items-center mr-2 ${
+                status[order?.status]
+              } ${
+                order?.status === "completed" && isCancel && "cursor-pointer"
+              }`}
             >
               {order?.status}
             </span>

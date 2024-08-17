@@ -31,7 +31,7 @@ const FavoriteProductCard = ({ favorite }: { favorite: any }) => {
   };
 
   return (
-    <div>
+    <div className="shadow-md p-2 rounded-md">
       <div className="rounded-[10px] relative">
         <div className="w-full">
           <Carousel responsive={responsive}>
