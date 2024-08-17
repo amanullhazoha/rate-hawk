@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { parseISO, format } from "date-fns";
 import Carousel from "react-multi-carousel";
 import { useState, useEffect } from "react";
 import product from "@/assets/images/product.jpg";
 import { RoomIcon } from "@/assets/ameniteIcon";
+import { localTimeConverter } from "@/lib/localTimeConverter";
 
 const responsive = {
   mobile: {
@@ -215,6 +217,27 @@ const RoomCard = ({
               )}
             </div>
           </div>
+
+          {rates?.find((item: any) =>
+            room?.name?.includes(item?.room_data_trans?.main_name),
+          )?.payment_options?.payment_types[0]?.cancellation_penalties
+            ?.free_cancellation_before && (
+            <div className="w-full flex items-center justify-end">
+              <div>
+                <p className="text-xs text-black">
+                  Free Cancellation Before
+                  <span className="bg-yellow-300 px-1">
+                    {localTimeConverter(
+                      rates?.find((item: any) =>
+                        room?.name?.includes(item?.room_data_trans?.main_name),
+                      )?.payment_options?.payment_types[0]
+                        ?.cancellation_penalties?.free_cancellation_before,
+                    )}
+                  </span>
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="w-full flex items-center justify-end">
             <div>

@@ -54,6 +54,7 @@ const DetailSection = ({
           policy_struct={hotelInfo?.policy_struct}
           check_in_time={hotelInfo?.check_in_time}
           check_out_time={hotelInfo?.check_out_time}
+          metapolicy_extra_info={hotelInfo?.metapolicy_extra_info}
         />
       </div>
 

@@ -40,8 +40,6 @@ const RoomRateSection = ({
     console.log(data);
   };
 
-  console.log(prebookHash);
-
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
       <div>
@@ -99,13 +97,6 @@ const RoomRateSection = ({
             +
           </button>
         </div>
-
-        <button
-          type="button"
-          className="bg-yellow-500 text-white px-4 py-2 rounded-md"
-        >
-          Search
-        </button>
       </div>
 
       <div className="flex gap-4 flex-col mt-8">

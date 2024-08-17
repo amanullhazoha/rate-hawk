@@ -4,10 +4,12 @@ const ThinksToKnowSection = ({
   policy_struct,
   check_in_time,
   check_out_time,
+  metapolicy_extra_info,
 }: {
   policy_struct: any;
   check_in_time?: string;
   check_out_time?: string;
+  metapolicy_extra_info: string;
 }) => {
   return (
     <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px]">
@@ -32,6 +34,19 @@ const ThinksToKnowSection = ({
           ))}
         </div>
       ))}
+
+      {metapolicy_extra_info && (
+        <div>
+          <h4 className="text-lg font-semibold text-black mb-4">
+            Meta Policy Extra Info
+          </h4>
+
+          <div
+            className="text-base font-normal text-text-blar mb-5"
+            dangerouslySetInnerHTML={{ __html: metapolicy_extra_info }}
+          />
+        </div>
+      )}
 
       <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
 
