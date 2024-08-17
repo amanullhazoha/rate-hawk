@@ -100,10 +100,10 @@ const ReservePage = () => {
           hotel_name: order?.data?.hotel_name,
           currency: order?.data?.currency_code,
           star_rating: order?.data?.star_rating,
-          guestsName: JSON.stringify(guestName),
           total_night: order?.data?.total_night,
           children: order?.data?.children?.length,
           total_amount: Number(order?.data?.total_amount),
+          guestsName: JSON.stringify(guestName.filter((item) => item !== null)),
         };
 
         const data: any = await createStripePayment(payload);
