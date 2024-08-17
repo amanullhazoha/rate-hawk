@@ -6,6 +6,7 @@ import {
   useUploadHotelJsonDataMutation,
   useDownloadHotelDumpDataMutation,
 } from "@/view/admin/slice";
+import { toast } from "react-toastify";
 
 const HotelManageModal = ({
   handleClose,
@@ -16,8 +17,8 @@ const HotelManageModal = ({
   handleOpenForm?: () => void;
   handleCSVfileUpload?: (data: any) => void;
 }) => {
-  const [fieldValue, setFieldValue] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [uploadPercent, setUploadPercent] = useState(0);
 
   const [downloadHotelDumpData, { isLoading: downloadLoading }] =
     useDownloadHotelDumpDataMutation();
@@ -37,19 +38,69 @@ const HotelManageModal = ({
 
   const handleFileUpload = async (event: any) => {
     const file = event.target.files[0];
+    const CHUNK_SIZE = 50 * 1024 * 1024;
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const textDecoder = new TextDecoder("utf-8");
 
-    const upload = await uploadHotelJsonData(formData);
+    let offset = 0;
+    let lineBuffer = "";
+    const fileSize = file.size;
 
-    console.log(upload);
+    while (offset < fileSize) {
+      const chunk: any = await readChunk(file, offset, CHUNK_SIZE);
+      offset += CHUNK_SIZE;
+
+      console.log(offset, fileSize);
+
+      setUploadPercent((100 / fileSize) * offset);
+
+      const text = textDecoder.decode(chunk, { stream: true });
+
+      lineBuffer += text;
+
+      const lines = lineBuffer.split("\n");
+
+      lineBuffer = lines.pop() || "";
+
+      const mappedLines = lines.map((line) => JSON.parse(line));
+
+      await uploadHotelJsonData({ hotels: mappedLines });
+    }
+
+    if (lineBuffer.length > 0) {
+      const jsonObj = JSON.parse(lineBuffer);
+      const mappedLine = jsonObj;
+
+      await uploadHotelJsonData({ hotels: [mappedLine] });
+    }
+
+    console.log("File processing complete");
+    toast.success("Dump data upload completed.");
+  };
+
+  const readChunk = (file: any, start: any, length: any) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const blob = file.slice(start, start + length);
+
+      reader.onload = (e: any) => resolve(new Uint8Array(e.target.result));
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(blob);
+    });
   };
 
   const handleDataDelete = async () => {
-    const data = await deleteHotelDumpData("");
+    try {
+      const data = await deleteHotelDumpData("");
 
-    console.log("handle delete", data);
+      handleClose();
+
+      toast.success("Dump data delete successfully.");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Dump data not deleted.");
+    }
   };
 
   const handleClick = useCallback((): void => {
@@ -120,7 +171,9 @@ const HotelManageModal = ({
                 }
                 className="py-2.5 w-full rounded-lg bg-green-700 text-white text-base font-medium"
               >
-                Upload Hotel JSON Data
+                {uploadLoading
+                  ? `Uploaded ${uploadPercent.toFixed(2)}% of 100%`
+                  : "Upload Hotel JSON Data"}
               </button>
 
               <input

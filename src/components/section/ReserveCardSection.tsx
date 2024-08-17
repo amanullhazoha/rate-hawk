@@ -1,8 +1,7 @@
-import { format } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
 import StarIcon from "@/assets/icons/StarIcon";
+import { format, differenceInDays } from "date-fns";
 import { useState, useRef, useEffect } from "react";
 import RangeCalender from "../calender/RangeCalender";
 import { childrenData } from "@/assets/data/childrenData";
@@ -49,6 +48,15 @@ const ReserveCardSection = ({
     : "USD";
 
   const handleDateRange = (dates: any) => {
+    const date1 = new Date(dates[0].startDate);
+    const date2 = new Date(dates[0].endDate);
+
+    const daysDifference = differenceInDays(date2, date1);
+
+    if (daysDifference >= 31) {
+      return toast.error("You can't select more than 30.");
+    }
+
     let url = searchParams.toString();
 
     const checkOut = format(dates[0].endDate, "yyyy-MM-dd");
@@ -95,6 +103,10 @@ const ReserveCardSection = ({
       setSelectRoom(null);
       return setOriginalRoom(null);
     } else {
+      if (children.length >= 4) {
+        return toast.error("You can't select more than 4.");
+      }
+
       const newData = [...children, item];
       setChildren(newData);
 
@@ -219,8 +231,6 @@ const ReserveCardSection = ({
     }
   }, []);
 
-  console.log(hotelInfo);
-
   return (
     <div className="p-6 shadow-shadow-primary border border-border-primary rounded-[20px]">
       {selectRoom?.daily_prices[0] && (
@@ -275,7 +285,6 @@ const ReserveCardSection = ({
                 <button
                   type="button"
                   disabled={guest <= 0 ? true : false}
-                  // onClick={() => setGuest((prev) => prev - 1)}
                   onClick={() => handleGuest(guest - 1)}
                   className="bg-yellow-500 text-white px-2 rounded-md"
                 >
@@ -283,10 +292,16 @@ const ReserveCardSection = ({
                 </button>
 
                 <p>{guest ? guest : "0"} Guests</p>
+
                 <button
                   type="button"
-                  // onClick={() => setGuest((prev) => prev + 1)}
-                  onClick={() => handleGuest(guest + 1)}
+                  onClick={() => {
+                    if (guest >= 6) {
+                      return toast.error("You can't add more than 6.");
+                    }
+
+                    handleGuest(guest + 1);
+                  }}
                   className="bg-yellow-500 text-white px-2 rounded-md"
                 >
                   +

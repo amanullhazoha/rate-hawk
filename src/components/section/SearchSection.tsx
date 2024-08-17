@@ -1,7 +1,7 @@
 "use client";
 
-import { format } from "date-fns";
 import { toast } from "react-toastify";
+import { format, differenceInDays } from "date-fns";
 import RangeCalender from "../calender/RangeCalender";
 import { countryData } from "@/assets/data/countryData";
 import { childrenData } from "@/assets/data/childrenData";
@@ -75,6 +75,15 @@ const SearchSection = () => {
   }, []);
 
   const handleDateRange = (dates: any) => {
+    const date1 = new Date(dates[0].startDate);
+    const date2 = new Date(dates[0].endDate);
+
+    const daysDifference = differenceInDays(date2, date1);
+
+    if (daysDifference >= 31) {
+      return toast.error("You can't select more than 30.");
+    }
+
     setSelectDate(dates);
   };
 
@@ -90,6 +99,10 @@ const SearchSection = () => {
 
       return setChildren(filterData);
     } else {
+      if (children.length >= 4) {
+        return toast.error("You can't select more than 4.");
+      }
+
       const newData = [...children, item];
       setChildren(newData);
     }
@@ -324,7 +337,13 @@ const SearchSection = () => {
                     <p>{guest ? guest : "0"} Guests</p>
                     <button
                       type="button"
-                      onClick={() => setGuest((prev) => prev + 1)}
+                      onClick={() => {
+                        if (guest >= 6) {
+                          return toast.error("You can't add more than 6.");
+                        }
+
+                        setGuest((prev) => prev + 1);
+                      }}
                       className="bg-yellow-500 text-white px-2 rounded-md"
                     >
                       +
