@@ -166,7 +166,15 @@ const ProductCard = ({
           <div className="flex justify-between items-center">
             {data?.rates[0]?.daily_prices[0] ? (
               <p className="text-base font-medium text-black-800">
-                {data?.rates[0]?.daily_prices[0]}{" "}
+                {/* {data?.rates[0]?.daily_prices[0]}{" "} */}
+                {(
+                  Number(data?.rates[0]?.daily_prices[0]) +
+                  Number(
+                    data?.rates[0]?.payment_options?.payment_types?.[0]
+                      ?.commission_info?.show?.amount_commission,
+                  ) /
+                    data?.rates[0]?.daily_prices?.length
+                ).toFixed(2)}{" "}
                 {localStorage.getItem("currency")}{" "}
                 <span className="text-text-blar">/night</span>
               </p>

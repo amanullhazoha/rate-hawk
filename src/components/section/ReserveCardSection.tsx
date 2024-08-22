@@ -161,10 +161,22 @@ const ReserveCardSection = ({
         region_id: hotelInfo?.region?.id,
         star_rating: hotelInfo?.star_rating,
         region_name: hotelInfo?.region?.name,
-        price_per_night: selectRoom?.daily_prices[0],
+        price_per_night: (
+          Number(selectRoom?.daily_prices[0]) +
+          Number(
+            selectRoom?.payment_options?.payment_types?.[0]?.commission_info
+              ?.show?.amount_commission,
+          ) /
+            selectRoom?.daily_prices?.length
+        ).toFixed(2),
         total_night: selectRoom?.daily_prices.length,
         total_amount: Number(
-          selectRoom?.payment_options?.payment_types?.[0]?.show_amount,
+          selectRoom?.payment_options?.payment_types?.[0]?.commission_info?.show
+            ?.amount_gross,
+        ),
+        total_commission: Number(
+          selectRoom?.payment_options?.payment_types?.[0]?.commission_info?.show
+            ?.amount_commission,
         ),
         children: childrenData?.filter((item: any) =>
           children.some(
@@ -237,7 +249,16 @@ const ReserveCardSection = ({
         <div className="w-full flex items-center justify-between mb-4">
           <div>
             <p className="text-xl font-medium text-black">
-              {localStorage.getItem("currency")} {selectRoom?.daily_prices[0]}
+              {/* {localStorage.getItem("currency")} {selectRoom?.daily_prices[0]} */}
+              {localStorage.getItem("currency")}{" "}
+              {(
+                Number(selectRoom?.daily_prices[0]) +
+                Number(
+                  selectRoom?.payment_options?.payment_types?.[0]
+                    ?.commission_info?.show?.amount_commission,
+                ) /
+                  selectRoom?.daily_prices?.length
+              ).toFixed(2)}
               <sub className="text-sm font-normal text-black-400"> /night</sub>
             </p>
           </div>
@@ -362,12 +383,15 @@ const ReserveCardSection = ({
       {selectRoom && (
         <div className="flex justify-between items-center border-b border-border-primary pb-2 mt-3">
           <p className="text-text-blar text-base">
-            {selectRoom?.daily_prices.length} Night
+            {selectRoom?.daily_prices?.length} Night
           </p>
 
           <p className="text-text-blar text-base">
             {localStorage.getItem("currency")}{" "}
-            {selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+            {
+              selectRoom?.payment_options?.payment_types?.[0]?.commission_info
+                ?.show?.amount_gross
+            }
           </p>
         </div>
       )}
@@ -378,7 +402,10 @@ const ReserveCardSection = ({
 
           <p className="text-black font-medium text-base">
             {localStorage.getItem("currency")}{" "}
-            {selectRoom?.payment_options?.payment_types?.[0]?.show_amount}
+            {
+              selectRoom?.payment_options?.payment_types?.[0]?.commission_info
+                ?.show?.amount_gross
+            }
           </p>
         </div>
       )}

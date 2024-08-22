@@ -97,7 +97,7 @@ const UserOrderCard = ({ order }: { order: any }) => {
             <span
               onClick={() => {
                 if (order?.status === "completed" && isCancel) {
-                  handleCancel(order?.partner_order_id);
+                  handleCancel(order?.order_id);
                 }
               }}
               className={`w-fit px-2 py-1 rounded-full flex  justify-center items-center mr-2 ${

@@ -34,6 +34,23 @@ const RoomCard = ({
 }) => {
   const [productImage, setProductImage] = useState([]);
 
+  const findDailyPrice = (allRates: any) => {
+    const hotelRate = allRates?.find((item: any) =>
+      room?.name?.includes(item?.room_data_trans?.main_name),
+    );
+
+    const dailyRate = (
+      Number(hotelRate?.daily_prices[0]) +
+      Number(
+        hotelRate?.payment_options?.payment_types?.[0]?.commission_info?.show
+          ?.amount_commission,
+      ) /
+        hotelRate?.daily_prices?.length
+    ).toFixed(2);
+
+    return dailyRate;
+  };
+
   useEffect(() => {
     if (images?.length > 0) {
       const newImages: any = images.map((image: string) =>
@@ -243,11 +260,12 @@ const RoomCard = ({
             <div>
               <p className="text-xl font-medium text-black">
                 {localStorage.getItem("currency")}{" "}
-                {
+                {/* {
                   rates?.find((item: any) =>
                     room?.name?.includes(item?.room_data_trans?.main_name),
                   )?.daily_prices[0]
-                }
+                } */}
+                {findDailyPrice(rates)}
                 <sub className="text-sm font-normal text-black-400">
                   {" "}
                   /night
