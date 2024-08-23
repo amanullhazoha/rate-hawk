@@ -58,6 +58,11 @@ const columns = [
     content: (row: any) => <td className="p-2">{row?.total_amount}</td>,
   },
   {
+    label: "Total Commission",
+    path: "total_commission",
+    content: (row: any) => <td className="p-2">{row?.total_commission}</td>,
+  },
+  {
     label: "Total Night",
     path: "total_night",
     content: (row: any) => <td className="p-2">{row?.total_night}</td>,
