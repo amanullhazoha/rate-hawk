@@ -38,7 +38,7 @@ const HotelManageModal = ({
 
   const handleFileUpload = async (event: any) => {
     const file = event.target.files[0];
-    const CHUNK_SIZE = 15 * 1024 * 1024;
+    const CHUNK_SIZE = 10 * 1024 * 1024;
 
     const textDecoder = new TextDecoder("utf-8");
 
