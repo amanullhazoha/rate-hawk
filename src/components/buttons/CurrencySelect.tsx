@@ -27,7 +27,7 @@ const CurrencySelect = () => {
     if (lang) {
       setCurrency(lang);
     } else {
-      localStorage.setItem("currency", "EN");
+      localStorage.setItem("currency", "USD");
     }
   }, []);
 

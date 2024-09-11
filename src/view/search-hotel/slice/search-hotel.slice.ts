@@ -9,9 +9,9 @@ export const searchHotelApi = createApi({
   tagTypes: ["search-hotel"],
   endpoints: (builder) => ({
     getHotelDumpData: builder.query({
-      query: ({ region_id, page, star }) => ({
+      query: ({ region_id, page, star, limit }) => ({
         url: "/public/dump-hotel",
-        params: { region_id, page, star },
+        params: { region_id, page, star, limit },
       }),
     }),
     getSearchHotelByIds: builder.mutation({

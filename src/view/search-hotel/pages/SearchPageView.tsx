@@ -24,7 +24,9 @@ const SearchPageView = () => {
 
   const skipQuery = !region_id || !page;
 
-  let filter: any = {};
+  let filter: any = {
+    limit: 30
+  };
 
   if (star) {
     filter.star = star;
@@ -90,50 +92,6 @@ const SearchPageView = () => {
   return (
     <main className="pt-4 pb-10 bg-white">
       <div className="container mx-auto px-2.5 lg:px-[35px]">
-        {/* <div>
-          <h3 className="text-2xl lg:text-4xl text-black font-semibold mb-2">
-            Hotels in{" "}
-            {searchParams.get("region_name")
-              ? searchParams.get("region_name")
-              : "unknown"}
-          </h3>
-
-          <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2 mb-8">
-            <span>
-              {hotelDumpData?.pagination?.totalItems
-                ? hotelDumpData?.pagination?.totalItems
-                : 0}{" "}
-              stays
-            </span>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="2"
-              height="2"
-              viewBox="0 0 2 2"
-              fill="none"
-            >
-              <circle cx="1" cy="1" r="1" fill="#6B7280" />
-            </svg>
-
-            <span>
-              {searchParams.get("check-in")} - {searchParams.get("check-out")}
-            </span>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="2"
-              height="2"
-              viewBox="0 0 2 2"
-              fill="none"
-            >
-              <circle cx="1" cy="1" r="1" fill="#6B7280" />
-            </svg>
-
-            <span>{searchParams.get("adults")} Guests</span>
-          </p>
-        </div> */}
-
         <div className="shadow-md px-2 py-1 rounded-md w-fit mb-8 border border-blue-50">
           <Link href="/" className="mr-2 text-blue-500 font-medium">
             Home
@@ -223,9 +181,10 @@ const SearchPageView = () => {
                 </div>
               </div>
 
-              {hotelDumpData?.pagination?.totalItems > 8 && (
+              {hotelDumpData?.pagination?.totalItems > 30 && (
                 <div className="mt-4">
                   <GlobalPagination
+                    limit={30}
                     page={page}
                     total_element={hotelDumpData?.pagination?.totalItems}
                     handlePagination={(value: number) =>

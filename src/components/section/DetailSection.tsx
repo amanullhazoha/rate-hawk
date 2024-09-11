@@ -8,6 +8,7 @@ import RangeCalender from "../calender/RangeCalender";
 import ReserveCardSection from "./ReserveCardSection";
 import AvailabilitySection from "./AvailabilitySection";
 import ThinksToKnowSection from "./ThinksToKnowSection";
+import MetaPolicySection from "./MetaPolicySection";
 
 const DetailSection = ({
   bookHash,
@@ -48,7 +49,11 @@ const DetailSection = ({
 
         <AmenitiesSection amenity_groups={hotelInfo?.amenity_groups} />
 
+        <MetaPolicySection metapolicy_struct={hotelInfo?.metapolicy_struct} />
+
         {/* <AvailabilitySection /> */}
+
+      
 
         <ThinksToKnowSection
           policy_struct={hotelInfo?.policy_struct}
