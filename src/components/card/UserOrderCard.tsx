@@ -11,6 +11,8 @@ import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
 import { localTimeConverter } from "@/lib/localTimeConverter";
 import { useOrderCancelMutation } from "@/view/my-booking/slices";
+import OrderCancelModal from "../modal/OrderCancelModal";
+import { useState } from "react";
 
 const responsive = {
   mobile: {
@@ -29,6 +31,7 @@ const status: any = {
 
 const UserOrderCard = ({ order }: { order: any }) => {
   const searchParams = useSearchParams();
+  const [openModal, setOpenModal] = useState(false);
   const [userOrderCancel, { isLoading }] = useOrderCancelMutation();
 
   const currentISOTime = getTime(new Date());
@@ -53,6 +56,7 @@ const UserOrderCard = ({ order }: { order: any }) => {
     const data: any = await userOrderCancel(payload);
 
     if (!data?.error) {
+      setOpenModal(false);
       return toast.success("Order cancel successfully.");
     }
 
@@ -64,94 +68,109 @@ const UserOrderCard = ({ order }: { order: any }) => {
   };
 
   return (
-    <div className="shadow-md p-2 rounded-md">
-      <div className="rounded-[10px] relative">
-        <div className="w-full">
-          <Carousel responsive={responsive}>
-            {order?.images?.length <= 0 ? (
-              <>
-                <div className="h-[200px] w-[200px]">
-                  <Image
-                    fill
-                    src={product_image}
-                    alt={order?.hotel_name}
-                    className="h-full object-cover rounded-md"
-                  />
-                </div>
-              </>
-            ) : (
-              order?.images?.map((image: string) => (
-                <div className="h-[200px] w-full" key={image}>
-                  <Image
-                    fill
-                    alt={order?.hotel_name}
-                    src={image.replace("{size}", "200x200")}
-                    className="h-full object-cover rounded-md"
-                  />
-                </div>
-              ))
-            )}
-          </Carousel>
+    <>
+      <div className="shadow-md p-2 rounded-md">
+        <div className="rounded-[10px] relative">
+          <div className="w-full">
+            <Carousel responsive={responsive}>
+              {order?.images?.length <= 0 ? (
+                <>
+                  <div className="h-[200px] w-[200px]">
+                    <Image
+                      fill
+                      src={product_image}
+                      alt={order?.hotel_name}
+                      className="h-full object-cover rounded-md"
+                    />
+                  </div>
+                </>
+              ) : (
+                order?.images?.map((image: string) => (
+                  <div className="h-[200px] w-full" key={image}>
+                    <Image
+                      fill
+                      alt={order?.hotel_name}
+                      src={image.replace("{size}", "200x200")}
+                      className="h-full object-cover rounded-md"
+                    />
+                  </div>
+                ))
+              )}
+            </Carousel>
 
-          <div className="absolute top-3 flex justify-end items-center left-0 right-0">
-            <span
-              onClick={() => {
-                if (order?.status === "completed" && isCancel) {
-                  handleCancel(order?.partner_order_id);
-                }
-              }}
-              className={`w-fit px-2 py-1 rounded-full flex  justify-center items-center mr-2 ${
-                status[order?.status]
-              } ${
-                order?.status === "completed" && isCancel && "cursor-pointer"
-              }`}
-            >
-              {order?.status}
-            </span>
-          </div>
-        </div>
-      </div>
+            <div className={`absolute top-3 items-center left-0 right-0 flex ${order?.status === "completed" && isCancel ? "justify-between" : "justify-end"}`}>
+              {order?.status === "completed" && isCancel && (
+                <span
+                  onClick={() => {
+                    if (order?.status === "completed" && isCancel) {
+                      setOpenModal(true);
+                    }
+                  }}
+                  className={`w-fit px-2 py-1 rounded-full flex  justify-center items-center ml-2 cursor-pointer bg-red-500 text-white`}
+                >
+                  Cancel
+                </span>
+              )}
 
-      <Link
-        href={`/hotel-detail/test_hotel${
-          searchParams.toString() ? `?${searchParams.toString()}` : ""
-        }`}
-        // href={`/hotel-detail/${favorite?.hotel_id}${
-        //   searchParams.toString() ? `?${searchParams.toString()}` : ""
-        // }`}
-      >
-        <div className="mt-3.5">
-          <p className="text-base font-semibold text-black-800 mb-2 truncate">
-            {order?.hotel_name}
-          </p>
-
-          <div className="h-[1px] bg-text-light w-14 my-2"></div>
-
-          <div className="flex justify-between items-center">
-            <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
-              <MapIcon />
-              {order?.region_name}
-            </p>
-
-            <div className="flex items-center gap-1">
-              <span>{order?.total_night} Night</span>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
-              {order?.kind}
-            </p>
-
-            <div className="flex items-center gap-1">
-              <span>
-                {order?.total_amount} {order?.currency_code}
+              <span
+                className={`w-fit px-2 py-1 rounded-full flex  justify-center items-center mr-2 ${
+                  status[order?.status]
+                }`}
+              >
+                {order?.status}
               </span>
             </div>
           </div>
         </div>
-      </Link>
-    </div>
+
+        <Link
+          href={`/hotel-detail/test_hotel${
+            searchParams.toString() ? `?${searchParams.toString()}` : ""
+          }`}
+          // href={`/hotel-detail/${favorite?.hotel_id}${
+          //   searchParams.toString() ? `?${searchParams.toString()}` : ""
+          // }`}
+        >
+          <div className="mt-3.5">
+            <p className="text-base font-semibold text-black-800 mb-2 truncate">
+              {order?.hotel_name}
+            </p>
+
+            <div className="h-[1px] bg-text-light w-14 my-2"></div>
+
+            <div className="flex justify-between items-center">
+              <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
+                <MapIcon />
+                {order?.region_name}
+              </p>
+
+              <div className="flex items-center gap-1">
+                <span>{order?.total_night} Night</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center">
+              <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
+                {order?.kind}
+              </p>
+
+              <div className="flex items-center gap-1">
+                <span>
+                  {order?.total_amount} {order?.currency_code}
+                </span>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </div>
+
+      {openModal && (
+        <OrderCancelModal 
+          handleClose={() => setOpenModal(false)} 
+          handleCancel={() => handleCancel(order?.partner_order_id)}
+        />
+      )}
+    </>
   );
 };
 

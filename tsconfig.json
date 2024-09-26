@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/view/save-list/slice"
-  ],
+, "src/components/modal/OrderCancelModal.jsx"  ],
   "exclude": ["node_modules"]
 }
