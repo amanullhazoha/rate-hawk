@@ -1,27 +1,48 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const OrderCancelModal = ({
   handleClose,
-  handleCancel
+  handleCancel,
 }: {
   handleClose: () => void;
   handleCancel: () => void;
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  // const handleClick = useCallback((): void => {
-  //   if (inputRef.current) {
-  //     inputRef.current.click();
-  //     handleClose();
-  //   }
-  // }, []);
+  // Disable page scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    // Cleanup on component unmount
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  // Close modal on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [handleClose]);
 
   return (
     <div className="bg-black bg-opacity-10 absolute top-0 left-0 right-0 bottom-0 z-[10000000000] flex items-center justify-center">
       <div className="container mx-auto px-1.5 flex justify-center">
-        <div className="px-4 py-4 bg-white rounded-[10px] shadow-modal w-[400px] min-h-[180px] flex flex-col justify-between">
+        <div
+          ref={modalRef}
+          className="px-4 py-4 bg-white rounded-[10px] shadow-modal w-[400px] min-h-[180px] flex flex-col justify-between"
+        >
           <div className="flex items-center justify-center mb-4">
             <h3 className="text-lg font-semibold text-text-tertiary text-center">
               Are you sure to cancel this order!
@@ -52,3 +73,4 @@ const OrderCancelModal = ({
 };
 
 export default OrderCancelModal;
+
