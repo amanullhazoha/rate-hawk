@@ -8,11 +8,25 @@
 
 * {
   font-family: "Poppins", sans-serif;
-}
-
+}   
+    
 body {
   @apply leading-[normal] m-0 font-primary;
+  position: static;
+  top: 0px !important;
 }
+
+.skiptranslate { 
+  display: none; 
+}
+
+.goog-gt-tt { 
+  display: none; 
+}
+
+/* #goog-gt-vt {
+  display: none !important;
+} */
 
 .my-container {
   @apply container mx-auto md:px-0 px-4;

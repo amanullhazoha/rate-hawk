@@ -133,7 +133,7 @@ const UserLayout = ({
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <CurrencySelect />
-                {/* <LanguageSelect /> */}
+                <LanguageSelect />
               </div>
 
               <div className="relative">

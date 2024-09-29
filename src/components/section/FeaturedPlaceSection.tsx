@@ -12,7 +12,7 @@ import Preloader from "../loading/Preloader";
 
 const FeaturedPlaceSection = () => {
   const [currency, setCurrency] = useState<string | null>(null);
-  const [region_id, setRegion_id] = useState(234);
+  const [region_id, setRegion_id] = useState(2621);
 
   const { data: favoriteData } = useGetUserAllSaveListQuery("");
   const {
@@ -77,9 +77,9 @@ const FeaturedPlaceSection = () => {
               <div>
                 <button
                   type="button"
-                  onClick={() => setRegion_id(234)}
+                  onClick={() => setRegion_id(2621)}
                   className={`w-[140px] px-6 py-2 rounded-full text-base font-medium ${
-                    region_id === 234
+                    region_id === 2621
                       ? "bg-primary-color text-black"
                       : "text-black-400"
                   }`}

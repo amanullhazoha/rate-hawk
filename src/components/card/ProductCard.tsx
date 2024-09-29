@@ -132,8 +132,8 @@ const ProductCard = ({
       )}
 
       <Link
-        // href={`/hotel-detail/${product?.id}${
-        href={`/hotel-detail/test_hotel${
+        // href={`/hotel-detail/test_hotel${
+        href={`/hotel-detail/${product?.id}${
           searchParams.toString() ? `?${searchParams.toString()}` : ""
         }`}
       >
