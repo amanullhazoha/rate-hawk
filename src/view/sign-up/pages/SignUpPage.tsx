@@ -45,14 +45,14 @@ const SignUpPage = () => {
       <div className="flex items-center justify-between gap-10 md:my-[85px] my-12">
         <div className="lg:w-1/2  w-full">
           <div className="px-4 md:px-8 py-9 border border-border-primary rounded-[20px]">
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <SocialButton
                 icon={<FacebookIcon />}
                 authLink={`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/public/facebook-login`}
               >
                 Continue with Facebook
               </SocialButton>
-            </div>
+            </div> */}
 
             <div className="mb-4">
               <SocialButton
