@@ -16,7 +16,7 @@ const columns = [
         <img
           alt={row.name}
           className="w-10 h-10 rounded-lg"
-          src={row?.images[0]?.replace("{size}", "1024x768")}
+          src={row?.images?.[0]?.replace("{size}", "1024x768")}
         />
       </td>
     ),
@@ -24,22 +24,22 @@ const columns = [
   {
     label: "Hotel Name",
     path: "name",
-    content: (row: any) => <td className="p-2">{row.name}</td>,
+    content: (row: any) => <td className="p-2">{row?.name}</td>,
   },
   {
     label: "kind",
     path: "kind",
-    content: (row: any) => <td className="p-2">{row.kind}</td>,
+    content: (row: any) => <td className="p-2">{row?.kind}</td>,
   },
   {
     label: "Star",
     path: "star_rating",
-    content: (row: any) => <td className="p-2">{row.star_rating}</td>,
+    content: (row: any) => <td className="p-2">{row?.star_rating}</td>,
   },
   {
     label: "Region",
     path: "name",
-    content: (row: any) => <td className="p-2">{row.region.name}</td>,
+    content: (row: any) => <td className="p-2">{row?.region.name}</td>,
   },
   {
     label: "Country Code",
@@ -49,12 +49,12 @@ const columns = [
   {
     label: "Check In Time",
     path: "check_in_time",
-    content: (row: any) => <td className="p-2">{row.check_in_time}</td>,
+    content: (row: any) => <td className="p-2">{row?.check_in_time}</td>,
   },
   {
     label: "Check Out Time",
     path: "check_out_time",
-    content: (row: any) => <td className="p-2">{row.check_out_time}</td>,
+    content: (row: any) => <td className="p-2">{row?.check_out_time}</td>,
   },
 ];
 
