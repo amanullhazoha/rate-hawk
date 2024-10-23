@@ -32,7 +32,7 @@ const CurrencySelect = () => {
   }, []);
 
   return (
-    <div className="relative group">
+    <div className="relative group notranslate">
       <p className="px-2 py-1 border border-border-primary rounded-md text-base flex items-center gap-1 cursor-pointer w-[70px] justify-between">
         {currency}
         <svg

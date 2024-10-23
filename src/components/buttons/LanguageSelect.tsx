@@ -1,4 +1,3 @@
-
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
@@ -6,16 +5,20 @@ const LanguageSelect = () => {
   const [language, setLanguage] = useState("EN");
 
   function googleTranslateElementInit() {
-    new window.google.translate.TranslateElement({
-      pageLanguage: "en", includedLanguages: "en,bn,nl"
-    }, "google_translate_element");
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "en",
+        includedLanguages: "en,bn,nl,de",
+      },
+      "google_translate_element"
+    );
   }
 
   const handleSelectLanguage = (lang: string) => {
     setLanguage(lang);
 
-    console.log(lang)
-    localStorage.setItem('lang', lang);
+    console.log(lang);
+    localStorage.setItem("lang", lang);
 
     const element: any = document.querySelector(".goog-te-combo");
     element.value = lang.toLowerCase();
@@ -31,13 +34,15 @@ const LanguageSelect = () => {
 
     if (lang) {
       setLanguage(lang);
-    } 
-    
+    }
   }, []);
 
   return (
-    <div className="relative group">
-      <div id="google_translate_element" style={{ visibility: "hidden", width: "1px", height: "1px" }}></div>
+    <div className="relative group notranslate">
+      <div
+        id="google_translate_element"
+        style={{ visibility: "hidden", width: "1px", height: "1px" }}
+      ></div>
 
       <p className="px-2 py-1 border border-border-primary rounded-md text-base flex items-center gap-1 cursor-pointer w-[58px]">
         {language}
@@ -58,7 +63,7 @@ const LanguageSelect = () => {
         </svg>
       </p>
 
-      <ul className="hidden absolute top-[35px] left-0 right-0 group-hover:block bg-white border border-border-primary px-1 py-1 z-50">
+      <ul className="hidden rounded-md absolute top-[35px] left-0 right-0 group-hover:block bg-white border border-border-primary px-2 py-1 z-[99999]">
         <li
           className="cursor-pointer mb-1"
           onClick={() => handleSelectLanguage("EN")}
@@ -79,6 +84,13 @@ const LanguageSelect = () => {
         >
           NL
         </li>
+
+        <li
+          className="cursor-pointer mb-1"
+          onClick={() => handleSelectLanguage("DE")}
+        >
+          DE
+        </li>
       </ul>
 
       <Script
@@ -91,4 +103,3 @@ const LanguageSelect = () => {
 };
 
 export default LanguageSelect;
-

@@ -73,7 +73,7 @@ const ProductDetailPageView = () => {
         )}
 
         {!isLoading && !isError && data?.data && (
-          <div className="w-full md:w-[90%] mx-auto">
+          <div className="w-full mx-auto">
             <ProductImageSection images={data?.data?.data?.images} />
             <DetailSection
               hotelInfo={data?.data?.data}

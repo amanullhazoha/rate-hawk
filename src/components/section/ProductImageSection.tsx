@@ -16,7 +16,7 @@ const ProductImageSection = ({ images }: { images: any }) => {
   useEffect(() => {
     if (images?.length > 0) {
       const newImages = images.map((image: string) =>
-        image.replace("{size}", "1024x768"),
+        image.replace("{size}", "1024x768")
       );
 
       setProductImage(newImages);
@@ -24,7 +24,7 @@ const ProductImageSection = ({ images }: { images: any }) => {
   }, [images]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-10 md:mb-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6 md:mb-10">
       <>
         <div className="relative overflow-hidden">
           <Carousel responsive={responsive}>

@@ -57,7 +57,7 @@ const SearchSection = () => {
         }, 1000);
       }
     },
-    [],
+    []
   );
 
   const handleSelect = useCallback((value: any) => {
@@ -89,12 +89,12 @@ const SearchSection = () => {
 
   const handleChildren = (item: any) => {
     const exists = children.some(
-      (obj: any) => obj.value === item.value && obj.name === item.name,
+      (obj: any) => obj.value === item.value && obj.name === item.name
     );
 
     if (exists) {
       const filterData = children?.filter(
-        (data: any) => data.value !== item.value,
+        (data: any) => data.value !== item.value
       );
 
       return setChildren(filterData);
@@ -145,7 +145,7 @@ const SearchSection = () => {
         ? setQueryParams(
             url,
             "children",
-            children?.map((item: any) => item.value).toString(),
+            children?.map((item: any) => item.value).toString()
           )
         : url;
 
@@ -291,7 +291,7 @@ const SearchSection = () => {
                       {selectDate
                         ? format(
                             new Date(selectDate[0]?.startDate),
-                            "yyyy-MM-dd",
+                            "yyyy-MM-dd"
                           )
                         : "yyyy-mm-dd"}
                     </p>
@@ -325,7 +325,7 @@ const SearchSection = () => {
                 </label>
 
                 <div className="border border-border-primary rounded-md px-3 py-2 mt-1">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 notranslate">
                     <button
                       type="button"
                       disabled={guest <= 0 ? true : false}
@@ -383,7 +383,7 @@ const SearchSection = () => {
                               children.some(
                                 (obj: any) =>
                                   obj.value === item.value &&
-                                  obj.name === item.name,
+                                  obj.name === item.name
                               )
                                 ? true
                                 : false

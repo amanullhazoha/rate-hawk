@@ -30,7 +30,7 @@ const DetailTopSection = ({
   const [userRemoveFavorite] = useUserRemoveFavoriteMutation();
 
   const isFavorite = favoriteData?.find(
-    (item: any) => item?.hotel_id === hotel_id,
+    (item: any) => item?.hotel_id === hotel_id
   )
     ? true
     : false;
@@ -75,7 +75,7 @@ const DetailTopSection = ({
   };
 
   return (
-    <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
+    <div className="px-4 md:px-6 py-4 md:py-6 border border-border-primary rounded-[20px] mb-6">
       <div className="flex justify-between items-center mb-6">
         <p className="bg-yellow-100 text-xs text-semi-primary font-medium px-3 py-1 rounded-[20px] border border-semi-primary">
           {kind}

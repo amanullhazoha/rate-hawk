@@ -9,7 +9,7 @@ const HomePageView = () => {
       <SearchSection />
       <FeaturedPlaceSection />
       {/* <NewsLetterSection /> */}
-      <ExploreSection />
+      {/* <ExploreSection /> */}
     </main>
   );
 };

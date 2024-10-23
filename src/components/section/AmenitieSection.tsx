@@ -43,15 +43,15 @@ const AmenitiesSection = ({ amenity_groups }: { amenity_groups: any }) => {
   };
 
   return (
-    <div className="px-4 md:px-8 py-6 md:py-8 border border-border-primary rounded-[20px] mb-8">
+    <div className="px-4 md:px-6 py-4 md:py-6 border border-border-primary rounded-[20px] mb-6">
       <div>
         <h3 className="text-2xl font-semibold text-black">Amenities</h3>
 
-        <p className="text-base font-normal text-text-blar mt-2.5">
+        <p className="text-base font-normal text-text-blar mt-2.5 mb-4">
           About the property&apos;s amenities and services
         </p>
 
-        <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p>
+        {/* <p className="w-14 h-[1px] bg-border-primary mt-8 mb-8"></p> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

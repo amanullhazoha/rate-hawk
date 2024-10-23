@@ -19,7 +19,7 @@ const FeaturedPlaceSection = () => {
     data: hotelDumpData,
     isLoading: isLoadingHotel,
     refetch,
-  } = useGetHotelDumpDataQuery({ region_id }, { skip: !region_id });
+  } = useGetHotelDumpDataQuery({ region_id, limit: 40 }, { skip: !region_id });
 
   const [getHotelData, { isLoading: isGetHotelData, data: hotelData }] =
     useGetSearchHotelByIdsMutation();

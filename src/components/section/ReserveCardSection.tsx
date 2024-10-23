@@ -79,12 +79,12 @@ const ReserveCardSection = ({
     let url: string = searchParams.toString();
 
     const exists = children.some(
-      (obj: any) => obj.value === item.value && obj.name === item.name,
+      (obj: any) => obj.value === item.value && obj.name === item.name
     );
 
     if (exists) {
       const filterData = children?.filter(
-        (data: any) => data.value !== item.value,
+        (data: any) => data.value !== item.value
       );
 
       url =
@@ -92,7 +92,7 @@ const ReserveCardSection = ({
           ? setQueryParams(
               url,
               "children",
-              filterData?.map((item: any) => item.value).toString(),
+              filterData?.map((item: any) => item.value).toString()
             )
           : url;
 
@@ -115,7 +115,7 @@ const ReserveCardSection = ({
           ? setQueryParams(
               url,
               "children",
-              newData?.map((item: any) => item.value).toString(),
+              newData?.map((item: any) => item.value).toString()
             )
           : url;
 
@@ -165,23 +165,23 @@ const ReserveCardSection = ({
           Number(selectRoom?.daily_prices[0]) +
           Number(
             selectRoom?.payment_options?.payment_types?.[0]?.commission_info
-              ?.show?.amount_commission,
+              ?.show?.amount_commission
           ) /
             selectRoom?.daily_prices?.length
         ).toFixed(2),
         total_night: selectRoom?.daily_prices.length,
         total_amount: Number(
           selectRoom?.payment_options?.payment_types?.[0]?.commission_info?.show
-            ?.amount_gross,
+            ?.amount_gross
         ),
         total_commission: Number(
           selectRoom?.payment_options?.payment_types?.[0]?.commission_info?.show
-            ?.amount_commission,
+            ?.amount_commission
         ),
         children: childrenData?.filter((item: any) =>
           children.some(
-            (obj: any) => obj.value === item.value && obj.name === item.name,
-          ),
+            (obj: any) => obj.value === item.value && obj.name === item.name
+          )
         ),
       };
 
@@ -255,7 +255,7 @@ const ReserveCardSection = ({
                 Number(selectRoom?.daily_prices[0]) +
                 Number(
                   selectRoom?.payment_options?.payment_types?.[0]
-                    ?.commission_info?.show?.amount_commission,
+                    ?.commission_info?.show?.amount_commission
                 ) /
                   selectRoom?.daily_prices?.length
               ).toFixed(2)}
@@ -302,7 +302,7 @@ const ReserveCardSection = ({
                 Guests
               </label>
 
-              <div className="flex items-center gap-3 mt-1">
+              <div className="flex items-center gap-3 mt-1 notranslate">
                 <button
                   type="button"
                   disabled={guest <= 0 ? true : false}
@@ -363,8 +363,7 @@ const ReserveCardSection = ({
                         checked={
                           children.some(
                             (obj: any) =>
-                              obj.value === item.value &&
-                              obj.name === item.name,
+                              obj.value === item.value && obj.name === item.name
                           )
                             ? true
                             : false
