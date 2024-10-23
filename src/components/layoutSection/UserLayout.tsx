@@ -158,7 +158,7 @@ const UserLayout = ({
         </div>
       </header>
 
-      <main className="min-h-[calc(100vh-690px)]">{children}</main>
+      <main className="min-h-[calc(100vh-568px)]">{children}</main>
 
       <footer className="bg-black-800">
         <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-3">

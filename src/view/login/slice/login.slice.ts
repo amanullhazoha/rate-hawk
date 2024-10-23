@@ -16,6 +16,14 @@ export const loginApi = createApi({
       }),
       invalidatesTags: ["login"],
     }),
+    adminLogin: builder.mutation({
+      query: (data: any) => ({
+        url: "/public/admin-login",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["login"],
+    }),
     userLogout: builder.mutation({
       query: () => ({
         url: "/secured/user/logout",
@@ -36,5 +44,6 @@ export const loginApi = createApi({
 export const {
   useUserLoginMutation,
   useUserLogoutMutation,
+  useAdminLoginMutation,
   useGetLoggedInProfileQuery,
 } = loginApi;
