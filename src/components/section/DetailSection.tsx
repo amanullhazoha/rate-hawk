@@ -22,8 +22,6 @@ const DetailSection = ({
   const [selectRoom, setSelectRoom] = useState<any>(null);
   const [originalRoom, setOriginalRoom] = useState<any>(null);
 
-  console.log(hotelInfo);
-
   return (
     <div className="max-md:flex max-md:flex-col md:grid gap-4 md:gap-6 grid-cols-12">
       <div className="w-full col-span-12 lg:col-span-8">

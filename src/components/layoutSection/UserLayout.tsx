@@ -160,7 +160,7 @@ const UserLayout = ({
 
       <main className="min-h-[calc(100vh-568px)]">{children}</main>
 
-      <footer className="bg-black-800">
+      <footer className="bg-black-800 z-[99999999] relative">
         <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-3">
           <div className="flex gap-10 flex-col md:flex-row">
             <div className="w-full ">
@@ -204,7 +204,9 @@ const UserLayout = ({
                 </a>
 
                 <a
-                  href="tel:+31623963831"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://wa.me/31623963831?text=Hello!"
                   className="w-9 h-9 rounded-full flex justify-center items-center bg-black-400"
                 >
                   <WhatsappIcon className="w-6 h-6 text-white" />
@@ -244,10 +246,10 @@ const UserLayout = ({
 
               <div className="flex flex-col gap-3.5 text-white text-base font-medium">
                 <p>Feel free to contact and reach us !!</p>
-                <p className="flex gap-3 items-center">
+                {/* <p className="flex gap-3 items-center">
                   <WhatsappIcon className="w-5 h-5 text-[#8A7E0F]" />
                   <a href="tel:+31623963831">+31623963831</a>
-                </p>
+                </p> */}
 
                 <p className="flex gap-3 items-center">
                   <EmailIcon />

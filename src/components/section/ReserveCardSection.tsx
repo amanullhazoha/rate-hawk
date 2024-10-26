@@ -190,6 +190,18 @@ const ReserveCardSection = ({
       if (data?.data?.data?.data?.order_id) {
         router.push(`/reserve/${data?.data?.data?.data?.order_id}`);
       } else {
+        if (data?.error?.originalStatus === 401) {
+          toast.error("Please login or create an account first!");
+
+          return setTimeout(() => {
+            window.open(
+              "http://localhost:3000/login",
+              "_blank",
+              "noopener,noreferrer"
+            );
+          }, 3000);
+        }
+
         toast.error(data?.error?.data);
       }
     } catch (error) {

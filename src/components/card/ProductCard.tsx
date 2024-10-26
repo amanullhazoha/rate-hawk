@@ -36,7 +36,7 @@ const ProductCard = ({
   const data = hotelData?.find((item: any) => item.id === product.id);
 
   const isFavorite = favoriteData?.find(
-    (item: any) => item?.hotel_id === product?.id,
+    (item: any) => item?.hotel_id === product?.id
   )
     ? true
     : false;
@@ -87,26 +87,44 @@ const ProductCard = ({
           <div className="w-full">
             <Carousel responsive={responsive}>
               {product?.images?.length <= 0 ? (
-                <>
-                  <div className="h-[200px] w-[200px]">
-                    <Image
-                      fill
-                      src={product_image}
-                      alt={product?.name}
-                      className="h-full object-cover rounded-md"
-                    />
-                  </div>
-                </>
+                <Link
+                  href={`/hotel-detail/${product?.id}${
+                    searchParams.toString() ? `?${searchParams.toString()}` : ""
+                  }`}
+                  legacyBehavior
+                >
+                  <a target="_blank" rel="noopener noreferrer">
+                    <div className="h-[200px] w-[200px]">
+                      <Image
+                        fill
+                        src={product_image}
+                        alt={product?.name}
+                        className="h-full object-cover rounded-md"
+                      />
+                    </div>
+                  </a>
+                </Link>
               ) : (
                 product?.images?.map((image: string) => (
-                  <div className="h-[200px] w-full" key={image}>
-                    <Image
-                      fill
-                      alt={product?.name}
-                      src={image.replace("{size}", "1024x768")}
-                      className="h-full object-cover rounded-md"
-                    />
-                  </div>
+                  <Link
+                    href={`/hotel-detail/${product?.id}${
+                      searchParams.toString()
+                        ? `?${searchParams.toString()}`
+                        : ""
+                    }`}
+                    legacyBehavior
+                  >
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="h-[200px] w-full" key={image}>
+                        <Image
+                          fill
+                          alt={product?.name}
+                          src={image.replace("{size}", "1024x768")}
+                          className="h-full object-cover rounded-md"
+                        />
+                      </div>
+                    </a>
+                  </Link>
                 ))
               )}
             </Carousel>
@@ -136,60 +154,63 @@ const ProductCard = ({
         href={`/hotel-detail/${product?.id}${
           searchParams.toString() ? `?${searchParams.toString()}` : ""
         }`}
+        legacyBehavior
       >
-        <div className="mt-3.5">
-          <div className="flex items-center gap-1 mb-2 text-sm font-medium text-text-blar">
-            <span>Entire cabin</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="2"
-              height="2"
-              viewBox="0 0 2 2"
-              fill="none"
-            >
-              <circle cx="1" cy="1" r="1" fill="#6B7280" />
-            </svg>
-            <span>{product?.rates?.length} beds</span>
-          </div>
+        <a target="_blank" rel="noopener noreferrer">
+          <div className="mt-3.5">
+            <div className="flex items-center gap-1 mb-2 text-sm font-medium text-text-blar">
+              <span>Entire cabin</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2"
+                height="2"
+                viewBox="0 0 2 2"
+                fill="none"
+              >
+                <circle cx="1" cy="1" r="1" fill="#6B7280" />
+              </svg>
+              <span>{product?.rates?.length} beds</span>
+            </div>
 
-          <p className="text-base font-semibold text-black-800 mb-2 truncate ">
-            {product?.name}
-          </p>
+            <p className="text-base font-semibold text-black-800 mb-2 truncate ">
+              {product?.name}
+            </p>
 
-          <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
-            <MapIcon />
-            {product?.region?.name}
-          </p>
+            <p className="flex gap-2 items-center text-text-blar text-sm font-medium">
+              <MapIcon />
+              {product?.region?.name}
+            </p>
 
-          <div className="h-[1px] bg-text-light w-14 my-2"></div>
+            <div className="h-[1px] bg-text-light w-14 my-2"></div>
 
-          <div className="flex justify-between items-center">
-            {data?.rates[0]?.daily_prices[0] ? (
-              <p className="text-base font-medium text-black-800">
-                {/* {data?.rates[0]?.daily_prices[0]}{" "} */}
-                {(
-                  Number(data?.rates[0]?.daily_prices[0]) +
-                  Number(
-                    data?.rates[0]?.payment_options?.payment_types?.[0]
-                      ?.commission_info?.show?.amount_commission,
-                  ) /
-                    data?.rates[0]?.daily_prices?.length
-                ).toFixed(2)}{" "}
-                {localStorage.getItem("currency")}{" "}
-                <span className="text-text-blar">/night</span>
-              </p>
-            ) : (
-              <p className="bg-yellow-300 px-1 py-0.5 rounded-md text-text-blar">
-                Booked
-              </p>
-            )}
+            <div className="flex justify-between items-center">
+              {data?.rates[0]?.daily_prices[0] ? (
+                <p className="text-base font-medium text-black-800">
+                  {/* {data?.rates[0]?.daily_prices[0]}{" "} */}
+                  {(
+                    Number(data?.rates[0]?.daily_prices[0]) +
+                    Number(
+                      data?.rates[0]?.payment_options?.payment_types?.[0]
+                        ?.commission_info?.show?.amount_commission
+                    ) /
+                      data?.rates[0]?.daily_prices?.length
+                  ).toFixed(2)}{" "}
+                  {localStorage.getItem("currency")}{" "}
+                  <span className="text-text-blar">/night</span>
+                </p>
+              ) : (
+                <p className="bg-yellow-300 px-1 py-0.5 rounded-md text-text-blar">
+                  Booked
+                </p>
+              )}
 
-            <div className="flex items-center gap-1">
-              <StarIcon className="w-4 h-4" />
-              <span>{product?.star_rating}</span>
+              <div className="flex items-center gap-1">
+                <StarIcon className="w-4 h-4" />
+                <span>{product?.star_rating}</span>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
       </Link>
     </div>
   );

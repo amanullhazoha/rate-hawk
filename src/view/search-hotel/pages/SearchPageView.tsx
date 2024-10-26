@@ -12,6 +12,7 @@ import {
   useGetHotelDumpDataQuery,
   useGetSearchHotelByIdsMutation,
 } from "../slice/search-hotel.slice";
+import HotelPageSearch from "@/components/section/HotelPageSearch";
 
 const SearchPageView = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const SearchPageView = () => {
   const skipQuery = !region_id || !page;
 
   let filter: any = {
-    limit: 30
+    limit: 30,
   };
 
   if (star) {
@@ -90,68 +91,91 @@ const SearchPageView = () => {
   }, [hotelDumpData, searchParams]);
 
   return (
-    <main className="pt-4 pb-10 bg-white">
+    <main className="pb-10 bg-white">
       <div className="container mx-auto px-2.5 lg:px-[35px]">
-        <div className="shadow-md px-2 py-1 rounded-md w-fit mb-8 border border-blue-50">
+        {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-8 border border-blue-50">
           <Link href="/" className="mr-2 text-blue-500 font-medium">
             Home
           </Link>
           <span className="mr-2">{">"}</span>
 
           <span className="font-medium">Search</span>
-        </div>
+        </div> */}
 
-        <div className="w-full mb-5 shadow-md px-2 py-3 border border-blue-200">
-          <p className="text-black text-xl mb-2 text-start font-medium">
-            Searching for options in{" "}
-            {searchParams.get("region_name")
-              ? searchParams.get("region_name")
-              : "unknown"}
-          </p>
+        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[99999999] top-[128px] bg-white pt-6">
+          <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
+            <Link href="/" className="mr-2 text-blue-500 font-medium">
+              Home
+            </Link>
+            <span className="mr-2">{">"}</span>
 
-          <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2">
-            <span>
-              {hotelDumpData?.pagination?.totalItems
-                ? hotelDumpData?.pagination?.totalItems
-                : 0}{" "}
-              stays
-            </span>
+            <span className="font-medium">Search</span>
+          </div>
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="2"
-              height="2"
-              viewBox="0 0 2 2"
-              fill="none"
-            >
-              <circle cx="1" cy="1" r="1" fill="#6B7280" />
-            </svg>
-
-            <span>
-              {searchParams.get("check-in")} - {searchParams.get("check-out")}
-            </span>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="2"
-              height="2"
-              viewBox="0 0 2 2"
-              fill="none"
-            >
-              <circle cx="1" cy="1" r="1" fill="#6B7280" />
-            </svg>
-
-            <span>{searchParams.get("adults")} Guests</span>
-          </p>
+          <HotelPageSearch />
 
           {(isLoadingByIds || isHotelDumpLoading) && (
-            <div className="w-full h-auto flex justify-center items-center mt-4">
+            <div className="w-full h-auto flex justify-center items-center">
               <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
                 <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
               </div>
             </div>
           )}
         </div>
+
+        {/* <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
+          <div className="w-full mb-5 shadow-md px-2 py-3 border border-blue-200 ">
+            <p className="text-black text-xl mb-2 text-start font-medium">
+              Searching for options in{" "}
+              {searchParams.get("region_name")
+                ? searchParams.get("region_name")
+                : "unknown"}
+            </p>
+
+            <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2">
+              <span>
+                {hotelDumpData?.pagination?.totalItems
+                  ? hotelDumpData?.pagination?.totalItems
+                  : 0}{" "}
+                stays
+              </span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2"
+                height="2"
+                viewBox="0 0 2 2"
+                fill="none"
+              >
+                <circle cx="1" cy="1" r="1" fill="#6B7280" />
+              </svg>
+
+              <span>
+                {searchParams.get("check-in")} - {searchParams.get("check-out")}
+              </span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="2"
+                height="2"
+                viewBox="0 0 2 2"
+                fill="none"
+              >
+                <circle cx="1" cy="1" r="1" fill="#6B7280" />
+              </svg>
+
+              <span>{searchParams.get("adults")} Guests</span>
+            </p>
+
+            {(isLoadingByIds || isHotelDumpLoading) && (
+              <div className="w-full h-auto flex justify-center items-center mt-4">
+                <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
+                  <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div> */}
 
         {hotelDumpData?.pagination?.totalItems <= 0 && !isLoadingByIds && (
           <div className="w-full text-center">
@@ -176,13 +200,15 @@ const SearchPageView = () => {
                   ))}
                 </div>
 
-                <div className="w-full lg:w-full h-[400px] lg:h-full">
-                  <MultiMarkerLocation hotelData={hotelDumpData?.data} />
+                <div className="relative">
+                  <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[299px]">
+                    <MultiMarkerLocation hotelData={hotelDumpData?.data} />
+                  </div>
                 </div>
               </div>
 
               {hotelDumpData?.pagination?.totalItems > 30 && (
-                <div className="mt-4">
+                <div className="mt-4 grid-cols-1 grid lg:grid-cols-2 gap-10">
                   <GlobalPagination
                     limit={30}
                     page={page}

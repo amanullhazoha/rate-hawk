@@ -92,21 +92,22 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <div className="flex items-center gap-2">
-                  <div>
-                    <WhatsappIcon className="text-[#9E9012] w-5 h-5" />
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://wa.me/31623963831?text=Hello!"
+                >
+                  <div className="flex items-center gap-2">
+                    <div>
+                      <WhatsappIcon className="text-[#9E9012] w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="uppercase text-sm text-black-800 font-semibold tracking-[0.28px]">
+                        Whatsapp
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="uppercase text-sm text-black-800 font-semibold tracking-[0.28px]">
-                      PHONE
-                    </h3>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-blar leading-[25.6px] pt-2">
-                    <a href="tel:+31623963831">+31623963831</a>
-                  </p>
-                </div>
+                </a>
               </div>
 
               {/* <div>

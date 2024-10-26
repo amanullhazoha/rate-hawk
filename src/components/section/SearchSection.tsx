@@ -1,11 +1,11 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { format, differenceInDays } from "date-fns";
 import RangeCalender from "../calender/RangeCalender";
 import { countryData } from "@/assets/data/countryData";
 import { childrenData } from "@/assets/data/childrenData";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
+import { format, differenceInDays, addDays } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocationSearchMutation } from "@/view/home/slice";
 import { useState, useEffect, useRef, ChangeEvent, useCallback } from "react";
@@ -71,7 +71,7 @@ const SearchSection = () => {
     setOpenSearch(false);
     setLocationItem(null);
     setSelectHotel(value);
-    setSearchLocation(value.name);
+    setSearchLocation(value?.name);
   }, []);
 
   const handleDateRange = (dates: any) => {
@@ -116,10 +116,12 @@ const SearchSection = () => {
       : "USD";
     const selectResidency = residency?.code;
     const region_id = locationItem ? locationItem?.id : null;
-    const checkIn =
-      selectDate && format(new Date(selectDate[0]?.startDate), "yyyy-MM-dd");
-    const checkOut =
-      selectDate && format(new Date(selectDate[0]?.endDate), "yyyy-MM-dd");
+    const checkIn = selectDate
+      ? format(new Date(selectDate[0]?.startDate), "yyyy-MM-dd")
+      : format(new Date(), "yyyy-MM-dd");
+    const checkOut = selectDate
+      ? format(new Date(selectDate[0]?.endDate), "yyyy-MM-dd")
+      : format(addDays(new Date(), 1), "yyyy-MM-dd");
 
     if (!checkIn) return toast.error("Please select check in time.");
     if (!checkOut) return toast.error("Please select check out time.");
@@ -167,6 +169,15 @@ const SearchSection = () => {
       setOpenCalender(false);
     }
   };
+
+  useEffect(() => {
+    if (data?.data?.data?.regions?.length > 0 && openSearch === false) {
+      if (!locationItem) {
+        setLocationItem(data?.data?.data?.regions[0]);
+        setSearchLocation(data?.data?.data?.regions[0]?.name);
+      }
+    }
+  }, [data, openSearch]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -257,7 +268,7 @@ const SearchSection = () => {
                         <li
                           key={item?.id}
                           onClick={() => handleSelect(item)}
-                          className="cursor-pointer"
+                          className="cursor-pointer hover:bg-slate-200"
                         >
                           {item?.name}
                         </li>
@@ -293,13 +304,13 @@ const SearchSection = () => {
                             new Date(selectDate[0]?.startDate),
                             "yyyy-MM-dd"
                           )
-                        : "yyyy-mm-dd"}
+                        : format(new Date(), "yyyy-MM-dd")}
                     </p>
                     -
                     <p>
                       {selectDate
                         ? format(new Date(selectDate[0]?.endDate), "yyyy-MM-dd")
-                        : "yyyy-mm-dd"}
+                        : format(addDays(new Date(), 1), "yyyy-MM-dd")}
                     </p>
                   </div>
                 </div>
