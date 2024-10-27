@@ -107,6 +107,7 @@ const ProductCard = ({
               ) : (
                 product?.images?.map((image: string) => (
                   <Link
+                    key={image}
                     href={`/hotel-detail/${product?.id}${
                       searchParams.toString()
                         ? `?${searchParams.toString()}`
@@ -115,7 +116,7 @@ const ProductCard = ({
                     legacyBehavior
                   >
                     <a target="_blank" rel="noopener noreferrer">
-                      <div className="h-[200px] w-full" key={image}>
+                      <div className="h-[200px] w-full">
                         <Image
                           fill
                           alt={product?.name}

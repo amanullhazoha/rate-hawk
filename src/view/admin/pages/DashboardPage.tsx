@@ -120,7 +120,7 @@ const DashboardPage = () => {
               <Table
                 columns={columns}
                 items={data?.data?.hotels}
-                className="min-w-[1000px]"
+                className="min-w-[1000px] w-full"
               />
             </div>
           </div>

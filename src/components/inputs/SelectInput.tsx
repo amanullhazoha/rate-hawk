@@ -15,7 +15,7 @@ const SelectInput = ({
   items: { id: string; title: string }[];
 }) => {
   return (
-    <div className={`mb-4 w-full`}>
+    <div className={`w-full`}>
       <label className="text-black-800">{label}</label>
 
       <div className="border border-border-primary rounded-lg  flex items-center gap-[10px] mt-2">

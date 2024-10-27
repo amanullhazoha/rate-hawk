@@ -8,20 +8,20 @@
 
 * {
   font-family: "Poppins", sans-serif;
-}   
-    
+}
+
 body {
   @apply leading-[normal] m-0 font-primary;
   position: static;
   top: 0px !important;
 }
 
-.skiptranslate { 
-  display: none; 
+.skiptranslate {
+  display: none;
 }
 
-.goog-gt-tt { 
-  display: none; 
+.goog-gt-tt {
+  display: none;
 }
 
 /* #goog-gt-vt {
@@ -43,4 +43,13 @@ body {
 ::before,
 ::after {
   border-width: 0;
+}
+
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd #edf2f7;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
 }
