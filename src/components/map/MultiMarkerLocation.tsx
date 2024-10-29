@@ -17,8 +17,8 @@ const MultiMarkerLocation = ({ hotelData }: { hotelData: any }) => {
 
   const onLoad = useCallback(function callback(map: any) {
     const bounds = new window.google.maps.LatLngBounds({
-      lat: hotelData[0]?.latitude,
-      lng: hotelData[0]?.longitude,
+      lat: hotelData?.[0]?.latitude,
+      lng: hotelData?.[0]?.longitude,
     });
 
     map.fitBounds(bounds);
@@ -43,8 +43,8 @@ const MultiMarkerLocation = ({ hotelData }: { hotelData: any }) => {
       onUnmount={onUnmount}
       mapContainerStyle={containerStyle}
       center={{
-        lat: hotelData[0].latitude,
-        lng: hotelData[0].longitude,
+        lat: hotelData?.[0].latitude,
+        lng: hotelData?.[0].longitude,
       }}
     >
       {hotelData?.map((item: any, index: number) => (

@@ -1,29 +1,38 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import ProductCard from "../../../components/card/ProductCard";
+import HotelPageSearch from "@/components/section/HotelPageSearch";
 import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
 import MultiMarkerLocation from "@/components/map/MultiMarkerLocation";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
 import {
-  useGetHotelDumpDataQuery,
-  useGetSearchHotelByIdsMutation,
+  useGetHotelByRegionIdQuery,
+  useLazyGetSearchHotelByIdsQuery,
 } from "../slice/search-hotel.slice";
-import HotelPageSearch from "@/components/section/HotelPageSearch";
+
+function chunkArray(array: any, chunkSize: any) {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
 
 const SearchPageView = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
   const { setQueryParams } = useSearchQueryParam();
+  const [hotel_ids, setHotelIds] = useState<any>([]);
+  const [dataByIds, setDataByIds] = useState<any>([]);
+  const [pageSize, setPageSize] = useState<number>(30);
   const star: string | null = searchParams.get("star");
   const activePage: string | null = searchParams.get("page");
   const region_id: string | null = searchParams.get("region_id");
 
-  const skipQuery = !region_id || !page;
+  const skipQuery = !region_id;
 
   let filter: any = {
     limit: 30,
@@ -37,26 +46,22 @@ const SearchPageView = () => {
     filter.region_id = region_id;
   }
 
-  if (page) {
-    filter.page = page;
-  }
-
   const { data: favoriteData } = useGetUserAllSaveListQuery("");
+
   const { data: hotelDumpData, isLoading: isHotelDumpLoading } =
-    useGetHotelDumpDataQuery(filter, { skip: skipQuery });
+    useGetHotelByRegionIdQuery(filter, { skip: skipQuery });
+
+  const [fetchHotels] = useLazyGetSearchHotelByIdsQuery();
+
+  const indexOfLastHotel = page * pageSize;
+  const indexOfFirstHotel = indexOfLastHotel - pageSize;
+  const currentHotels = dataByIds.slice(indexOfFirstHotel, indexOfLastHotel);
 
   const handlePagination = (value: number) => {
-    let url: string | null = searchParams?.toString();
-
-    url = setQueryParams(url, "page", value.toString());
-
-    setPage(value);
-
-    router.push(`/search-hotel${url ? `?${url}` : ""}`);
+    if (value) {
+      setPage(value);
+    }
   };
-
-  const [getSearchHotelByIds, { isLoading: isLoadingByIds, data: dataByIds }] =
-    useGetSearchHotelByIdsMutation();
 
   useEffect(() => {
     if (activePage) {
@@ -65,56 +70,47 @@ const SearchPageView = () => {
   }, []);
 
   useEffect(() => {
-    const payload = {
-      language: "en",
-      star: searchParams.get("star"),
-      checkin: searchParams.get("check-in"),
-      checkout: searchParams.get("check-out"),
-      residency: searchParams.get("residency"),
-      guests: [
-        {
-          adults: Number(searchParams.get("adults")),
-          children: searchParams.get("children")
-            ? searchParams
-                .get("children")
-                ?.split(",")
-                .map((item) => Number(item))
-            : [],
-        },
-      ],
-      region_id: Number(searchParams.get("region_id")),
-      currency: searchParams.get("currency"),
-      ids: hotelDumpData?.data?.map((item: any) => item.id),
+    const allHotetIds = hotelDumpData?.data?.data?.hotels?.map(
+      (item: any) => item.id
+    );
+
+    if (allHotetIds?.length > 0) {
+      setHotelIds(allHotetIds);
+    }
+  }, [hotelDumpData]);
+
+  const chunkedHotelIds = chunkArray(hotel_ids, 10);
+
+  useEffect(() => {
+    const fetchHotelData = async () => {
+      for (const idsChunk of chunkedHotelIds) {
+        const response = await fetchHotels({ hotel_ids: idsChunk }).unwrap();
+
+        if (response?.data?.length > 0) {
+          setDataByIds((prevData: any) => [...prevData, ...response?.data]);
+        }
+      }
     };
 
-    if (hotelDumpData?.data?.length > 0) getSearchHotelByIds(payload);
-  }, [hotelDumpData, searchParams]);
+    fetchHotelData();
+  }, [hotel_ids, star, fetchHotels]);
 
   return (
     <main className="pb-10 bg-white">
       <div className="container mx-auto px-2.5 lg:px-[35px]">
-        {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-8 border border-blue-50">
-          <Link href="/" className="mr-2 text-blue-500 font-medium">
-            Home
-          </Link>
-          <span className="mr-2">{">"}</span>
-
-          <span className="font-medium">Search</span>
-        </div> */}
-
-        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[99999999] top-[128px] bg-white pt-6">
-          <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
+        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6">
+          {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
             <Link href="/" className="mr-2 text-blue-500 font-medium">
               Home
             </Link>
             <span className="mr-2">{">"}</span>
 
             <span className="font-medium">Search</span>
-          </div>
+          </div> */}
 
           <HotelPageSearch />
 
-          {(isLoadingByIds || isHotelDumpLoading) && (
+          {isHotelDumpLoading && (
             <div className="w-full h-auto flex justify-center items-center">
               <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
                 <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
@@ -123,104 +119,45 @@ const SearchPageView = () => {
           )}
         </div>
 
-        {/* <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
-          <div className="w-full mb-5 shadow-md px-2 py-3 border border-blue-200 ">
-            <p className="text-black text-xl mb-2 text-start font-medium">
-              Searching for options in{" "}
-              {searchParams.get("region_name")
-                ? searchParams.get("region_name")
-                : "unknown"}
-            </p>
-
-            <p className="text-base font-normal text-text-blar flex flex-wrap items-center gap-2">
-              <span>
-                {hotelDumpData?.pagination?.totalItems
-                  ? hotelDumpData?.pagination?.totalItems
-                  : 0}{" "}
-                stays
-              </span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="2"
-                viewBox="0 0 2 2"
-                fill="none"
-              >
-                <circle cx="1" cy="1" r="1" fill="#6B7280" />
-              </svg>
-
-              <span>
-                {searchParams.get("check-in")} - {searchParams.get("check-out")}
-              </span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="2"
-                viewBox="0 0 2 2"
-                fill="none"
-              >
-                <circle cx="1" cy="1" r="1" fill="#6B7280" />
-              </svg>
-
-              <span>{searchParams.get("adults")} Guests</span>
-            </p>
-
-            {(isLoadingByIds || isHotelDumpLoading) && (
-              <div className="w-full h-auto flex justify-center items-center mt-4">
-                <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
-                  <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div> */}
-
-        {hotelDumpData?.pagination?.totalItems <= 0 && !isLoadingByIds && (
+        {hotelDumpData?.pagination?.totalItems <= 0 && (
           <div className="w-full text-center">
             <h3>No data found.</h3>
           </div>
         )}
 
-        {hotelDumpData &&
-          dataByIds &&
-          !isLoadingByIds &&
-          !isHotelDumpLoading && (
-            <>
-              <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  {hotelDumpData?.data?.map((item: any) => (
-                    <ProductCard
-                      product={item}
-                      key={item?.id}
-                      favoriteData={favoriteData?.data}
-                      hotelData={dataByIds?.data?.data?.hotels}
-                    />
-                  ))}
-                </div>
-
-                <div className="relative">
-                  <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[299px]">
-                    <MultiMarkerLocation hotelData={hotelDumpData?.data} />
-                  </div>
-                </div>
+        {currentHotels?.length > 0 && !isHotelDumpLoading && (
+          <>
+            <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                {currentHotels?.map((item: any) => (
+                  <ProductCard
+                    product={item}
+                    key={item?.id}
+                    favoriteData={favoriteData?.data}
+                    hotelData={hotelDumpData?.data?.data?.hotels}
+                  />
+                ))}
               </div>
 
-              {hotelDumpData?.pagination?.totalItems > 30 && (
-                <div className="mt-4 grid-cols-1 grid lg:grid-cols-2 gap-10">
-                  <GlobalPagination
-                    limit={30}
-                    page={page}
-                    total_element={hotelDumpData?.pagination?.totalItems}
-                    handlePagination={(value: number) =>
-                      handlePagination(value)
-                    }
-                  />
+              <div className="relative">
+                <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[247px]">
+                  <MultiMarkerLocation hotelData={dataByIds} />
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            </div>
+
+            {dataByIds?.length > 30 && (
+              <div className="mt-4 grid-cols-1 grid lg:grid-cols-2 gap-10">
+                <GlobalPagination
+                  page={page}
+                  limit={pageSize}
+                  total_element={dataByIds?.length}
+                  handlePagination={(value: number) => handlePagination(value)}
+                />
+              </div>
+            )}
+          </>
+        )}
       </div>
     </main>
   );

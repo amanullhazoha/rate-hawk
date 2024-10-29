@@ -14,11 +14,35 @@ export const searchHotelApi = createApi({
         params: { region_id, page, star, limit },
       }),
     }),
-    getSearchHotelByIds: builder.mutation({
-      query: (data: any) => ({
-        url: "/public/search/hotel-by-ids",
-        method: "POST",
-        body: data,
+    getHotelByRegionId: builder.query({
+      query: ({
+        adults,
+        check_in,
+        children,
+        currency,
+        checkout,
+        residency,
+        region_id,
+      }) => ({
+        url: "/public/hotels-by-region-id",
+        params: {
+          adults,
+          check_in,
+          checkout,
+          children,
+          currency,
+          region_id,
+          residency,
+        },
+      }),
+    }),
+    getSearchHotelByIds: builder.query({
+      query: ({ star, hotel_ids }) => ({
+        url: "/public/dump-hotel-by-ids",
+        params: {
+          star,
+          hotel_ids,
+        },
       }),
     }),
     getSearchHotel: builder.mutation({
@@ -50,5 +74,8 @@ export const {
   useGetHotelDumpDataQuery,
   useGetUserOrderByIdQuery,
   useGetSearchHotelMutation,
-  useGetSearchHotelByIdsMutation,
+  useGetHotelByRegionIdQuery,
+  useLazyGetSearchHotelByIdsQuery,
+  // useGetSearchHotelByIdsQuery,
+  // useGetSearchHotelByIdsMutation,
 } = searchHotelApi;
