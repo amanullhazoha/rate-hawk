@@ -1,8 +1,8 @@
 "use client";
 
+import { format, addDays } from "date-fns";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import ProductCard from "../../../components/card/ProductCard";
 import HotelPageSearch from "@/components/section/HotelPageSearch";
 import { useGetUserAllSaveListQuery } from "@/view/save-list/slice";
@@ -25,18 +25,28 @@ function chunkArray(array: any, chunkSize: any) {
 const SearchPageView = () => {
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
-  const { setQueryParams } = useSearchQueryParam();
   const [hotel_ids, setHotelIds] = useState<any>([]);
   const [dataByIds, setDataByIds] = useState<any>([]);
   const [pageSize, setPageSize] = useState<number>(30);
+  const [dataLoading, setDataLoading] = useState(true);
+
   const star: string | null = searchParams.get("star");
-  const activePage: string | null = searchParams.get("page");
+  const checkin: string | null = searchParams.get("check-in");
+  const currency: string | null = searchParams.get("currency");
+  const checkout: string | null = searchParams.get("check-out");
   const region_id: string | null = searchParams.get("region_id");
+  const residency: string | null = searchParams.get("residency");
 
   const skipQuery = !region_id;
 
   let filter: any = {
-    limit: 30,
+    currency: currency ? currency : "USD",
+    residency: residency ? residency : "nl",
+    language: "en",
+    checkin: checkin ? checkin : format(new Date(), "yyyy-MM-dd"),
+    checkout: checkout
+      ? checkout
+      : format(addDays(new Date(), 2), "yyyy-MM-dd"),
   };
 
   if (star) {
@@ -65,10 +75,10 @@ const SearchPageView = () => {
   };
 
   useEffect(() => {
-    if (activePage) {
-      setPage(Number(activePage));
-    }
-  }, []);
+    setPage(page);
+    setDataByIds([]);
+    setDataLoading(true);
+  }, [currency]);
 
   useEffect(() => {
     const allHotetIds = hotelDumpData?.data?.data?.hotels?.map(
@@ -85,11 +95,17 @@ const SearchPageView = () => {
   useEffect(() => {
     const abortController: any = new AbortController();
 
-    const fetchHotelData = async () => {
-      setDataByIds([]);
+    setPage(1);
+    setDataByIds([]);
 
+    const fetchHotelData = async () => {
       for (const idsChunk of chunkedHotelIds) {
-        const response = await fetchHotels({ hotel_ids: idsChunk }).unwrap();
+        const response = await fetchHotels({
+          hotel_ids: idsChunk,
+          star: Number(star),
+        }).unwrap();
+
+        setDataLoading(false);
 
         if (response?.data?.length > 0) {
           const filterData = response.data?.filter(
@@ -106,11 +122,11 @@ const SearchPageView = () => {
     return () => {
       abortController.abort();
     };
-  }, [hotel_ids, star]);
+  }, [hotel_ids, currency]);
 
   return (
     <main className="pb-10 bg-white">
-      <div className="container mx-auto px-2.5 lg:px-[35px]">
+      <div className="container mx-auto px-2.5 ">
         <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6">
           {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
             <Link href="/" className="mr-2 text-blue-500 font-medium">
@@ -121,37 +137,34 @@ const SearchPageView = () => {
             <span className="font-medium">Search</span>
           </div> */}
 
-          <HotelPageSearch />
-
-          {/* {(isHotelDumpLoading || isLoading) && (
-            <div className="w-full h-auto flex justify-center items-center">
-              <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
-                <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
-              </div>
-            </div>
-          )} */}
+          <HotelPageSearch
+            handleSearchingData={() => {
+              setHotelIds([]);
+              setDataLoading(true);
+            }}
+          />
         </div>
 
-        {currentHotels?.length <= 0 && hotel_ids?.length <= 0 && (
-          <div className="w-full text-center h-20">
-            <h3>No data found.</h3>
+        {!dataLoading && currentHotels?.length <= 0 && (
+          <div className="w-full flex justify-center items-center h-[220px]">
+            <h3 className="text-xl font-medium text-slate-400">
+              No Data Found
+            </h3>
           </div>
         )}
 
-        {isHotelDumpLoading ||
-          isLoading ||
-          (currentHotels?.length <= 0 && hotel_ids?.length > 0 && (
-            <div className="w-full h-auto flex justify-center items-center">
-              <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
-                <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
-              </div>
+        {dataLoading && (
+          <div className="w-full h-auto flex justify-center items-center">
+            <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
+              <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
             </div>
-          ))}
+          </div>
+        )}
 
         {currentHotels?.length > 0 && (!isHotelDumpLoading || !isLoading) && (
           <>
             <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {currentHotels?.map((item: any) => (
                   <ProductCard
                     product={item}

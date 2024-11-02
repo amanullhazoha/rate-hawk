@@ -8,7 +8,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useLocationSearchMutation } from "@/view/home/slice";
 import { useState, useEffect, useRef, ChangeEvent, useCallback } from "react";
 
-const HotelPageSearch = () => {
+const HotelPageSearch = ({
+  handleSearchingData,
+}: {
+  handleSearchingData: () => void;
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -146,6 +150,8 @@ const HotelPageSearch = () => {
     if (locationItem) searchData.locationItem = locationItem;
 
     localStorage.setItem("searchData", JSON.stringify(searchData));
+
+    handleSearchingData();
 
     if (selectHotel) {
       router.push(`/hotel-detail/${selectHotel?.id}${url ? `?${url}` : ""}`);

@@ -15,6 +15,8 @@ import {
   useUserRemoveFavoriteMutation,
 } from "@/view/save-list/slice";
 import BreakfastIcon from "@/assets/icons/BreakfastIcon";
+import RoundArrow from "@/assets/icons/RoundArrow";
+import GuestIcon from "@/assets/icons/GuestIcon";
 
 const responsive = {
   mobile: {
@@ -83,7 +85,7 @@ const ProductCard = ({
   };
 
   return (
-    <div>
+    <div className="shadow-lg rounded-md">
       {product && (
         <div className="rounded-[10px] relative">
           <div className="w-full">
@@ -160,7 +162,7 @@ const ProductCard = ({
         legacyBehavior
       >
         <a target="_blank" rel="noopener noreferrer">
-          <div className="mt-3.5">
+          <div className="mt-3.5 p-2.5 pt-0">
             <div className="flex items-center gap-1 mb-2 text-sm font-medium text-text-blar">
               <span>Entire cabin</span>
               <svg
@@ -194,7 +196,7 @@ const ProductCard = ({
               <div className="flex flex-wrap gap-5">
                 {data?.rates[0]?.rg_ext?.capacity > 0 && (
                   <p className="text-xs flex items-center gap-1 text-[#008900]">
-                    <BreakfastIcon color="#008900" />
+                    <GuestIcon color="#008900" />
                     {data?.rates[0]?.rg_ext?.capacity}
                   </p>
                 )}
@@ -224,7 +226,7 @@ const ProductCard = ({
                     : "text-[#000000]"
                 }`}
               >
-                <BreakfastIcon
+                <RoundArrow
                   color={
                     data?.rates[0]?.payment_options?.payment_types[0]
                       ?.cancellation_penalties?.free_cancellation_before

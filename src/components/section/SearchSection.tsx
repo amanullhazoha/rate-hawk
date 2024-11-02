@@ -266,7 +266,7 @@ const SearchSection = () => {
       ]);
     }
     if (searchData?.adults) setGuest(searchData.adults);
-    if (searchData?.selectResidency) setResidency(searchData.selectResidency);
+    if (searchData?.residency) setResidency(searchData.residency);
     if (searchData?.children) setChildren(searchData.children);
     if (searchData?.locationItem) setLocationItem(searchData.locationItem);
     if (searchData?.locationItem)
