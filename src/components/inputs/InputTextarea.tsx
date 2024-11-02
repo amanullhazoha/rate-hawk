@@ -5,6 +5,7 @@ interface InputTextAreaProps {
   rows?: number;
   label: string;
   required?: string;
+  disabled?: boolean;
   placeholder?: string;
 }
 
@@ -14,6 +15,7 @@ const InputTextArea = ({
   required,
   rows = 4,
   placeholder,
+  disabled = false,
 }: InputTextAreaProps) => {
   return (
     <div>
@@ -26,6 +28,7 @@ const InputTextArea = ({
           name={name}
           as="textarea"
           rows={rows}
+          disabled={disabled}
           placeholder={placeholder}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pr-4 py-[14px] bg-transparent"
         />

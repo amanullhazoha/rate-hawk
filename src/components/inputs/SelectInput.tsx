@@ -7,10 +7,12 @@ const SelectInput = ({
   width,
   items,
   required,
+  disabled,
 }: {
   name: string;
   width?: string;
   label: string;
+  disabled?: boolean;
   required?: string;
   items: { id: string; title: string }[];
 }) => {
@@ -22,6 +24,7 @@ const SelectInput = ({
         <Field
           as="select"
           name={name}
+          disabled={disabled}
           className="outline-none focus:outline-none border-none placeholder:text-blar placeholder:text-sm w-full h-full pl-4 pr-4 py-[14px] bg-transparent"
         >
           <option value="" label="Select an option" />

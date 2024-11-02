@@ -106,7 +106,7 @@ const SearchPageView = () => {
     return () => {
       abortController.abort();
     };
-  }, [hotel_ids, star, fetchHotels]);
+  }, [hotel_ids, star]);
 
   return (
     <main className="pb-10 bg-white">

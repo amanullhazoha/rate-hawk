@@ -17,22 +17,24 @@ export const searchHotelApi = createApi({
     getHotelByRegionId: builder.query({
       query: ({
         adults,
-        check_in,
+        checkin,
         children,
         currency,
         checkout,
         residency,
         region_id,
+        hotels_limit,
       }) => ({
         url: "/public/hotels-by-region-id",
         params: {
           adults,
-          check_in,
+          checkin,
           checkout,
           children,
           currency,
           region_id,
           residency,
+          hotels_limit,
         },
       }),
     }),

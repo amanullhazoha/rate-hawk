@@ -1,89 +1,30 @@
 "use client";
 import { Formik, Form } from "formik";
-import { useGetUserQuery } from "../slice";
+import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 import Table from "@/components/table/Table";
+import LockIcon from "@/assets/icons/LockIcon";
 import UserIcon from "@/assets/icons/UserIcon";
 import MailIcon from "@/assets/icons/MailIcon";
+import ViewIcon from "@/assets/icons/ViewIcon";
+import EditIcon from "@/assets/icons/EditIcon";
 import PhoneIcon from "@/assets/icons/PhoneIcon";
+import DeleteIcon from "@/assets/icons/DeleteIcon";
+import LocationIcon from "@/assets/icons/LocationIcon";
 import Preloader from "@/components/loading/Preloader";
 import InputGroup from "@/components/inputs/InputGroup";
 import SelectInput from "@/components/inputs/SelectInput";
 import useSearchQueryParam from "@/lib/useSearchQueryParam";
 import { useSearchParams, useRouter } from "next/navigation";
 import InputTextArea from "@/components/inputs/InputTextarea";
+import AlertMessageModal from "@/components/modal/AlertMessageModal";
 import GlobalPagination from "@/components/pagination/GlobalPagination";
-import ViewIcon from "@/assets/icons/ViewIcon";
-import EditIcon from "@/assets/icons/EditIcon";
-import DeleteIcon from "@/assets/icons/DeleteIcon";
-import LocationIcon from "@/assets/icons/LocationIcon";
-import LockIcon from "@/assets/icons/LockIcon";
-
-const columns = [
-  {
-    label: "Name",
-    path: "user_name",
-    content: (row: any) => <td className="p-2 text">{row.user_name}</td>,
-  },
-  {
-    label: "Email",
-    path: "email",
-    content: (row: any) => <td className="p-2 text-center">{row.email}</td>,
-  },
-  {
-    label: "Status",
-    path: "email_verify",
-    content: (row: any) => (
-      <td
-        className={`p-2 capitalize text-center ${
-          row.email_verify === "verified" ? "text-green-700" : " text-red-700"
-        }`}
-      >
-        {row.email_verify}
-      </td>
-    ),
-  },
-  {
-    label: "Gender",
-    path: "gender",
-    content: (row: any) => (
-      <td className="p-2 capitalize text-center">{row.gender}</td>
-    ),
-  },
-  {
-    label: "Role",
-    path: "role",
-    content: (row: any) => (
-      <td className="p-2 capitalize text-center">{row.role}</td>
-    ),
-  },
-  {
-    label: "Phone",
-    path: "phone",
-    content: (row: any) => <td className="p-2 text-center">{row.phone}</td>,
-  },
-  {
-    label: "Action",
-    path: "",
-    content: (row: any) => (
-      <td className="p-2 text-center">
-        <div className="flex gap-1.5 items-center justify-center">
-          <button type="button" className="text-blue-400">
-            <ViewIcon />
-          </button>
-
-          <button type="button" className="text-green-500">
-            <EditIcon />
-          </button>
-
-          <button type="button" className="text-red-500">
-            <DeleteIcon />
-          </button>
-        </div>
-      </td>
-    ),
-  },
-];
+import {
+  useGetUserQuery,
+  useAddUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} from "../slice";
 
 const UserListPage = () => {
   const router = useRouter();
@@ -91,6 +32,8 @@ const UserListPage = () => {
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
   const { setQueryParams } = useSearchQueryParam();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [userModalType, setUserModalType] = useState<any>(null);
   const activePage: string | null = searchParams.get("page");
   const [openAddUserModal, setOpenAddUserModal] = useState(false);
   const skipQuery = !page;
@@ -101,6 +44,53 @@ const UserListPage = () => {
     isError,
   } = useGetUserQuery({ page }, { skip: skipQuery });
 
+  const [addUser] = useAddUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
+
+  const handelAddUser = async (values: any, action: any) => {
+    const res = await addUser(values);
+
+    if (res?.data?.code === 200) {
+      setData(null);
+      setUserModalType(null);
+      setOpenAddUserModal(false);
+      action.resetForm();
+
+      toast.success("User add successfully.");
+    } else {
+      toast.error(res?.data?.message);
+    }
+  };
+
+  const handleUpdateUser = async (values: any, action: any) => {
+    const res = await updateUser(values);
+
+    if (res?.data?.code === 200) {
+      setData(null);
+      setUserModalType(null);
+      setOpenAddUserModal(false);
+      action.resetForm();
+
+      toast.success("User update successfully.");
+    } else {
+      toast.error(res?.data?.message);
+    }
+  };
+
+  const handleDeleteUesr = async (user: any) => {
+    const res = await deleteUser(user);
+
+    if (res.data?.code === 200) {
+      setData(null);
+      setOpenAlert(false);
+
+      toast.success("User deleted successfully.");
+    } else {
+      toast.error(res?.data?.message);
+    }
+  };
+
   const handlePagination = (value: number) => {
     let url: string | null = searchParams?.toString();
 
@@ -110,6 +100,95 @@ const UserListPage = () => {
 
     router.push(`/admin/user${url ? `?${url}` : ""}`);
   };
+
+  const columns = [
+    {
+      label: "Name",
+      path: "user_name",
+      content: (row: any) => <td className="p-2 text">{row.user_name}</td>,
+    },
+    {
+      label: "Email",
+      path: "email",
+      content: (row: any) => <td className="p-2 text-center">{row.email}</td>,
+    },
+    {
+      label: "Status",
+      path: "email_verify",
+      content: (row: any) => (
+        <td
+          className={`p-2 capitalize text-center ${
+            row.email_verify === "verified" ? "text-green-700" : " text-red-700"
+          }`}
+        >
+          {row.email_verify}
+        </td>
+      ),
+    },
+    {
+      label: "Gender",
+      path: "gender",
+      content: (row: any) => (
+        <td className="p-2 capitalize text-center">{row.gender}</td>
+      ),
+    },
+    {
+      label: "Role",
+      path: "role",
+      content: (row: any) => (
+        <td className="p-2 capitalize text-center">{row.role}</td>
+      ),
+    },
+    {
+      label: "Phone",
+      path: "phone",
+      content: (row: any) => <td className="p-2 text-center">{row.phone}</td>,
+    },
+    {
+      label: "Action",
+      path: "",
+      content: (row: any) => (
+        <td className="p-2 text-center">
+          <div className="flex gap-1.5 items-center justify-center">
+            <button
+              type="button"
+              className="text-blue-400"
+              onClick={() => {
+                setData(row);
+                setOpenAddUserModal(true);
+                setUserModalType({ type: "viewUser" });
+              }}
+            >
+              <ViewIcon />
+            </button>
+
+            <button
+              type="button"
+              className="text-green-500"
+              onClick={() => {
+                setData(row);
+                setOpenAddUserModal(true);
+                setUserModalType({ type: "updateUser" });
+              }}
+            >
+              <EditIcon />
+            </button>
+
+            <button
+              type="button"
+              className="text-red-500"
+              onClick={() => {
+                setData(row);
+                setOpenAlert(true);
+              }}
+            >
+              <DeleteIcon />
+            </button>
+          </div>
+        </td>
+      ),
+    },
+  ];
 
   useEffect(() => {
     if (activePage) {
@@ -124,7 +203,10 @@ const UserListPage = () => {
 
         <button
           type="button"
-          onClick={() => setOpenAddUserModal(true)}
+          onClick={() => {
+            setOpenAddUserModal(true);
+            setUserModalType({ type: "addUser" });
+          }}
           className="bg-green-500 px-5 py-1.5 rounded-lg text-white"
         >
           Add User
@@ -164,27 +246,29 @@ const UserListPage = () => {
       {openAddUserModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto w-full h-[80%] overflow-y-auto scrollbar-custom">
-            {/* Close Button */}
-            <button
-              onClick={() => setOpenAddUserModal(false)}
-              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
-            >
-              ✕
-            </button>
-
             <div className="w-full">
               <Formik
                 initialValues={{
-                  email: data?.data?.email ? data?.data?.email : "",
-                  phone: data?.data?.phone ? data?.data?.phone : "",
-                  gender: data?.data?.gender ? data?.data?.gender : "",
-                  address: data?.data?.address ? data?.data?.address : "",
-                  user_name: data?.data?.user_name ? data?.data?.user_name : "",
-                  bath_date: data?.data?.bath_date ? data?.data?.bath_date : "",
-                  about_you: data?.data?.about_you ? data?.data?.about_you : "",
+                  id: data?._id ? data?._id : "",
+                  role: data?.role ? data?.role : "",
+                  email: data?.email ? data?.email : "",
+                  phone: data?.phone ? data?.phone : "",
+                  gender: data?.gender ? data?.gender : "",
+                  address: data?.address ? data?.address : "",
+                  user_name: data?.user_name ? data?.user_name : "",
+                  bath_date: data?.bath_date ? data?.bath_date : "",
+                  about_you: data?.about_you ? data?.about_you : "",
                 }}
-                // onSubmit={handleSubmit}
-                onSubmit={() => console.log("hi")}
+                onSubmit={(values, action) => {
+                  console.log(userModalType);
+
+                  if (userModalType?.type === "addUser") {
+                    alert("add user");
+                    handelAddUser(values, action);
+                  } else if (userModalType?.type === "updateUser") {
+                    handleUpdateUser(values, action);
+                  }
+                }}
                 // validationSchema={userProfileUpdateSchema}
               >
                 {({ handleSubmit }) => (
@@ -196,15 +280,20 @@ const UserListPage = () => {
                         name="user_name"
                         placeholder="name"
                         icon={<UserIcon />}
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputGroup
                         type="email"
                         name="email"
                         label="Email"
-                        disabled={true}
                         icon={<MailIcon />}
                         placeholder="example@example.com"
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputGroup
@@ -213,6 +302,9 @@ const UserListPage = () => {
                         name="password"
                         icon={<LockIcon />}
                         placeholder="XXXXXXXXXXXX"
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <SelectInput
@@ -222,6 +314,9 @@ const UserListPage = () => {
                           { id: "male", title: "Male" },
                           { id: "female", title: "Female" },
                         ]}
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <SelectInput
@@ -231,6 +326,9 @@ const UserListPage = () => {
                           { id: "user", title: "User" },
                           { id: "admin", title: "Admin" },
                         ]}
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputGroup
@@ -238,39 +336,67 @@ const UserListPage = () => {
                         name="bath_date"
                         label="Birth of Date"
                         placeholder=""
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputGroup
                         type="text"
                         name="address"
                         label="Address"
-                        icon={<LocationIcon fill="#6B7280" />}
                         placeholder="example@example.com"
+                        icon={<LocationIcon fill="#6B7280" />}
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputGroup
                         type="phone"
                         name="phone"
                         label="Phone"
+                        placeholder="000 0000 0000"
                         icon={<PhoneIcon fill="#6B7280" />}
-                        placeholder="01715378419"
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
 
                       <InputTextArea
                         name="about_you"
                         label="About you"
                         placeholder="I am"
+                        disabled={
+                          userModalType?.type === "viewUser" ? true : false
+                        }
                       />
                     </div>
 
-                    <div className="mt-5 grid grid-cols-2 gap-4">
-                      <button className="bg-slate-400 font-medium text-center rounded-lg  py-2 px-5 text-md text-white border border-[#DBDBDB] font-secondary">
+                    <div
+                      className={`mt-5 grid gap-4 ${
+                        userModalType?.type === "viewUser"
+                          ? "grid-cols-1"
+                          : "grid-cols-2"
+                      }`}
+                    >
+                      <button
+                        className="bg-slate-400 font-medium text-center rounded-lg  py-2 px-5 text-md text-white border border-[#DBDBDB] font-secondary"
+                        onClick={() => {
+                          setOpenAddUserModal(false);
+                          setUserModalType(null);
+                        }}
+                      >
                         Cancel
                       </button>
 
-                      <button className="bg-primary-color font-medium text-center rounded-lg  py-2 px-5 text-md text-black-600 border border-[#DBDBDB] font-secondary">
-                        Update info
-                      </button>
+                      {userModalType?.type !== "viewUser" && (
+                        <button className="bg-primary-color font-medium text-center rounded-lg  py-2 px-5 text-md text-black-600 border border-[#DBDBDB] font-secondary">
+                          {userModalType?.type === "updateUser"
+                            ? "Update"
+                            : "Add"}
+                        </button>
+                      )}
                     </div>
                   </Form>
                 )}
@@ -278,6 +404,16 @@ const UserListPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {openAlert && (
+        <AlertMessageModal
+          handleClose={() => {
+            setData(null);
+            setOpenAlert(false);
+          }}
+          handleSuccess={() => handleDeleteUesr(data)}
+        />
       )}
     </main>
   );

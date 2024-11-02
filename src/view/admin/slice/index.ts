@@ -6,12 +6,37 @@ export const adminApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`,
     credentials: "include",
   }),
+  tagTypes: ["user"],
   endpoints: (builder) => ({
     getUser: builder.query({
       query: ({ page }) => ({
         url: "/secured/user",
         params: { page, limit: 10 },
       }),
+      providesTags: ["user"],
+    }),
+    addUser: builder.mutation({
+      query: (data: any) => ({
+        url: "/secured/user",
+        method: "post",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    updateUser: builder.mutation({
+      query: (data: any) => ({
+        url: `/secured/user/${data.id}`,
+        method: "put",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    deleteUser: builder.mutation({
+      query: (data) => ({
+        url: `/secured/user/${data?._id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["user"],
     }),
     getAllTransaction: builder.query({
       query: ({ page }) => ({
@@ -62,6 +87,9 @@ export const adminApi = createApi({
 
 export const {
   useGetUserQuery,
+  useAddUserMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
   useGetOrderInfoMutation,
   useGetDashboardDataQuery,
   useGetAllTransactionQuery,
