@@ -36,14 +36,14 @@ const RoomCard = ({
 
   const findDailyPrice = (allRates: any) => {
     const hotelRate = allRates?.find((item: any) =>
-      room?.name?.includes(item?.room_data_trans?.main_name),
+      room?.name?.includes(item?.room_data_trans?.main_name)
     );
 
     const dailyRate = (
       Number(hotelRate?.daily_prices[0]) +
       Number(
         hotelRate?.payment_options?.payment_types?.[0]?.commission_info?.show
-          ?.amount_commission,
+          ?.amount_commission
       ) /
         hotelRate?.daily_prices?.length
     ).toFixed(2);
@@ -54,7 +54,7 @@ const RoomCard = ({
   useEffect(() => {
     if (images?.length > 0) {
       const newImages: any = images.map((image: string) =>
-        image.replace("{size}", "1024x768"),
+        image.replace("{size}", "1024x768")
       );
 
       setProductImage(newImages);
@@ -65,7 +65,7 @@ const RoomCard = ({
     <div
       className={`p-3.5 rounded-md bg-bg-primary ${
         rates?.find((item: any) =>
-          room?.name?.includes(item?.room_data_trans?.main_name),
+          room?.name?.includes(item?.room_data_trans?.main_name)
         )?.daily_prices[0]
           ? "grid grid-cols-3 gap-4"
           : "hidden"
@@ -236,7 +236,7 @@ const RoomCard = ({
           </div>
 
           {rates?.find((item: any) =>
-            room?.name?.includes(item?.room_data_trans?.main_name),
+            room?.name?.includes(item?.room_data_trans?.main_name)
           )?.payment_options?.payment_types[0]?.cancellation_penalties
             ?.free_cancellation_before && (
             <div className="w-full flex items-center justify-end">
@@ -246,9 +246,9 @@ const RoomCard = ({
                   <span className="bg-yellow-300 px-1">
                     {localTimeConverter(
                       rates?.find((item: any) =>
-                        room?.name?.includes(item?.room_data_trans?.main_name),
+                        room?.name?.includes(item?.room_data_trans?.main_name)
                       )?.payment_options?.payment_types[0]
-                        ?.cancellation_penalties?.free_cancellation_before,
+                        ?.cancellation_penalties?.free_cancellation_before
                     )}
                   </span>
                 </p>
@@ -275,7 +275,7 @@ const RoomCard = ({
           </div>
 
           <div className="flex items-center gap-2 mt-t justify-end">
-            {prebook && (
+            {/* {prebook && (
               <button
                 type="button"
                 onClick={() => {
@@ -289,14 +289,14 @@ const RoomCard = ({
               >
                 Prebook
               </button>
-            )}
+            )} */}
 
             <button
               type="button"
               onClick={() =>
                 handleSelectRoom({
                   ...rates?.find((item: any) =>
-                    room?.name?.includes(item?.room_data_trans?.main_name),
+                    room?.name?.includes(item?.room_data_trans?.main_name)
                   ),
                   room_group_id: room?.room_group_id,
                 })

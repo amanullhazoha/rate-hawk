@@ -160,7 +160,7 @@ const UserLayout = ({
 
       <main className="min-h-[calc(100vh-568px)]">{children}</main>
 
-      <footer className="bg-black-800 z-[99999999] relative">
+      <footer className="bg-black-800 z-[1000000] relative">
         <div className="container max-md:px-2.5 mx-auto py-10 md:py-24 grid gap-10 lg:gap-[90px] grid-col-1 lg:grid-cols-3">
           <div className="flex gap-10 flex-col md:flex-row">
             <div className="w-full ">

@@ -159,6 +159,19 @@ const SearchSection = () => {
       router.push(`/search-hotel${url ? `?${url}` : ""}`);
     }
 
+    const searchData: any = {};
+    if (star) searchData.star = star;
+    if (checkIn) searchData.checkIn = checkIn;
+    if (checkOut) searchData.checkOut = checkOut;
+    if (currency) searchData.currency = currency;
+    if (language) searchData.language = language;
+    if (adults) searchData.adults = adults;
+    if (residency) searchData.residency = residency;
+    if (children) searchData.children = children;
+    if (locationItem) searchData.locationItem = locationItem;
+
+    localStorage.setItem("searchData", JSON.stringify(searchData));
+
     if (selectHotel) {
       router.push(`/hotel-detail/${selectHotel?.id}${url ? `?${url}` : ""}`);
     }
@@ -232,6 +245,32 @@ const SearchSection = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    const getSearchData = localStorage.getItem("searchData");
+
+    const searchData = getSearchData ? JSON.parse(getSearchData) : {};
+
+    if (searchData?.star) setStar(searchData.star);
+    if (searchData?.checkIn && searchData.checkOut) {
+      const checkIn: any = searchData?.checkIn;
+      const checkOut: any = searchData?.checkOut;
+
+      setSelectDate([
+        {
+          key: "selection",
+          startDate: new Date(checkIn),
+          endDate: new Date(checkOut),
+        },
+      ]);
+    }
+    if (searchData?.adults) setGuest(searchData.adults);
+    if (searchData?.selectResidency) setResidency(searchData.selectResidency);
+    if (searchData?.children) setChildren(searchData.children);
+    if (searchData?.locationItem) setLocationItem(searchData.locationItem);
+    if (searchData?.locationItem)
+      setSearchLocation(searchData.locationItem?.name);
   }, []);
 
   return (

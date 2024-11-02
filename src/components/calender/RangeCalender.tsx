@@ -29,8 +29,16 @@ const RangeCalender = ({
   };
 
   useEffect(() => {
-    const checkIn = searchParams.get("check-in");
-    const checkOut = searchParams.get("check-out");
+    const getSearchData = localStorage.getItem("searchData");
+
+    const searchData = getSearchData ? JSON.parse(getSearchData) : {};
+
+    const checkIn = searchParams.get("check-in")
+      ? searchParams.get("check-in")
+      : searchData?.checkIn;
+    const checkOut = searchParams.get("check-out")
+      ? searchParams.get("check-out")
+      : searchData?.checkOut;
 
     checkIn &&
       checkOut &&

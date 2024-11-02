@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Carousel from "react-multi-carousel";
 import MapIcon from "@/assets/icons/MapIcon";
 import StarIcon from "@/assets/icons/StarIcon";
+import { RoomIcon } from "@/assets/ameniteIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import { useSearchParams } from "next/navigation";
 import product_image from "@/assets/images/product.jpg";
@@ -13,6 +14,7 @@ import {
   useUserAddFavoriteMutation,
   useUserRemoveFavoriteMutation,
 } from "@/view/save-list/slice";
+import BreakfastIcon from "@/assets/icons/BreakfastIcon";
 
 const responsive = {
   mobile: {
@@ -183,6 +185,59 @@ const ProductCard = ({
             </p>
 
             <div className="h-[1px] bg-text-light w-14 my-2"></div>
+
+            <div className="bg-bg-primary px-2 py-2 rounded-md mb-2">
+              <p className="text-xs mb-1.5">
+                {data?.rates[0]?.room_data_trans?.main_name}
+              </p>
+
+              <div className="flex flex-wrap gap-5">
+                {data?.rates[0]?.rg_ext?.capacity > 0 && (
+                  <p className="text-xs flex items-center gap-1 text-[#008900]">
+                    <BreakfastIcon color="#008900" />
+                    {data?.rates[0]?.rg_ext?.capacity}
+                  </p>
+                )}
+                <p
+                  className={`text-xs flex items-center gap-1 capitalize ${
+                    data?.rates[0]?.meal !== "nomeal"
+                      ? "text-[#008900]"
+                      : "text-[#000000]"
+                  }`}
+                >
+                  <BreakfastIcon
+                    color={
+                      data?.rates[0]?.meal !== "nomeal" ? "#008900" : "#000000"
+                    }
+                  />
+                  {data?.rates[0]?.meal === "nomeal"
+                    ? "No meals"
+                    : data?.rates[0]?.meal?.replace(/-/g, " ")}
+                </p>
+              </div>
+
+              <p
+                className={`text-xs flex items-center gap-1 mt-1.5 ${
+                  data?.rates[0]?.payment_options?.payment_types[0]
+                    ?.cancellation_penalties?.free_cancellation_before
+                    ? "text-[#008900]"
+                    : "text-[#000000]"
+                }`}
+              >
+                <BreakfastIcon
+                  color={
+                    data?.rates[0]?.payment_options?.payment_types[0]
+                      ?.cancellation_penalties?.free_cancellation_before
+                      ? "#008900"
+                      : "#000000"
+                  }
+                />
+                {data?.rates[0]?.payment_options?.payment_types[0]
+                  ?.cancellation_penalties?.free_cancellation_before
+                  ? "Free cancellation"
+                  : "No free cancellation"}
+              </p>
+            </div>
 
             <div className="flex justify-between items-center">
               {data?.rates[0]?.daily_prices[0] ? (

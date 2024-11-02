@@ -15,6 +15,7 @@ import {
 
 function chunkArray(array: any, chunkSize: any) {
   const chunks = [];
+
   for (let i = 0; i < array.length; i += chunkSize) {
     chunks.push(array.slice(i, i + chunkSize));
   }
@@ -51,7 +52,7 @@ const SearchPageView = () => {
   const { data: hotelDumpData, isLoading: isHotelDumpLoading } =
     useGetHotelByRegionIdQuery(filter, { skip: skipQuery });
 
-  const [fetchHotels] = useLazyGetSearchHotelByIdsQuery();
+  const [fetchHotels, { isLoading }] = useLazyGetSearchHotelByIdsQuery();
 
   const indexOfLastHotel = page * pageSize;
   const indexOfFirstHotel = indexOfLastHotel - pageSize;
@@ -82,17 +83,29 @@ const SearchPageView = () => {
   const chunkedHotelIds = chunkArray(hotel_ids, 10);
 
   useEffect(() => {
+    const abortController: any = new AbortController();
+
     const fetchHotelData = async () => {
+      setDataByIds([]);
+
       for (const idsChunk of chunkedHotelIds) {
         const response = await fetchHotels({ hotel_ids: idsChunk }).unwrap();
 
         if (response?.data?.length > 0) {
-          setDataByIds((prevData: any) => [...prevData, ...response?.data]);
+          const filterData = response.data?.filter(
+            (item: any) => item.region?.id === Number(region_id)
+          );
+
+          setDataByIds((prevData: any) => [...prevData, ...filterData]);
         }
       }
     };
 
     fetchHotelData();
+
+    return () => {
+      abortController.abort();
+    };
   }, [hotel_ids, star, fetchHotels]);
 
   return (
@@ -110,22 +123,32 @@ const SearchPageView = () => {
 
           <HotelPageSearch />
 
-          {isHotelDumpLoading && (
+          {/* {(isHotelDumpLoading || isLoading) && (
             <div className="w-full h-auto flex justify-center items-center">
               <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
                 <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
-        {hotelDumpData?.pagination?.totalItems <= 0 && (
-          <div className="w-full text-center">
+        {currentHotels?.length <= 0 && hotel_ids?.length <= 0 && (
+          <div className="w-full text-center h-20">
             <h3>No data found.</h3>
           </div>
         )}
 
-        {currentHotels?.length > 0 && !isHotelDumpLoading && (
+        {isHotelDumpLoading ||
+          isLoading ||
+          (currentHotels?.length <= 0 && hotel_ids?.length > 0 && (
+            <div className="w-full h-auto flex justify-center items-center">
+              <div className="w-full h-[10px] border-orange-500 rounded-[20px] bg-blue-300">
+                <div className="h-[10px] rounded-[20px] bg-yellow-300 animate-loading"></div>
+              </div>
+            </div>
+          ))}
+
+        {currentHotels?.length > 0 && (!isHotelDumpLoading || !isLoading) && (
           <>
             <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
