@@ -86,7 +86,7 @@ const SearchPageView = () => {
     setHotelIds([]);
     setDataByIds([]);
     setCurrentHotels([]);
-  }, [isLoading]);
+  }, [dataLoading]);
 
   useEffect(() => {
     setCurrentHotels(dataByIds.slice(indexOfFirstHotel, indexOfLastHotel));
@@ -213,7 +213,7 @@ const SearchPageView = () => {
                     limit={pageSize}
                     total_element={
                       dataByIds?.filter(
-                        (item: any) => item.region?.id === Number(region_id)
+                        (item: any) => item?.region?.id === Number(region_id)
                       )?.length
                     }
                     handlePagination={(value: number) =>

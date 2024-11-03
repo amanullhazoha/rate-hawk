@@ -69,10 +69,6 @@ const FeaturedPlaceSection = () => {
   }, [region_id]);
 
   useEffect(() => {
-    setDataByIds([]);
-  }, [dataLoading]);
-
-  useEffect(() => {
     const allHotetIds = hotelDumpData?.data?.data?.hotels?.map(
       (item: any) => item.id
     );
@@ -93,11 +89,7 @@ const FeaturedPlaceSection = () => {
         const response = await fetchHotels({ hotel_ids: idsChunk }).unwrap();
 
         if (response?.data?.length > 0) {
-          const filterData = response.data?.filter(
-            (item: any) => item.region?.id === Number(region_id)
-          );
-
-          setDataByIds(filterData);
+          setDataByIds(response?.data);
           setDataLoading(false);
         }
       }
@@ -105,6 +97,8 @@ const FeaturedPlaceSection = () => {
 
     dataByIds?.length <= 40 && fetchHotelData();
   }, [hotel_ids, currency]);
+
+  console.log(dataByIds);
 
   return (
     <section className="py-12 md:py-[100px] bg-white">
@@ -181,10 +175,7 @@ const FeaturedPlaceSection = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {dataByIds
-                ?.filter(
-                  (filterData: any) =>
-                    filterData?.region?.id === Number(region_id)
-                )
+                ?.filter((item: any) => item.region?.id === Number(region_id))
                 ?.slice(0, 40)
                 ?.map((item: any) => (
                   <ProductCard
