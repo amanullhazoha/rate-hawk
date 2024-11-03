@@ -155,13 +155,21 @@ const SearchPageView = () => {
           />
         </div>
 
+        {!dataLoading && hotelDumpData?.data?.data?.hotels?.length <= 0 && (
+          <div className="w-full flex justify-center items-center h-[220px]">
+            <h3 className="text-xl font-medium text-slate-400">
+              No Data Found
+            </h3>
+          </div>
+        )}
+
         {!dataLoading &&
           currentHotels?.filter(
             (item: any) => item.region?.id === Number(region_id)
           )?.length <= 0 && (
             <div className="w-full flex justify-center items-center h-[220px]">
               <h3 className="text-xl font-medium text-slate-400">
-                No Data Found
+                Data Searching On Background
               </h3>
             </div>
           )}
