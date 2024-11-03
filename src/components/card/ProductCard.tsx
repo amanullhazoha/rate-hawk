@@ -27,11 +27,13 @@ const responsive = {
 
 const ProductCard = ({
   product,
+  customUrl,
   hotelData,
   favoriteData,
 }: {
   product: any;
   hotelData: any;
+  customUrl?: string;
   favoriteData: any;
 }) => {
   const searchParams = useSearchParams();
@@ -156,9 +158,13 @@ const ProductCard = ({
 
       <Link
         // href={`/hotel-detail/test_hotel${
-        href={`/hotel-detail/${product?.id}${
-          searchParams.toString() ? `?${searchParams.toString()}` : ""
-        }`}
+        href={
+          customUrl
+            ? customUrl
+            : `/hotel-detail/${product?.id}${
+                searchParams.toString() ? `?${searchParams.toString()}` : ""
+              }`
+        }
         legacyBehavior
       >
         <a target="_blank" rel="noopener noreferrer">

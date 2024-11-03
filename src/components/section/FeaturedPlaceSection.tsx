@@ -98,8 +98,6 @@ const FeaturedPlaceSection = () => {
     dataByIds?.length <= 40 && fetchHotelData();
   }, [hotel_ids, currency]);
 
-  console.log(dataByIds);
-
   return (
     <section className="py-12 md:py-[100px] bg-white">
       <div className="container max-md:px-2.5 mx-auto overflow-hidden">
@@ -181,6 +179,13 @@ const FeaturedPlaceSection = () => {
                   <ProductCard
                     product={item}
                     key={item?.id}
+                    customUrl={`/hotel-detail/${item?.id}?check-in=${format(
+                      new Date(),
+                      "yyyy-MM-dd"
+                    )}&check-out=${format(
+                      addDays(new Date(), 2),
+                      "yyyy-MM-dd"
+                    )}&adults=1`}
                     favoriteData={favoriteData?.data}
                     hotelData={hotelDumpData?.data?.data?.hotels}
                   />

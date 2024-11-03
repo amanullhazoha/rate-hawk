@@ -294,7 +294,7 @@ const ReserveCardSection = ({
             {openCalender && (
               <div className="relative w-full">
                 <RangeCalender
-                  className="absolute right-[-60px] top-2.5 border border-border-primary"
+                  className="absolute left-[-47px] top-2.5 border border-border-primary"
                   handleDateRange={handleDateRange}
                 />
               </div>
