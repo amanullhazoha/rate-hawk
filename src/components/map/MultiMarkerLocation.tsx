@@ -15,16 +15,21 @@ const MultiMarkerLocation = ({ hotelData }: { hotelData: any }) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY as string,
   });
 
-  const onLoad = useCallback(function callback(map: any) {
-    const bounds = new window.google.maps.LatLngBounds({
-      lat: hotelData?.[0]?.latitude,
-      lng: hotelData?.[0]?.longitude,
-    });
+  const onLoad = useCallback(
+    function callback(map: any) {
+      if (hotelData?.length > 0) {
+        const bounds = new window.google.maps.LatLngBounds({
+          lat: hotelData?.[0]?.latitude,
+          lng: hotelData?.[0]?.longitude,
+        });
 
-    map.fitBounds(bounds);
+        map.fitBounds(bounds);
 
-    setMap(map);
-  }, []);
+        setMap(map);
+      }
+    },
+    [hotelData]
+  );
 
   const onUnmount = useCallback(function callback(map: any) {
     setMap(null);
@@ -43,16 +48,16 @@ const MultiMarkerLocation = ({ hotelData }: { hotelData: any }) => {
       onUnmount={onUnmount}
       mapContainerStyle={containerStyle}
       center={{
-        lat: hotelData?.[0].latitude,
-        lng: hotelData?.[0].longitude,
+        lat: hotelData?.[0]?.latitude,
+        lng: hotelData?.[0]?.longitude,
       }}
     >
       {hotelData?.map((item: any, index: number) => (
         <MarkerF
           key={index}
           position={{
-            lat: item.latitude,
-            lng: item.longitude,
+            lat: item?.latitude,
+            lng: item?.longitude,
           }}
         />
       ))}

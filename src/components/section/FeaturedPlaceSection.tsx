@@ -64,9 +64,13 @@ const FeaturedPlaceSection = () => {
   useEffect(() => {
     if (region_id) {
       setDataByIds([]);
-      setHotelIds([]);
+      // setHotelIds([]);
     }
   }, [region_id]);
+
+  useEffect(() => {
+    setDataByIds([]);
+  }, [dataLoading]);
 
   useEffect(() => {
     const allHotetIds = hotelDumpData?.data?.data?.hotels?.map(
@@ -176,14 +180,20 @@ const FeaturedPlaceSection = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {dataByIds?.slice(0, 40)?.map((item: any) => (
-                <ProductCard
-                  product={item}
-                  key={item?.id}
-                  favoriteData={favoriteData?.data}
-                  hotelData={hotelDumpData?.data?.data?.hotels}
-                />
-              ))}
+              {dataByIds
+                ?.filter(
+                  (filterData: any) =>
+                    filterData?.region?.id === Number(region_id)
+                )
+                ?.slice(0, 40)
+                ?.map((item: any) => (
+                  <ProductCard
+                    product={item}
+                    key={item?.id}
+                    favoriteData={favoriteData?.data}
+                    hotelData={hotelDumpData?.data?.data?.hotels}
+                  />
+                ))}
             </div>
           )}
         </div>

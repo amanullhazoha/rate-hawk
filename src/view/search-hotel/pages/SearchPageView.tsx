@@ -29,6 +29,8 @@ const SearchPageView = () => {
   const [dataByIds, setDataByIds] = useState<any>([]);
   const [pageSize, setPageSize] = useState<number>(30);
   const [dataLoading, setDataLoading] = useState(true);
+  const [currentHotels, setCurrentHotels] = useState([]);
+  const [chunkedHotelIds, setChunkedHotelIds] = useState<any>([]);
 
   const star: string | null = searchParams.get("star");
   const checkin: string | null = searchParams.get("check-in");
@@ -66,7 +68,6 @@ const SearchPageView = () => {
 
   const indexOfLastHotel = page * pageSize;
   const indexOfFirstHotel = indexOfLastHotel - pageSize;
-  const currentHotels = dataByIds.slice(indexOfFirstHotel, indexOfLastHotel);
 
   const handlePagination = (value: number) => {
     if (value) {
@@ -75,10 +76,25 @@ const SearchPageView = () => {
   };
 
   useEffect(() => {
-    setPage(page);
+    setPage(1);
     setDataByIds([]);
     setDataLoading(true);
   }, [currency]);
+
+  useEffect(() => {
+    setPage(1);
+    setHotelIds([]);
+    setDataByIds([]);
+    setCurrentHotels([]);
+  }, [isLoading]);
+
+  useEffect(() => {
+    setCurrentHotels(dataByIds.slice(indexOfFirstHotel, indexOfLastHotel));
+  }, [indexOfFirstHotel, indexOfLastHotel, dataByIds]);
+
+  useEffect(() => {
+    setChunkedHotelIds(chunkArray(hotel_ids, 10));
+  }, [hotel_ids]);
 
   useEffect(() => {
     const allHotetIds = hotelDumpData?.data?.data?.hotels?.map(
@@ -89,8 +105,6 @@ const SearchPageView = () => {
       setHotelIds(allHotetIds);
     }
   }, [hotelDumpData]);
-
-  const chunkedHotelIds = chunkArray(hotel_ids, 10);
 
   useEffect(() => {
     const abortController: any = new AbortController();
@@ -108,11 +122,7 @@ const SearchPageView = () => {
         setDataLoading(false);
 
         if (response?.data?.length > 0) {
-          const filterData = response.data?.filter(
-            (item: any) => item.region?.id === Number(region_id)
-          );
-
-          setDataByIds((prevData: any) => [...prevData, ...filterData]);
+          setDataByIds((prevData: any) => [...prevData, ...response?.data]);
         }
       }
     };
@@ -122,12 +132,12 @@ const SearchPageView = () => {
     return () => {
       abortController.abort();
     };
-  }, [hotel_ids, currency]);
+  }, [chunkedHotelIds, currency, region_id]);
 
   return (
     <main className="pb-10 bg-white">
       <div className="container mx-auto px-2.5 ">
-        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6">
+        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[9999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6">
           {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
             <Link href="/" className="mr-2 text-blue-500 font-medium">
               Home
@@ -145,13 +155,16 @@ const SearchPageView = () => {
           />
         </div>
 
-        {!dataLoading && currentHotels?.length <= 0 && (
-          <div className="w-full flex justify-center items-center h-[220px]">
-            <h3 className="text-xl font-medium text-slate-400">
-              No Data Found
-            </h3>
-          </div>
-        )}
+        {!dataLoading &&
+          currentHotels?.filter(
+            (item: any) => item.region?.id === Number(region_id)
+          )?.length <= 0 && (
+            <div className="w-full flex justify-center items-center h-[220px]">
+              <h3 className="text-xl font-medium text-slate-400">
+                No Data Found
+              </h3>
+            </div>
+          )}
 
         {dataLoading && (
           <div className="w-full h-auto flex justify-center items-center">
@@ -161,39 +174,56 @@ const SearchPageView = () => {
           </div>
         )}
 
-        {currentHotels?.length > 0 && (!isHotelDumpLoading || !isLoading) && (
-          <>
-            <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {currentHotels?.map((item: any) => (
-                  <ProductCard
-                    product={item}
-                    key={item?.id}
-                    favoriteData={favoriteData?.data}
-                    hotelData={hotelDumpData?.data?.data?.hotels}
-                  />
-                ))}
-              </div>
+        {currentHotels?.filter(
+          (item: any) => item.region?.id === Number(region_id)
+        )?.length > 0 &&
+          (!isHotelDumpLoading || !isLoading) && (
+            <>
+              <div className="grid-cols-1 grid lg:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {currentHotels
+                    ?.filter(
+                      (item: any) => item.region?.id === Number(region_id)
+                    )
+                    ?.map((item: any) => (
+                      <ProductCard
+                        product={item}
+                        key={item?.id}
+                        favoriteData={favoriteData?.data}
+                        hotelData={hotelDumpData?.data?.data?.hotels}
+                      />
+                    ))}
+                </div>
 
-              <div className="relative">
-                <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[247px]">
-                  <MultiMarkerLocation hotelData={dataByIds} />
+                <div className="relative">
+                  <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[247px]">
+                    <MultiMarkerLocation
+                      hotelData={dataByIds?.filter(
+                        (item: any) => item.region?.id === Number(region_id)
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {dataByIds?.length > 30 && (
-              <div className="mt-4 grid-cols-1 grid lg:grid-cols-2 gap-10">
-                <GlobalPagination
-                  page={page}
-                  limit={pageSize}
-                  total_element={dataByIds?.length}
-                  handlePagination={(value: number) => handlePagination(value)}
-                />
-              </div>
-            )}
-          </>
-        )}
+              {dataByIds?.length > 30 && (
+                <div className="mt-4 grid-cols-1 grid lg:grid-cols-2 gap-10">
+                  <GlobalPagination
+                    page={page}
+                    limit={pageSize}
+                    total_element={
+                      dataByIds?.filter(
+                        (item: any) => item.region?.id === Number(region_id)
+                      )?.length
+                    }
+                    handlePagination={(value: number) =>
+                      handlePagination(value)
+                    }
+                  />
+                </div>
+              )}
+            </>
+          )}
       </div>
     </main>
   );
