@@ -19,6 +19,7 @@ export function middleware(request: NextRequest) {
   const publicRoutes = [
     "/login",
     "/signup",
+    "/admin/login",
     "/forget-password",
     "/reset-password",
   ];

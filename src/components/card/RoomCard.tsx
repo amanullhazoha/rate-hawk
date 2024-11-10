@@ -4,8 +4,11 @@ import Image from "next/image";
 import { parseISO, format } from "date-fns";
 import Carousel from "react-multi-carousel";
 import { useState, useEffect } from "react";
-import product from "@/assets/images/product.jpg";
 import { RoomIcon } from "@/assets/ameniteIcon";
+// import GuestIcon from "@/assets/icons/GuestIcon";
+import product from "@/assets/images/product.jpg";
+// import RoundArrow from "@/assets/icons/RoundArrow";
+// import BreakfastIcon from "@/assets/icons/BreakfastIcon";
 import { localTimeConverter } from "@/lib/localTimeConverter";
 
 const responsive = {
@@ -233,11 +236,68 @@ const RoomCard = ({
                 </div>
               )}
             </div>
+            {/* 
+            <div className="bg-bg-primary px-2 py-2 rounded-md mb-2">
+              <p className="text-xs mb-1.5">
+                {room?.room_data_trans?.main_name}
+              </p>
+
+              {console.log(room)}
+
+              <div className="flex flex-wrap gap-5">
+                {room?.rates?.[0]?.rg_ext?.capacity > 0 && (
+                  <p className="text-xs flex items-center gap-1 text-[#008900]">
+                    <GuestIcon color="#008900" />
+                    {room?.rates?.[0]?.rg_ext?.capacity}
+                  </p>
+                )}
+                <p
+                  className={`text-xs flex items-center gap-1 capitalize ${
+                    room?.rates?.[0]?.meal !== "nomeal"
+                      ? "text-[#008900]"
+                      : "text-[#000000]"
+                  }`}
+                >
+                  <BreakfastIcon
+                    color={
+                      room?.rates?.[0]?.meal !== "nomeal"
+                        ? "#008900"
+                        : "#000000"
+                    }
+                  />
+                  {room?.rates?.[0]?.meal === "nomeal"
+                    ? "No meals"
+                    : room?.rates?.[0]?.meal?.replace(/-/g, " ")}
+                </p>
+              </div>
+
+              <p
+                className={`text-xs flex items-center gap-1 mt-1.5 ${
+                  room?.rates?.[0]?.payment_options?.payment_types[0]
+                    ?.cancellation_penalties?.free_cancellation_before
+                    ? "text-[#008900]"
+                    : "text-[#000000]"
+                }`}
+              >
+                <RoundArrow
+                  color={
+                    room?.rates?.[0]?.payment_options?.payment_types?.[0]
+                      ?.cancellation_penalties?.free_cancellation_before
+                      ? "#008900"
+                      : "#000000"
+                  }
+                />
+                {room?.rates?.[0]?.payment_options?.payment_types?.[0]
+                  ?.cancellation_penalties?.free_cancellation_before
+                  ? "Free cancellation"
+                  : "No free cancellation"}
+              </p>
+            </div> */}
           </div>
 
           {rates?.find((item: any) =>
             room?.name?.includes(item?.room_data_trans?.main_name)
-          )?.payment_options?.payment_types[0]?.cancellation_penalties
+          )?.payment_options?.payment_types?.[0]?.cancellation_penalties
             ?.free_cancellation_before && (
             <div className="w-full flex items-center justify-end">
               <div>

@@ -49,7 +49,7 @@ const UserListPage = () => {
   const [updateUser] = useUpdateUserMutation();
 
   const handelAddUser = async (values: any, action: any) => {
-    const res = await addUser(values);
+    const res: any = await addUser(values);
 
     if (res?.data?.code === 200) {
       setData(null);
@@ -59,12 +59,12 @@ const UserListPage = () => {
 
       toast.success("User add successfully.");
     } else {
-      toast.error(res?.data?.message);
+      toast.error(res?.error?.data?.message);
     }
   };
 
   const handleUpdateUser = async (values: any, action: any) => {
-    const res = await updateUser(values);
+    const res: any = await updateUser(values);
 
     if (res?.data?.code === 200) {
       setData(null);
@@ -74,7 +74,7 @@ const UserListPage = () => {
 
       toast.success("User update successfully.");
     } else {
-      toast.error(res?.data?.message);
+      toast.error(res?.error?.data?.message);
     }
   };
 
@@ -263,7 +263,6 @@ const UserListPage = () => {
                   console.log(userModalType);
 
                   if (userModalType?.type === "addUser") {
-                    alert("add user");
                     handelAddUser(values, action);
                   } else if (userModalType?.type === "updateUser") {
                     handleUpdateUser(values, action);

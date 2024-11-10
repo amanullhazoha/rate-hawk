@@ -363,7 +363,7 @@ const ReserveCardSection = ({
 
             {openChildren && (
               <div className="relative w-full">
-                <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+                <ul className="absolute top-2.5 left-0 right-0 shadow-md border border-border-primary bg-white px-3 py-3 rounded-md flex flex-col gap-2 max-h-[300px] overflow-y-auto z-[9999999]">
                   {childrenData?.map((item: any) => (
                     <li
                       key={item?.code}
