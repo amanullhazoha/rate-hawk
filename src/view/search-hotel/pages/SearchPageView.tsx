@@ -1,7 +1,7 @@
 "use client";
 
 import { format, addDays } from "date-fns";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductCard from "../../../components/card/ProductCard";
 import HotelPageSearch from "@/components/section/HotelPageSearch";
@@ -12,6 +12,7 @@ import {
   useGetHotelByRegionIdQuery,
   useLazyGetSearchHotelByIdsQuery,
 } from "../slice/search-hotel.slice";
+import { is } from "date-fns/locale";
 
 function chunkArray(array: any, chunkSize: any) {
   const chunks = [];
@@ -23,8 +24,10 @@ function chunkArray(array: any, chunkSize: any) {
 }
 
 const SearchPageView = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
+  const [isSticky, setIsSticky] = useState(false);
   const [hotel_ids, setHotelIds] = useState<any>([]);
   const [dataByIds, setDataByIds] = useState<any>([]);
   const [pageSize, setPageSize] = useState<number>(30);
@@ -134,10 +137,32 @@ const SearchPageView = () => {
     };
   }, [chunkedHotelIds, currency, region_id]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (mapRef.current) {
+        const mapTop = mapRef.current.getBoundingClientRect().top;
+
+        if (mapTop <= 129) {
+          console.log("hi", mapTop);
+          setIsSticky(true);
+        } else {
+          setIsSticky(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  console.log(isSticky);
+
   return (
     <main className="pb-10 bg-white">
       <div className="container mx-auto px-2.5 ">
-        <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[9999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6">
+        <div className="grid-cols-1 grid lg:grid-cols-1  pt-2.5 md:pt-6">
+          {/* <div className="grid-cols-1 grid lg:grid-cols-1 sticky z-[9999999] top-[87px] md:top-[128px] bg-white pt-2.5 md:pt-6"> */}
           {/* <div className="shadow-md px-2 py-1 rounded-md w-fit mb-4 border border-blue-50">
             <Link href="/" className="mr-2 text-blue-500 font-medium">
               Home
@@ -203,8 +228,15 @@ const SearchPageView = () => {
                     ))}
                 </div>
 
-                <div className="relative">
-                  <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[247px]">
+                <div className="relative" ref={mapRef}>
+                  {/* <div className="w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[247px]"> */}
+                  <div
+                    className={
+                      isSticky
+                        ? "w-full lg:w-[50%] h-[400px] lg:h-full relative lg:fixed lg:right-0 lg:top-[129px]"
+                        : "w-full lg:w-[141%] h-[400px] lg:h-full relative lg:absolute lg:right-[-38%] lg:top-[0px] transition-all duration-500 ease-in-out"
+                    }
+                  >
                     <MultiMarkerLocation
                       hotelData={dataByIds?.filter(
                         (item: any) => item.region?.id === Number(region_id)
