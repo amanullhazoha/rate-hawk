@@ -306,7 +306,7 @@ const HotelPageSearch = ({
                 {openCalender && (
                   <div className="relative w-full">
                     <RangeCalender
-                      className="absolute left-0 top-2.5 border border-border-primary"
+                      className="absolute left-0 top-2.5 border border-border-primary z-[9999999]"
                       handleDateRange={handleDateRange}
                     />
                   </div>
