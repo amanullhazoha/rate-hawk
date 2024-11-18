@@ -85,6 +85,7 @@ const SearchSection = () => {
     }
 
     setSelectDate(dates);
+    setOpenCalender(false);
   };
 
   const handleChildren = (item: any) => {

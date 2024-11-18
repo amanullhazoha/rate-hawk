@@ -25,7 +25,7 @@ const RangeCalender = ({
 
     setTimeout(() => {
       handleDateRange([item.selection]);
-    }, 1000);
+    }, 1500);
   };
 
   useEffect(() => {
