@@ -53,3 +53,7 @@ body {
 .scrollbar-custom::-webkit-scrollbar {
   width: 8px;
 }
+
+/* .yarl__portal {
+  z-index: 9999999999999999 !important;
+} */

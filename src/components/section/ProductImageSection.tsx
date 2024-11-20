@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import product from "@/assets/images/product.jpg";
+import ImageLightBox from "@/components/modal/ImageLightBox";
 
 const responsive = {
   mobile: {
@@ -11,6 +12,7 @@ const responsive = {
 };
 
 const ProductImageSection = ({ images }: { images: any }) => {
+  const [open, setOpen] = useState(false);
   const [productImage, setProductImage] = useState([]);
 
   useEffect(() => {
@@ -29,7 +31,11 @@ const ProductImageSection = ({ images }: { images: any }) => {
         <div className="relative overflow-hidden">
           <Carousel responsive={responsive}>
             {productImage?.map((image: string) => (
-              <div className="w-full h-[410px] overflow-hidden" key={image}>
+              <div
+                className="w-full h-[410px] overflow-hidden cursor-pointer"
+                key={image}
+                onClick={() => setOpen(true)}
+              >
                 <Image
                   fill
                   alt="image"
@@ -60,10 +66,12 @@ const ProductImageSection = ({ images }: { images: any }) => {
 
             <span>Show all photos</span>
           </button> */}
+
+          <ImageLightBox images={productImage} open={open} setOpen={setOpen} />
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
-          <div className="relative h-[200px]">
+        <div className="grid grid-cols-2 gap-2 cursor-pointer">
+          <div className="relative h-[200px]" onClick={() => setOpen(true)}>
             <Image
               fill
               alt="image"
@@ -72,7 +80,10 @@ const ProductImageSection = ({ images }: { images: any }) => {
             />
           </div>
 
-          <div className="relative h-[200px]">
+          <div
+            className="relative h-[200px] cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
             <Image
               fill
               alt="image"
@@ -81,7 +92,10 @@ const ProductImageSection = ({ images }: { images: any }) => {
             />
           </div>
 
-          <div className="relative h-[200px]">
+          <div
+            className="relative h-[200px] cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
             <Image
               fill
               alt="image"
@@ -90,7 +104,10 @@ const ProductImageSection = ({ images }: { images: any }) => {
             />
           </div>
 
-          <div className="relative h-[200px]">
+          <div
+            className="relative h-[200px] cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
             <Image
               fill
               alt="image"
