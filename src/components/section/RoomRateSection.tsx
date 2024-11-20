@@ -37,6 +37,8 @@ const RoomRateSection = ({
     }
   };
 
+  console.log(bookHash, room_groups);
+
   return (
     <div className="px-4 md:px-6 py-4 md:py-4 border border-border-primary rounded-[20px] mb-6">
       <div>

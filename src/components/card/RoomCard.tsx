@@ -11,6 +11,10 @@ import product from "@/assets/images/product.jpg";
 // import BreakfastIcon from "@/assets/icons/BreakfastIcon";
 import { localTimeConverter } from "@/lib/localTimeConverter";
 
+import GuestIcon from "@/assets/icons/GuestIcon";
+import BreakfastIcon from "@/assets/icons/BreakfastIcon";
+import RoundArrow from "@/assets/icons/RoundArrow";
+
 const responsive = {
   mobile: {
     breakpoint: { max: 20000, min: 0 },
@@ -295,7 +299,85 @@ const RoomCard = ({
             </div> */}
           </div>
 
-          {rates?.find((item: any) =>
+          <div className="mt-4">
+            <div className="flex flex-wrap gap-5">
+              {rates?.find((item: any) =>
+                room?.name?.includes(item?.room_data_trans?.main_name)
+              )?.rg_ext?.capacity > 0 && (
+                <p className="text-xs flex items-center gap-1 text-[#008900]">
+                  <GuestIcon color="#008900" />
+                  {
+                    rates?.find((item: any) =>
+                      room?.name?.includes(item?.room_data_trans?.main_name)
+                    )?.rg_ext?.capacity
+                  }
+                </p>
+              )}
+              <p
+                className={`text-xs flex items-center gap-1 capitalize ${
+                  rates?.find((item: any) =>
+                    room?.name?.includes(item?.room_data_trans?.main_name)
+                  )?.meal !== "nomeal"
+                    ? "text-[#008900]"
+                    : "text-[#000000]"
+                }`}
+              >
+                <BreakfastIcon
+                  color={
+                    rates?.find((item: any) =>
+                      room?.name?.includes(item?.room_data_trans?.main_name)
+                    )?.meal !== "nomeal"
+                      ? "#008900"
+                      : "#000000"
+                  }
+                />
+                {rates?.find((item: any) =>
+                  room?.name?.includes(item?.room_data_trans?.main_name)
+                )?.meal === "nomeal"
+                  ? "No meals"
+                  : rates
+                      ?.find((item: any) =>
+                        room?.name?.includes(item?.room_data_trans?.main_name)
+                      )
+                      ?.meal?.replace(/-/g, " ")}
+              </p>
+            </div>
+
+            <p
+              className={`text-xs flex items-center gap-1 mt-1.5 ${
+                rates?.find((item: any) =>
+                  room?.name?.includes(item?.room_data_trans?.main_name)
+                )?.payment_options?.payment_types[0]?.cancellation_penalties
+                  ?.free_cancellation_before
+                  ? "text-[#008900]"
+                  : "text-[#000000]"
+              }`}
+            >
+              <RoundArrow
+                color={
+                  rates?.find((item: any) =>
+                    room?.name?.includes(item?.room_data_trans?.main_name)
+                  )?.payment_options?.payment_types[0]?.cancellation_penalties
+                    ?.free_cancellation_before
+                    ? "#008900"
+                    : "#000000"
+                }
+              />
+              {rates?.find((item: any) =>
+                room?.name?.includes(item?.room_data_trans?.main_name)
+              )?.payment_options?.payment_types[0]?.cancellation_penalties
+                ?.free_cancellation_before
+                ? `Free cancellation before ${localTimeConverter(
+                    rates?.find((item: any) =>
+                      room?.name?.includes(item?.room_data_trans?.main_name)
+                    )?.payment_options?.payment_types[0]?.cancellation_penalties
+                      ?.free_cancellation_before
+                  )}`
+                : "No free cancellation"}
+            </p>
+          </div>
+
+          {/* {rates?.find((item: any) =>
             room?.name?.includes(item?.room_data_trans?.main_name)
           )?.payment_options?.payment_types?.[0]?.cancellation_penalties
             ?.free_cancellation_before && (
@@ -314,7 +396,7 @@ const RoomCard = ({
                 </p>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="w-full flex items-center justify-end">
             <div>
