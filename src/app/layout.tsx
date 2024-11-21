@@ -10,6 +10,7 @@ import "react-multi-carousel/lib/styles.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import ArrowIcon from "@/assets/icons/ArrowIcon";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google" content="notranslate" />
+      </head>
+
       <Provider store={store}>
         <body className={inter.className}>
           {children}

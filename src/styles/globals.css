@@ -57,3 +57,7 @@ body {
 /* .yarl__portal {
   z-index: 9999999999999999 !important;
 } */
+
+#goog-gt-tt {
+  display: none !important;
+}
