@@ -48,7 +48,7 @@ const UserLayout = ({
         </div>
       }
     >
-      <header className="sticky top-0 z-[99999999]">
+      <header className="sticky top-0 z-[9999]">
         {/* <div
           className={`bg-black-800 ${
             data?.data && !isError ? "hidden" : "block"

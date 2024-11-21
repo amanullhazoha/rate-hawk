@@ -14,10 +14,12 @@ const DetailSection = ({
   bookHash,
   hotelInfo,
   favoriteData,
+  setLoginView,
 }: {
   bookHash: any;
   hotelInfo: any;
   favoriteData: any;
+  setLoginView: any;
 }) => {
   const [selectRoom, setSelectRoom] = useState<any>(null);
   const [originalRoom, setOriginalRoom] = useState<any>(null);
@@ -64,6 +66,7 @@ const DetailSection = ({
           hotelInfo={hotelInfo}
           selectRoom={selectRoom}
           originalRoom={originalRoom}
+          setLoginView={setLoginView}
           setSelectRoom={setSelectRoom}
           setOriginalRoom={setOriginalRoom}
         />

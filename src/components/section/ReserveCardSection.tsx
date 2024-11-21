@@ -13,12 +13,14 @@ const ReserveCardSection = ({
   hotelInfo,
   selectRoom,
   originalRoom,
+  setLoginView,
   setSelectRoom,
   setOriginalRoom,
 }: {
   hotelInfo: any;
   selectRoom: any;
   originalRoom: any;
+  setLoginView: (data: any) => void;
   setSelectRoom: (data: any) => void;
   setOriginalRoom: (data: any) => void;
 }) => {
@@ -73,6 +75,8 @@ const ReserveCardSection = ({
     router.push(`${pathName}${url ? `?${url}` : ""}`);
     setSelectRoom(null);
     setOriginalRoom(null);
+
+    setOpenCalender(false);
   };
 
   const handleChildren = (item: any) => {
@@ -193,13 +197,15 @@ const ReserveCardSection = ({
         if (data?.error?.originalStatus === 401) {
           toast.error("Please login or create an account first!");
 
-          return setTimeout(() => {
-            window.open(
-              "http://localhost:3000/login",
-              "_blank",
-              "noopener,noreferrer"
-            );
-          }, 3000);
+          return setLoginView(true);
+
+          // return setTimeout(() => {
+          //   window.open(
+          //     "http://localhost:3000/login",
+          //     "_blank",
+          //     "noopener,noreferrer"
+          //   );
+          // }, 3000);
         }
 
         toast.error(data?.error?.data);

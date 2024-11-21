@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { format, addDays } from "date-fns";
 import Preloader from "@/components/loading/Preloader";
 import { useSearchParams, useParams } from "next/navigation";
@@ -11,10 +11,12 @@ import {
   useGetHotelDetailMutation,
   useGetHotelBookHashMutation,
 } from "../slice/hotel-detail.slice";
+import CheckoutLoginPageView from "@/view/login/pages/CheckoutLoginPage";
 
 const ProductDetailPageView = () => {
   const searchParams = useSearchParams();
   const params: { id: string } = useParams();
+  const [loginView, setLoginView] = useState(false);
 
   const { data: favoriteData } = useGetUserAllSaveListQuery("");
 
@@ -72,15 +74,22 @@ const ProductDetailPageView = () => {
           </div>
         )}
 
-        {!isLoading && !isError && data?.data && (
-          <div className="w-full mx-auto">
-            <ProductImageSection images={data?.data?.data?.images} />
-            <DetailSection
-              hotelInfo={data?.data?.data}
-              favoriteData={favoriteData?.data}
-              bookHash={bookHash?.data?.data?.hotels}
-            />
-          </div>
+        {loginView ? (
+          <CheckoutLoginPageView setLoginView={setLoginView} />
+        ) : (
+          !isLoading &&
+          !isError &&
+          data?.data && (
+            <div className="w-full mx-auto">
+              <ProductImageSection images={data?.data?.data?.images} />
+              <DetailSection
+                setLoginView={setLoginView}
+                hotelInfo={data?.data?.data}
+                favoriteData={favoriteData?.data}
+                bookHash={bookHash?.data?.data?.hotels}
+              />
+            </div>
+          )
         )}
       </div>
     </main>

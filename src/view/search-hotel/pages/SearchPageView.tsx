@@ -122,10 +122,9 @@ const SearchPageView = () => {
           star: Number(star),
         }).unwrap();
 
-        setDataLoading(false);
-
         if (response?.data?.length > 0) {
           setDataByIds((prevData: any) => [...prevData, ...response?.data]);
+          setDataLoading(false);
         }
       }
     };
@@ -143,7 +142,6 @@ const SearchPageView = () => {
         const mapTop = mapRef.current.getBoundingClientRect().top;
 
         if (mapTop <= 129) {
-          console.log("hi", mapTop);
           setIsSticky(true);
         } else {
           setIsSticky(false);
@@ -155,8 +153,6 @@ const SearchPageView = () => {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  console.log(isSticky);
 
   return (
     <main className="pb-10 bg-white">
